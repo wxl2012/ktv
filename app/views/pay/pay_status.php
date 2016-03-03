@@ -11,9 +11,7 @@
 </style>
 <div class="container">
     <div class="text-center" style="padding-top: 20px;">
-        <div class="img-circle">
-            <i class="fa fa-check" style="color: #fff; font-size: 4em;"></i>
-        </div>
+        <i class="fa fa-check-circle" style="font-size: 8em; color: green"></i>
     </div>
     <div class="text-center" style="padding-top: 20px; font-size: 20pt;">
         支付完成

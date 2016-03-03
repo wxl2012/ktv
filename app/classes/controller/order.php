@@ -19,7 +19,7 @@
  * @package  app
  * @extends  Controller
  */
-class Controller_order extends \Fuel\Core\Controller_Template
+class Controller_Order extends Controller_BaseController
 {
 
     public $template = 'template';

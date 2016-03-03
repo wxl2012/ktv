@@ -19,7 +19,7 @@
  * @package  app
  * @extends  Controller
  */
-class Controller_Room extends \Fuel\Core\Controller_Template
+class Controller_Room extends Controller_BaseController
 {
 
     public $template = 'template';
@@ -31,7 +31,25 @@ class Controller_Room extends \Fuel\Core\Controller_Template
      */
     public function action_index()
     {
-        return Response::forge(View::forge('welcome/index'));
+        $this->template->content = \View::forge('room/index');
+    }
+
+    /**
+     * KTV包房详情
+     *
+     * @access  public
+     * @return  Response
+     */
+    public function action_view($id = 0)
+    {
+        $room = \Model_Room::find($id);
+
+        $params = [
+            'item' => $room,
+        ];
+
+        \View::set_global($params);
+        $this->template->content = \View::forge('room/view');
     }
 
     /**

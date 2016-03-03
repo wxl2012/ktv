@@ -179,7 +179,7 @@
                             <td>玫瑰苑</td>
                             <td>280/3小时</td>
                             <td>
-                                <input type="checkbox" name="ckbReserve[]" value="1">
+                                <input type="checkbox" name="ckbReserve" value="1">
                             </td>
                         </tr>
                         <tr>
@@ -187,7 +187,7 @@
                             <td>桃花源</td>
                             <td>580/3小时</td>
                             <td>
-                                <input type="checkbox" name="ckbReserve[]" value="2">
+                                <input type="checkbox" name="ckbReserve" value="2">
                             </td>
                         </tr>
                         <tr>
@@ -195,7 +195,7 @@
                             <td>红豆阁</td>
                             <td>880/3小时</td>
                             <td>
-                                <input type="checkbox" name="ckbReserve[]" value="3">
+                                <input type="checkbox" name="ckbReserve" value="3">
                             </td>
                         </tr>
                         </tbody>
@@ -220,14 +220,10 @@
 <script type="text/javascript">
     $(function () {
         $('input[name=ckbAll]').click(function(){
-            var checked = $(this).is(':checked');
-
-            $(this).parents('table').find('tbody').find('input[type=checkbox]').each(function(){
-                if(checked){
-                    $(this).attr('checked', 'true');
-                }else{
-                    $(this).removeAttr('checked');
-                }
+            var checked = $(this).attr('checked');
+            $(this).parents('table').find('input[name=ckbReserve]:checkbox').each(function(){
+                console.log(checked);
+                $(this).attr('checked', checked);
             });
         });
     });

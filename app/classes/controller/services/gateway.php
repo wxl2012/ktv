@@ -84,7 +84,7 @@ class Controller_Services_Gateway extends Controller_BaseController {
         );
 
         $params['paySign'] = \handler\mp\Tool::getWxPaySign($params, $access->access_key);
-        $params['to_url'] = "/order/home/delivery/{$order->id}";
+        $params['to_url'] = "/order/pay_status";
 
         return \Response::forge(\View::forge('pay/wxpay', $params));
     }

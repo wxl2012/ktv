@@ -35,8 +35,7 @@ class Controller_Order extends Controller_BaseController
     }
 
     /**
-     * A typical "Hello, Bob!" type example.  This uses a Presenter to
-     * show how to use them.
+     * 确认支付
      *
      * @access  public
      * @return  Response
@@ -47,13 +46,13 @@ class Controller_Order extends Controller_BaseController
     }
 
     /**
-     * The 404 action for the application.
+     * 支付状态显示
      *
      * @access  public
      * @return  Response
      */
-    public function action_404()
+    public function action_pay_status()
     {
-        return Response::forge(Presenter::forge('welcome/404'), 404);
+        $this->template->content = \View::forge('pay/pay_status');
     }
 }

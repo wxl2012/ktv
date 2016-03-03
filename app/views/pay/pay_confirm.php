@@ -10,7 +10,7 @@
     }
 </style>
 
-<div class="contorin">
+<div class="container">
     <div class="alert alert-warning text-center" style="font-weight: 600;">
         请在10分钟20秒内完成支付!
     </div>

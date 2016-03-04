@@ -9,7 +9,7 @@
     <link href="/assets/css/bootstrap.min.css" rel="stylesheet">
     <link href="/assets/third-party/font-awesome/4.5.0/css/font-awesome.min.css" rel="stylesheet">
 
-    <script type="text/javascript" src="/assets/third-party/jquery/1.12.0/jquery.min.js"></script>
+    <script type="text/javascript" src="http://lib.sinaapp.com/js/jquery/1.10.2/jquery-1.10.2.min.js"></script>
 </head>
 
 <body>

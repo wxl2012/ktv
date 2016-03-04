@@ -1,4 +1,23 @@
 <link rel="stylesheet" type="text/css" href="/assets/third-party/swiper/3.2.7/css/swiper.min.css">
+<style type="text/css">
+    .navbar-blue{
+        background-color: #337ab7;
+    }
+</style>
+<nav class="navbar navbar-blue navbar-fixed-top" style="border-bottom: 1px solid #C6C0B3;">
+    <div class="container-fluid">
+        <div class="row" style="line-height: 50px; margin-left: 0px; margin-right: 0px;">
+            <div class="col-xs-2">
+                <i class="fa fa-angle-left" style="font-size: 2em; color: #fff;"></i>
+            </div>
+            <div class="col-xs-8 text-center" style="color: #fff; font-size: 13pt; font-weight: 600;">
+                包房详情
+            </div>
+            <div class="col-xs-2">
+            </div>
+        </div>
+    </div>
+</nav>
 
 <div class="container" style="margin-top: 52px; padding-top: 10px; padding-bottom: 15px; background-color: #fff;">
     <div class="row">
@@ -45,5 +64,16 @@
 
 <script type="text/javascript" src="/assets/third-party/swiper/3.2.7/js/swiper.min.js"></script>
 <script type="text/javascript">
-
+    $(function(){
+        var swiper = new Swiper('.swiper-container', {
+            pagination: '.swiper-pagination',
+            nextButton: '.swiper-button-next',
+            prevButton: '.swiper-button-prev',
+            slidesPerView: 1,
+            paginationClickable: true,
+            spaceBetween: 30,
+            autoplay: 2500,
+            loop: true
+        });
+    });
 </script>

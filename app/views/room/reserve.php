@@ -36,14 +36,11 @@
                 预订商家
             </div>
             <div class="col-xs-9">
-                <select class="form-control">
+                <select class="form-control" id="seller_id" name="seller_id">
                     <option value="0">请选择KTV商户</option>
-                    <option value="1">商家1</option>
-                    <option value="2">商家2</option>
-                    <option value="3">商家3</option>
-                    <option value="4">商家4</option>
-                    <option value="5">商家5</option>
-                    <option value="6">商家6</option>
+                    <?php foreach ($sellers as $seller) { ?>
+                        <option value="<?php echo $seller->id; ?>"><?php echo $seller->name?></option>
+                    <?php } ?>
                 </select>
             </div>
         </div>
@@ -54,11 +51,12 @@
                 预订日期
             </div>
             <div class="col-xs-9">
-                <select class="form-control">
+                <?php $week = [0 => '星期天', 1 => '星期一', 2 => '星期二', 3 => '星期三', 4 => '星期四', 5 => '星期五', 6 => '星期六']; ?>
+                <select class="form-control" id="arrival_date" name="arrival_date">
                     <?php $date = time(); ?>
                     <?php for($i = 0; $i < 10; $i ++){ ?>
                         <?php $date += (60 * 60 * 24); ?>
-                        <option value="1"><?php echo date('Y-m-d', $date);?></option>
+                        <option value="1"><?php echo date('Y-m-d', $date);?> <?php echo $week[date('w', $date)];?></option>
                     <?php } ?>
                 </select>
             </div>
@@ -70,7 +68,7 @@
                 开始时间
             </div>
             <div class="col-xs-4">
-                <select class="form-control">
+                <select class="form-control" id="arrival_hour" name="arrival_hour">
                     <option value="11">11</option>
                     <option value="12">12</option>
                     <option value="13">13</option>
@@ -80,7 +78,7 @@
                 </select>
             </div>
             <div class="col-xs-5">
-                <select class="form-control">
+                <select class="form-control" id="arrival_minute" name="arrival_minute">
                     <option value="00">00</option>
                     <option value="10">10</option>
                     <option value="20">20</option>
@@ -97,7 +95,7 @@
                 预订人数
             </div>
             <div class="col-xs-9">
-                <input type="text" value="" class="form-control" placeholder="人数" />
+                <input type="text" value="" class="form-control" id="people" name="people" placeholder="人数" />
             </div>
         </div>
     </li>
@@ -107,12 +105,12 @@
                 您的称呼
             </div>
             <div class="col-xs-6">
-                <input type="text" value="" class="form-control" placeholder="姓名" />
+                <input type="text" value="" class="form-control" id="name" name="name" placeholder="姓名" />
             </div>
             <div class="col-xs-3" style="padding-right: 15px; padding-left: 0px;">
-                <select class="form-control">
-                    <option value="famil">先生</option>
-                    <option value="a">女士</option>
+                <select class="form-control" id="gender" name="gender">
+                    <option value="male">先生</option>
+                    <option value="female">女士</option>
                 </select>
             </div>
         </div>
@@ -123,7 +121,7 @@
                 联系电话
             </div>
             <div class="col-xs-9">
-                <input type="number" value="" class="form-control" placeholder="联系电话" />
+                <input type="number" value="" class="form-control" placeholder="联系电话" id="phone" name="phone" />
             </div>
         </div>
     </li>
@@ -133,82 +131,16 @@
                 备注信息
             </div>
             <div class="col-xs-9">
-                <textarea class="form-control" placeholder="备注"></textarea>
+                <textarea class="form-control" placeholder="备注" id="remark" name="remark"></textarea>
             </div>
         </div>
     </li>
     <li class="list-group-item">
         <div class="tabbable">
             <ul class="nav nav-tabs" id="myTab">
-                <li class="active">
-                    <a data-toggle="tab" href="#home">
-                        <i class="green icon-home bigger-110"></i>
-                        小包
-                    </a>
-                </li>
-
-                <li>
-                    <a data-toggle="tab" href="#profile">
-                        中包
-                    </a>
-                </li>
-
-                <li>
-                    <a data-toggle="tab" href="#dropdown1">
-                        大包
-                        <span class="badge badge-danger">0</span>
-                    </a>
-                </li>
             </ul>
 
             <div class="tab-content">
-                <div id="home" class="tab-pane in active">
-                    <p>可容纳1-6人</p>
-                    <table class="table table-bordered">
-                        <thead>
-                        <tr>
-                            <th>包房号</th>
-                            <th>包房名称</th>
-                            <th>价格</th>
-                            <th><input type="checkbox" name="ckbAll" value="all"></th>
-                        </tr>
-                        </thead>
-                        <tbody>
-                        <tr>
-                            <th scope="row">1</th>
-                            <td>玫瑰苑</td>
-                            <td>280/3小时</td>
-                            <td>
-                                <input type="checkbox" name="ckbReserve" value="1">
-                            </td>
-                        </tr>
-                        <tr>
-                            <th scope="row">2</th>
-                            <td>桃花源</td>
-                            <td>580/3小时</td>
-                            <td>
-                                <input type="checkbox" name="ckbReserve" value="2">
-                            </td>
-                        </tr>
-                        <tr>
-                            <th scope="row">3</th>
-                            <td>红豆阁</td>
-                            <td>880/3小时</td>
-                            <td>
-                                <input type="checkbox" name="ckbReserve" value="3">
-                            </td>
-                        </tr>
-                        </tbody>
-                    </table>
-                </div>
-
-                <div id="profile" class="tab-pane">
-                    <p>Food truck fixie locavore, accusamus mcsweeney's marfa nulla single-origin coffee squid.</p>
-                </div>
-
-                <div id="dropdown1" class="tab-pane">
-                    <p>Etsy mixtape wayfarers, ethical wes anderson tofu before they sold out mcsweeney's organic lomo retro fanny pack lo-fi farm-to-table readymade.</p>
-                </div>
             </div>
         </div>
     </li>
@@ -216,6 +148,45 @@
         <a class="btn btn-warning" href="/order/pay_confirm"> 提交预订 </a>
     </li>
 </ul>
+
+<script type="text/javascript" src="/assets/third-party/jquery-tmpl-master/jquery.tmpl.min.js"></script>
+<script type="text/javascript" src="/assets/third-party/jquery-tmpl-master/jquery.tmplPlus.min.js"></script>
+
+<script type="text/x-jquery-tmpl" id="navItem">
+<li class="active">
+    <a data-toggle="tab" href="#tab${id}">
+        <i class="green icon-home bigger-110"></i>
+        ${name}
+    </a>
+</li>
+</script>
+
+<script type="text/x-jquery-tmpl" id="tabItem">
+<div id="tab${category_id}" class="tab-pane in active">
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th>包房号</th>
+                <th>包房名称</th>
+                <th>价格</th>
+                <th><input type="checkbox" name="ckbAll" value="all"></th>
+            </tr>
+        </thead>
+        <tbody>
+            {{each(i, item) items}}
+            <tr>
+                <th scope="row">${item.no}</th>
+                <td>${item.name}</td>
+                <td>${item.price}</td>
+                <td>
+                    <input type="checkbox" name="ckbReserve" value="${item.id}">
+                </td>
+            </tr>
+            {{/each}}
+        </tbody>
+    </table>
+</div>
+</script>
 
 <script type="text/javascript">
     $(function () {
@@ -226,5 +197,36 @@
                 $(this).attr('checked', checked);
             });
         });
+
+        $('#seller_id').change(getData);
+
+        getData();
     });
+
+    function getData(){
+        $.get('http://www.ktv.ray/room/rooms/' + $('#seller_id').val(),
+            function(data){
+                if(data.status == 'err'){
+                    return;
+                }
+                loadData(data.cats, data.data);
+            }, 'json');
+    }
+
+    function loadData(cats, items){
+        $('#myTab').empty();
+        $('.tab-content').empty();
+        for(var i = 0; i < cats.length; i ++){
+            var list = [];
+            for (var j = 0; j < items.length; j ++){
+                if(cats[i].id == items[j].category_id){
+                    list[list.length] = items[j];
+                }
+            }
+            console.log(JSON.stringify(cats[i]));
+            $('#myTab').append(navItem, cats[i], null);
+            $('.tab-content').append(tabItem, {category_id: cats[i], items: items});
+        }
+
+    }
 </script>

@@ -11,10 +11,9 @@
  */
 
 /**
- * The Welcome Controller.
+ * 包房控制器
  *
- * A basic controller example.  Has examples of how to set the
- * response body and status.
+ * 包房列表 包房详情 包房预订
  *
  * @package  app
  * @extends  Controller
@@ -31,6 +30,31 @@ class Controller_Room extends Controller_BaseController
      */
     public function action_index()
     {
+        $items = \Model_Room::query()
+            ->where(['is_deleted' => 0]);
+
+        $items->order_by(array('created_at' => 'desc', 'id' => 'desc'));
+
+        $count = $items->count();
+        $config = array(
+            'pagination_url' => "/room",
+            'total_items'    => $count,
+            'per_page'       => \Input::get('count', 15),
+            'uri_segment'    => "start",
+            'show_first'     => true,
+            'show_last'      => true,
+            'name'           => 'bootstrap3_cn'
+        );
+
+        $pagination = new \Pagination($config);
+        $params['pagination'] = $pagination;
+        $params['items'] = $items
+            ->rows_offset($pagination->offset)
+            ->rows_limit($pagination->per_page)
+            ->get();
+
+        \View::set_global($params);
+
         $this->template->content = \View::forge('room/index');
     }
 
@@ -53,15 +77,44 @@ class Controller_Room extends Controller_BaseController
     }
 
     /**
-     * A typical "Hello, Bob!" type example.  This uses a Presenter to
-     * show how to use them.
+     * 包房预订
      *
      * @access  public
      * @return  Response
      */
     public function action_reserve()
     {
+        $params['sellers'] = \Model_Seller::query()
+            ->where(['is_deleted' => 0, 'status' => 'OPEN'])
+            ->get();
+
+        \View::set_global($params);
         $this->template->content = \View::forge('room/reserve');
+    }
+
+    /**
+     * 根据商家ID获取包房列表
+     *
+     * @param int $id 商户ID
+     */
+    public function action_rooms($id = 0){
+
+        $tableRoom = \DB::table_prefix('rooms');
+        $tableCategory = \DB::table_prefix('categories');
+
+
+        $sql = "SELECT c.id, c.name FROM {$tableRoom} AS r LEFT JOIN {$tableCategory} AS c ON r.category_id = c.id WHERE r.seller_id = {$id} AND is_deleted = 0 GROUP BY category_id";
+        $result = \DB::query($sql)->execute()->as_array();
+        $rooms = \Model_Room::query()
+            ->where(['is_deleted' => 0, 'seller_id' => $id])
+            ->get();
+
+        $items = [];
+        foreach($rooms as $room){
+            array_push($items, $room->to_array());
+        }
+
+        die(json_encode(['status' => 'succ', 'msg' => '', 'errcode' => 0, 'data' => $items, 'cats' => $result]));
     }
 
     /**
@@ -72,6 +125,7 @@ class Controller_Room extends Controller_BaseController
      */
     public function action_404()
     {
+
         return Response::forge(Presenter::forge('welcome/404'), 404);
     }
 }

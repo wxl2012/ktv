@@ -27,15 +27,17 @@ class Model_RoomGallery extends \Orm\Model {
         ),
     );
 
-    /**
-     * @var array	has_many relationships
-     */
-    protected static $_has_many = array(
+    protected static $_belongs_to = array(
         'room' => array(
             'model_to' => 'Model_Room',
             'key_from' => 'room_id',
-            'key_to'   => 'id'
-        )
+            'key_to'   => 'id',
+        ),
+        'attachment' => array(
+            'model_to' => 'Model_Attachment',
+            'key_from' => 'attachment_id',
+            'key_to'   => 'id',
+        ),
     );
 
     /**

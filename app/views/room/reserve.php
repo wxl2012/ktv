@@ -223,7 +223,6 @@
                     list[list.length] = items[j];
                 }
             }
-            console.log(JSON.stringify(cats[i]));
             $('#myTab').append(navItem, cats[i], null);
             $('.tab-content').append(tabItem, {category_id: cats[i], items: items});
         }

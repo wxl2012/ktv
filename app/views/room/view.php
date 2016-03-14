@@ -62,18 +62,4 @@
 
 <a href="/room/reserve" class="btn btn-warning buy" style="width:100%; margin-bottom: 10px;">立即预订</a>
 
-<script type="text/javascript" src="/assets/third-party/swiper/3.2.7/js/swiper.min.js"></script>
-<script type="text/javascript">
-    $(function(){
-        var swiper = new Swiper('.swiper-container', {
-            pagination: '.swiper-pagination',
-            nextButton: '.swiper-button-next',
-            prevButton: '.swiper-button-prev',
-            slidesPerView: 1,
-            paginationClickable: true,
-            spaceBetween: 30,
-            autoplay: 2500,
-            loop: true
-        });
-    });
-</script>
+<script src="/assets/third-party/requirejs/require.js" data-main="/assets/app/room/view.js"></script>

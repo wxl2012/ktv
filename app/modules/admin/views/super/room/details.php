@@ -1,3 +1,11 @@
+<style type="text/css">
+    .img-thumbnail{
+        width: 60px;
+    }
+    .select{
+        border: 2px dashed green
+    }
+</style>
 <div class="block-area">
     <h3 class="block-title">基本信息</h3>
     <div class="tile p-15">
@@ -61,3 +69,66 @@
 </div>
 
 <hr class="whiter m-t-20">
+
+<div class="block-area">
+    <h3 class="block-title">图库</h3>
+    <div class="tile p-15" id="gallery">
+        <a href="/assets/superadmin/img/gallery/1.jpg" data-rel="gallery"  class="pirobox_gall img-popup" title="Lovely evening in Noreway">
+            <img src="/assets/superadmin/img/images-doc/thumbnail.png" class="img-thumbnail m-r-10 m-b-10" alt="">
+        </a>
+        <a id="btnAddGallery" data-toggle="modal" href="#modalGallery" title="新增图片" style="border: 3px dashed #aaa; padding: 25px 40px; font-size: 3em;">
+            +
+        </a>
+    </div>
+</div>
+
+
+<div class="modal fade" id="modalGallery" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                <h4 class="modal-title">图片管理</h4>
+            </div>
+            <div class="modal-body" style="padding-bottom: 0px;">
+                <div class="tab-container tile">
+                    <ul class="nav tab nav-tabs">
+                        <li class="active"><a href="#zone">图片空间</a></li>
+                        <li class=""><a href="#local">本地上传</a></li>
+                    </ul>
+
+                    <div class="tab-content">
+                        <div class="tab-pane active" id="zone">
+                            <?php for($j = 0; $j < 3; $j ++){?>
+                            <?php for ($i = 1; $i < 6; $i ++){ ?>
+                                <a href="/assets/superadmin/img/gallery/<?php echo $i; ?>.jpg" data-rel="gallery"  class="pirobox_gall img-popup" title="Lovely evening in Noreway">
+                                    <img src="/assets/superadmin/img/gallery/thumbs/<?php echo $i; ?>.jpg" class="img-thumbnail m-r-10 m-b-10" alt="">
+                                </a>
+                            <?php } }?>
+                        </div>
+                        <div class="tab-pane" id="local">
+                            本地上传图片
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-sm" id="btnChioce" data-dismiss="modal">确定</button>
+                <button type="button" class="btn btn-sm" data-dismiss="modal">关闭</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script type="text/x-jquery-tmpl" id="imgItem">
+    <a href="javascript:;" data-rel="gallery"  class="thumbnail-select" datd-id="${id}">
+        <img src="${url}" class="img-thumbnail m-r-10 m-b-10" alt="">
+    </a>
+</script>
+
+<?php
+
+    \Asset::css(['lightbox.css'], [], 'css-files', false);
+    \Asset::js(['jquery-tmpl/jquery.tmpl.min.js', 'jquery-tmpl/jquery.tmplPlus.min.js', 'pirobox.min.js', 'modules/admin/super/room/details.js'], [], 'js-files', false);
+
+?>

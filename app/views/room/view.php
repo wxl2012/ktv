@@ -8,7 +8,9 @@
     <div class="container-fluid">
         <div class="row" style="line-height: 50px; margin-left: 0px; margin-right: 0px;">
             <div class="col-xs-2">
-                <i class="fa fa-angle-left" style="font-size: 2em; color: #fff;"></i>
+                <a href="javascript:history.back();">
+                    <i class="fa fa-angle-left" style="font-size: 2em; color: #fff;"></i>
+                </a>
             </div>
             <div class="col-xs-8 text-center" style="color: #fff; font-size: 13pt; font-weight: 600;">
                 包房详情
@@ -37,29 +39,49 @@
         </div>
     </div>
     <div class="row" style="margin-top: 10px;">
-        <div class="col-xs-8">
+        <div class="col-xs-6">
             <span style="color: #06c1ae; font-size: 1.4em;"><?php echo $item->day; ?></span> 元
         </div>
-        <div class="col-xs-4 text-right">
-            <a class="btn btn-warning buy">立即预订</a>
+        <div class="col-xs-6 text-right" style="line-height: 28px;">
+            <i class="fa fa-shopping-cart"></i>
+            已售 <?php echo $item->sale_total; ?>
         </div>
     </div>
+    <hr style="height: 1px; border: none; border-top: 1px dashed #0066cc;">
+
+    <ul class="list-group">
+        <li class="list-group-item active">
+            商家信息
+        </li>
+        <li class="list-group-item">
+            <div class="row">
+                <div class="col-xs-2" style="padding-right: 0px;">地址:</div>
+                <div class="col-xs-10"><?php echo $item->seller->address; ?></div>
+            </div>
+        </li>
+        <li class="list-group-item">
+            <div class="row">
+                <div class="col-xs-2" style="padding-right: 0px;">电话:</div>
+                <div class="col-xs-10"><?php echo $item->seller->tel; ?></div>
+            </div>
+        </li>
+    </ul>
+
     <hr style="height: 1px; border: none; border-top: 1px dashed #0066cc;">
 
     <div class="row" style="color: #aaa;">
         <div class="col-xs-12">
             <?php echo htmlspecialchars_decode($item->body);?>
         </div>
-        <div class="col-xs-12">
-            <?php if($item->sale_total){ ?>
-                <i class="fa fa-shopping-cart"></i>
-                已售 <?php echo $item->sale_total; ?>
-            <?php } ?>
-
-        </div>
     </div>
 </div>
 
-<a href="/room/reserve" class="btn btn-warning buy" style="width:100%; margin-bottom: 10px;">立即预订</a>
-
-<script src="/assets/third-party/requirejs/require.js" data-main="/assets/app/room/view.js"></script>
+<nav class="navbar navbar-default navbar-fixed-bottom" style="min-height: 0px; background-color: #fff;">
+    <div class="container">
+        <div class="row">
+            <div class="col-xs-12" style="padding: 5px 15px;">
+                <a href="/room/reserve?id=<?php echo $item->id; ?>" class="btn btn-warning buy" style="width:100%;">立即预订</a>
+            </div>
+        </div>
+    </div>
+</nav>

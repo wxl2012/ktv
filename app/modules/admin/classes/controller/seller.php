@@ -56,18 +56,18 @@ class Controller_Seller extends Controller_BaseController
             ->get();
 
         \View::set_global($params);
-        $this->template->content = \View::forge('super/seller/index');
+        $this->template->content = \View::forge("{$this->theme}/seller/index");
     }
 
     /**
-     * 确认支付
+     * 保存商家
      *
      * @access  public
      * @return  Response
      */
-    public function action_pay_confirm()
+    public function action_save($id = 0)
     {
-        $this->template->content = \View::forge('pay/pay_confirm');
+        $this->template->content = \View::forge("{$this->theme}/seller/details");
     }
 
     /**

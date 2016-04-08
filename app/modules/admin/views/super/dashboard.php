@@ -9,7 +9,7 @@
         <div class="overflow" style="height: 254px">
             <div class="media">
                 <div class="pull-left">
-                    <img width="40" src="img/profile-pics/1.jpg" alt="">
+                    <img width="40" src="/assets/superadmin/img/profile-pics/1.jpg" alt="">
                 </div>
                 <div class="media-body">
                     <small class="text-muted">Nadin Jackson - 2 Hours ago</small><br>
@@ -18,7 +18,7 @@
             </div>
             <div class="media">
                 <div class="pull-left">
-                    <img width="40" src="img/profile-pics/2.jpg" alt="">
+                    <img width="40" src="/assets/superadmin/img/profile-pics/2.jpg" alt="">
                 </div>
                 <div class="media-body">
                     <small class="text-muted">David Villa - 5 Hours ago</small><br>
@@ -27,7 +27,7 @@
             </div>
             <div class="media">
                 <div class="pull-left">
-                    <img width="40" src="img/profile-pics/3.jpg" alt="">
+                    <img width="40" src="/assets/superadmin/img/profile-pics/3.jpg" alt="">
                 </div>
                 <div class="media-body">
                     <small class="text-muted">Harris worgon - On 15/12/2013</small><br>
@@ -36,7 +36,7 @@
             </div>
             <div class="media">
                 <div class="pull-left">
-                    <img width="40" src="img/profile-pics/4.jpg" alt="">
+                    <img width="40" src="/assets/superadmin/img/profile-pics/4.jpg" alt="">
                 </div>
                 <div class="media-body">
                     <small class="text-muted">Mitch Bradberry - On 14/12/2013</small><br>
@@ -45,7 +45,7 @@
             </div>
             <div class="media">
                 <div class="pull-left">
-                    <img width="40" src="img/profile-pics/1.jpg" alt="">
+                    <img width="40" src="/assets/superadmin/img/profile-pics/1.jpg" alt="">
                 </div>
                 <div class="media-body">
                     <small class="text-muted">Nadin Jackson - On 15/12/2013</small><br>
@@ -54,7 +54,7 @@
             </div>
             <div class="media">
                 <div class="pull-left">
-                    <img width="40" src="img/profile-pics/2.jpg" alt="">
+                    <img width="40" src="/assets/superadmin/img/profile-pics/2.jpg" alt="">
                 </div>
                 <div class="media-body">
                     <small class="text-muted">David Villa - On 16/12/2013</small><br>
@@ -63,7 +63,7 @@
             </div>
             <div class="media">
                 <div class="pull-left">
-                    <img width="40" src="img/profile-pics/3.jpg" alt="">
+                    <img width="40" src="/assets/superadmin/img/profile-pics/3.jpg" alt="">
                 </div>
                 <div class="media-body">
                     <small class="text-muted">Harris worgon - On 17/12/2013</small><br>
@@ -72,7 +72,7 @@
             </div>
             <div class="media">
                 <div class="pull-left">
-                    <img width="40" src="img/profile-pics/4.jpg" alt="">
+                    <img width="40" src="/assets/superadmin/img/profile-pics/4.jpg" alt="">
                 </div>
                 <div class="media-body">
                     <small class="text-muted">Mitch Bradberry - On 18/12/2013</small><br>
@@ -81,7 +81,7 @@
             </div>
             <div class="media">
                 <div class="pull-left">
-                    <img width="40" src="img/profile-pics/5.jpg" alt="">
+                    <img width="40" src="/assets/superadmin/img/profile-pics/5.jpg" alt="">
                 </div>
                 <div class="media-body">
                     <small class="text-muted">Wendy Mitchell - On 19/12/2013</small><br>
@@ -105,7 +105,7 @@
         <div class="overflow" style="height: 254px">
             <div class="media">
                 <div class="pull-left">
-                    <img width="40" src="img/profile-pics/1.jpg" alt="">
+                    <img width="40" src="/assets/superadmin/img/profile-pics/1.jpg" alt="">
                 </div>
                 <div class="media-body">
                     <small class="text-muted">Nadin Jackson - 2 Hours ago</small><br>
@@ -114,7 +114,7 @@
             </div>
             <div class="media">
                 <div class="pull-left">
-                    <img width="40" src="img/profile-pics/2.jpg" alt="">
+                    <img width="40" src="/assets/superadmin/img/profile-pics/2.jpg" alt="">
                 </div>
                 <div class="media-body">
                     <small class="text-muted">David Villa - 5 Hours ago</small><br>
@@ -123,7 +123,7 @@
             </div>
             <div class="media">
                 <div class="pull-left">
-                    <img width="40" src="img/profile-pics/3.jpg" alt="">
+                    <img width="40" src="/assets/superadmin/img/profile-pics/3.jpg" alt="">
                 </div>
                 <div class="media-body">
                     <small class="text-muted">Harris worgon - On 15/12/2013</small><br>
@@ -132,7 +132,7 @@
             </div>
             <div class="media">
                 <div class="pull-left">
-                    <img width="40" src="img/profile-pics/4.jpg" alt="">
+                    <img width="40" src="/assets/superadmin/img/profile-pics/4.jpg" alt="">
                 </div>
                 <div class="media-body">
                     <small class="text-muted">Mitch Bradberry - On 14/12/2013</small><br>
@@ -141,7 +141,7 @@
             </div>
             <div class="media">
                 <div class="pull-left">
-                    <img width="40" src="img/profile-pics/1.jpg" alt="">
+                    <img width="40" src="/assets/superadmin/img/profile-pics/1.jpg" alt="">
                 </div>
                 <div class="media-body">
                     <small class="text-muted">Nadin Jackson - On 15/12/2013</small><br>
@@ -150,7 +150,7 @@
             </div>
             <div class="media">
                 <div class="pull-left">
-                    <img width="40" src="img/profile-pics/2.jpg" alt="">
+                    <img width="40" src="/assets/superadmin/img/profile-pics/2.jpg" alt="">
                 </div>
                 <div class="media-body">
                     <small class="text-muted">David Villa - On 16/12/2013</small><br>
@@ -176,27 +176,27 @@
 <!-- Shortcuts -->
 <div class="block-area shortcut-area">
     <a class="shortcut tile" href="">
-        <img src="img/shortcuts/money.png" alt="">
+        <img src="/assets/superadmin/img/shortcuts/money.png" alt="">
         <small class="t-overflow">Purchases</small>
     </a>
     <a class="shortcut tile" href="">
-        <img src="img/shortcuts/twitter.png" alt="">
+        <img src="/assets/superadmin/img/shortcuts/twitter.png" alt="">
         <small class="t-overflow">Tweets</small>
     </a>
     <a class="shortcut tile" href="">
-        <img src="img/shortcuts/calendar.png" alt="">
+        <img src="/assets/superadmin/img/shortcuts/calendar.png" alt="">
         <small class="t-overflow">Calendar</small>
     </a>
     <a class="shortcut tile" href="">
-        <img src="img/shortcuts/stats.png" alt="">
+        <img src="/assets/superadmin/img/shortcuts/stats.png" alt="">
         <small class="t-overflow">Statistics</small>
     </a>
     <a class="shortcut tile" href="">
-        <img src="img/shortcuts/connections.png" alt="">
+        <img src="/assets/superadmin/img/shortcuts/connections.png" alt="">
         <small class="t-overflow">Connection</small>
     </a>
     <a class="shortcut tile" href="">
-        <img src="img/shortcuts/reports.png" alt="">
+        <img src="/assets/superadmin/img/shortcuts/reports.png" alt="">
         <small class="t-overflow">Reports</small>
     </a>
 </div>
@@ -350,7 +350,7 @@
                         <div class="listview narrow">
                             <div class="media p-l-5">
                                 <div class="pull-left">
-                                    <img width="40" src="img/profile-pics/1.jpg" alt="">
+                                    <img width="40" src="/assets/superadmin/img/profile-pics/1.jpg" alt="">
                                 </div>
                                 <div class="media-body">
                                     <small class="text-muted">2 Hours ago by Adrien San</small><br/>
@@ -360,7 +360,7 @@
                             </div>
                             <div class="media p-l-5">
                                 <div class="pull-left">
-                                    <img width="40" src="img/profile-pics/2.jpg" alt="">
+                                    <img width="40" src="/assets/superadmin/img/profile-pics/2.jpg" alt="">
                                 </div>
                                 <div class="media-body">
                                     <small class="text-muted">5 Hours ago by David Villa</small><br/>
@@ -370,7 +370,7 @@
                             </div>
                             <div class="media p-l-5">
                                 <div class="pull-left">
-                                    <img width="40" src="img/profile-pics/3.jpg" alt="">
+                                    <img width="40" src="/assets/superadmin/img/profile-pics/3.jpg" alt="">
                                 </div>
                                 <div class="media-body">
                                     <small class="text-muted">On 15/12/2013 by Mitch bradberry</small><br/>
@@ -380,7 +380,7 @@
                             </div>
                             <div class="media p-l-5">
                                 <div class="pull-left">
-                                    <img width="40" src="img/profile-pics/4.jpg" alt="">
+                                    <img width="40" src="/assets/superadmin/img/profile-pics/4.jpg" alt="">
                                 </div>
                                 <div class="media-body">
                                     <small class="text-muted">On 14/12/2013 by Mitch bradberry</small><br/>
@@ -390,7 +390,7 @@
                             </div>
                             <div class="media p-l-5">
                                 <div class="pull-left">
-                                    <img width="40" src="img/profile-pics/5.jpg" alt="">
+                                    <img width="40" src="/assets/superadmin/img/profile-pics/5.jpg" alt="">
                                 </div>
                                 <div class="media-body">
                                     <small class="text-muted">On 13/12/2013 by Mitch bradberry</small><br/>
@@ -595,37 +595,37 @@
     <div class="pull-left chat-list">
         <div class="listview narrow">
             <div class="media">
-                <img class="pull-left" src="img/profile-pics/1.jpg" width="30" alt="">
+                <img class="pull-left" src="/assets/superadmin/img/profile-pics/1.jpg" width="30" alt="">
                 <div class="media-body p-t-5">
                     Alex Bendit
                 </div>
             </div>
             <div class="media">
-                <img class="pull-left" src="img/profile-pics/2.jpg" width="30" alt="">
+                <img class="pull-left" src="/assets/superadmin/img/profile-pics/2.jpg" width="30" alt="">
                 <div class="media-body">
                     <span class="t-overflow p-t-5">David Volla Watkinson</span>
                 </div>
             </div>
             <div class="media">
-                <img class="pull-left" src="img/profile-pics/3.jpg" width="30" alt="">
+                <img class="pull-left" src="/assets/superadmin/img/profile-pics/3.jpg" width="30" alt="">
                 <div class="media-body">
                     <span class="t-overflow p-t-5">Mitchell Christein</span>
                 </div>
             </div>
             <div class="media">
-                <img class="pull-left" src="img/profile-pics/4.jpg" width="30" alt="">
+                <img class="pull-left" src="/assets/superadmin/img/profile-pics/4.jpg" width="30" alt="">
                 <div class="media-body">
                     <span class="t-overflow p-t-5">Wayne Parnell</span>
                 </div>
             </div>
             <div class="media">
-                <img class="pull-left" src="img/profile-pics/5.jpg" width="30" alt="">
+                <img class="pull-left" src="/assets/superadmin/img/profile-pics/5.jpg" width="30" alt="">
                 <div class="media-body">
                     <span class="t-overflow p-t-5">Melina April</span>
                 </div>
             </div>
             <div class="media">
-                <img class="pull-left" src="img/profile-pics/6.jpg" width="30" alt="">
+                <img class="pull-left" src="/assets/superadmin/img/profile-pics/6.jpg" width="30" alt="">
                 <div class="media-body">
                     <span class="t-overflow p-t-5">Ford Harnson</span>
                 </div>
@@ -644,7 +644,7 @@
 
         <div class="chat-body">
             <div class="media">
-                <img class="pull-right" src="img/profile-pics/1.jpg" width="30" alt="" />
+                <img class="pull-right" src="/assets/superadmin/img/profile-pics/1.jpg" width="30" alt="" />
                 <div class="media-body pull-right">
                     Hiiii<br/>
                     How you doing bro?
@@ -653,7 +653,7 @@
             </div>
 
             <div class="media pull-left">
-                <img class="pull-left" src="img/profile-pics/2.jpg" width="30" alt="" />
+                <img class="pull-left" src="/assets/superadmin/img/profile-pics/2.jpg" width="30" alt="" />
                 <div class="media-body">
                     I'm doing well buddy. <br/>How do you do?
                     <small>David - 9 Mins ago</small>
@@ -661,7 +661,7 @@
             </div>
 
             <div class="media pull-right">
-                <img class="pull-right" src="img/profile-pics/2.jpg" width="30" alt="" />
+                <img class="pull-right" src="/assets/superadmin/img/profile-pics/2.jpg" width="30" alt="" />
                 <div class="media-body">
                     I'm Fine bro <br/>Thank you for asking
                     <small>Me - 8 Mins ago</small>
@@ -669,7 +669,7 @@
             </div>
 
             <div class="media pull-right">
-                <img class="pull-right" src="img/profile-pics/2.jpg" width="30" alt="" />
+                <img class="pull-right" src="/assets/superadmin/img/profile-pics/2.jpg" width="30" alt="" />
                 <div class="media-body">
                     Any idea for a hangout?
                     <small>Me - 8 Mins ago</small>
@@ -688,3 +688,19 @@
 
     </div>
 </div>
+
+<?php
+    \Asset::js([
+        'charts/jquery.flot.js',
+        'charts/jquery.flot.time.js',
+        'charts/jquery.flot.animator.min.js',
+        'charts/jquery.flot.resize.min.js',
+        'sparkline.min.js',
+        'easypiechart.js',
+        'charts.js',
+        'maps/jvectormap.min.js',
+        'maps/usa.js',
+        'icheck.js',
+        'scroll.min.js',
+    ], [], 'js-files', false);
+?>

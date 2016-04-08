@@ -1,3 +1,6 @@
+<?php
+$seller = \Session::get('seller', false);
+?>
 <!-- Sidebar -->
 <aside id="sidebar">
 
@@ -6,16 +9,16 @@
         <!-- Profile Menu -->
         <div class="text-center s-widget m-b-25 dropdown" id="profile-menu">
             <a href="" data-toggle="dropdown">
-                <img class="profile-pic animated" src="img/profile-pic.jpg" alt="">
+                <img class="profile-pic animated" src="/assets/superadmin/img/profile-pic.jpg" alt="">
             </a>
             <ul class="dropdown-menu profile-menu">
-                <li><a href="">My Profile</a> <i class="icon left">&#61903;</i><i class="icon right">&#61815;</i></li>
-                <li><a href="">Messages</a> <i class="icon left">&#61903;</i><i class="icon right">&#61815;</i></li>
-                <li><a href="">Settings</a> <i class="icon left">&#61903;</i><i class="icon right">&#61815;</i></li>
-                <li><a href="">Sign Out</a> <i class="icon left">&#61903;</i><i class="icon right">&#61815;</i></li>
+                <!--<li><a href="javascript:;">我的资料</a> <i class="icon left">&#61903;</i><i class="icon right">&#61815;</i></li>
+                <li><a href="javascript:;">我的消息</a> <i class="icon left">&#61903;</i><i class="icon right">&#61815;</i></li>-->
+                <li><a href="javascript:;">修改密码</a> <i class="icon left">&#61903;</i><i class="icon right">&#61815;</i></li>
+                <li><a href="/admin/home/logout">安全退出</a> <i class="icon left">&#61903;</i><i class="icon right">&#61815;</i></li>
             </ul>
-            <h4 class="m-0">张三</h4>
-            @金碧辉煌
+            <h4 class="m-0"><?php echo \Auth::check() ? \Auth::get_user()->username : ''; ?></h4>
+            @<?php echo $seller ? $seller->name : '系统管理员'?>
         </div>
 
         <!-- Calendar -->
@@ -102,21 +105,22 @@
                 <span class="menu-item">预订管理</span>
             </a>
             <ul class="list-unstyled menu-item">
-                <li><a href="/admin/order/reserve">空闲包房</a></li>
-                <li><a href="/admin/order/reserve?order_status=WAIT_PAYMENT">未付款的预订</a></li>
-                <li><a href="/admin/order/reserve?order_status=PAYMENT_SUCCESS">未使用的预订</a></li>
-                <li><a href="/admin/order/reserve?order_status=FINISH">已使用的预订</a></li>
+                <li><a href="/admin/room/reserve">空闲包房</a></li>
+                <li><a href="/admin/room/reserve?status=NONE">未付款的预订</a></li>
+                <li><a href="/admin/room/reserve?status=SUCCESS">未使用的预订</a></li>
+                <li><a href="/admin/room/reserve?status=USED">已使用的预订</a></li>
+                <li><a href="/admin/room/reserve?status=TIMEOUT">超时的预订</a></li>
             </ul>
         </li>
-        <li class="dropdown hide">
+        <li class="dropdown">
             <a class="sa-side-form" href="">
                 <span class="menu-item">订单管理</span>
             </a>
             <ul class="list-unstyled menu-item">
-                <li><a href="form-elements.html">Basic Form Elements</a></li>
-                <li><a href="form-components.html">Form Components</a></li>
-                <li><a href="form-examples.html">Form Examples</a></li>
-                <li><a href="form-validation.html">Form Validation</a></li>
+                <li><a href="/admin/order">所有订单</a></li>
+                <li><a href="/admin/order/reserve?order_status=WAIT_PAYMENT">未付款的订单</a></li>
+                <li><a href="/admin/order/reserve?order_status=PAYMENT_SUCCESS">未使用的订单</a></li>
+                <li><a href="/admin/order/reserve?order_status=FINISH">已使用的订单</a></li>
             </ul>
         </li>
         <li>
@@ -148,17 +152,12 @@
         </li>
         <?php if(\Auth::check() && \Auth::get_user()->group_id == 6){ ?>
             <li class="dropdown">
-                <a class="sa-side-ui" href="">
+                <a class="sa-list-week" href="">
                     <span class="menu-item">商户管理</span>
                 </a>
                 <ul class="list-unstyled menu-item">
-                    <li><a href="buttons.html">Buttons</a></li>
-                    <li><a href="labels.html">Labels</a></li>
-                    <li><a href="images-icons.html">Images &amp; Icons</a></li>
-                    <li><a href="alerts.html">Alerts</a></li>
-                    <li><a href="media.html">Media</a></li>
-                    <li><a href="components.html">Components</a></li>
-                    <li><a href="other-components.html">Others</a></li>
+                    <li><a href="/admin/seller/save">新增商户</a></li>
+                    <li><a href="/admin/seller">所有商户</a></li>
                 </ul>
             </li>
         <?php } ?>

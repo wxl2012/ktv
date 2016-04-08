@@ -35,13 +35,52 @@ class Controller_Home extends Controller_BaseController
     }
 
     /**
-     * 确认支付
+     * 设置主题
      *
      * @access  public
      * @return  Response
      */
-    public function action_404()
+    public function action_setting_theme()
     {
-        $this->template->content = \View::forge('super/public/404');
+        if(\Input::method() == 'POST'){
+            $user = \Auth::get_user();
+            $user->default_theme = \Input::post('theme', '');
+            $user->save();
+
+        }
+    }
+
+    public function action_login(){
+
+        if(\Input::method() == 'POST'){
+            $msg = ['status' => 'err', 'msg' => '表单验证错误', 'errcode' => 10];
+
+            $val = \Validation::forge('MyRules');
+            $val->add_callable('MyRules');
+            $val->add_field('username', '用户名', 'required|trim');
+            $val->add_field('password', '密码', 'required|trim');
+
+            $flag = $val->run();
+            if ($flag){
+                if(\Auth::login()){
+                    \Response::redirect('/admin/home');
+                }
+                $msg = ['status' => 'err', 'msg' => '密码错误', 'errcode' => 10];
+            }else{
+                foreach ($val->error() as $key => $value) {
+                    $errors[$key] = (string)$value;
+                }
+                $msg['data'] = $errors;
+            }
+            \Session::set_flash('msg', $msg);
+        }
+
+        return \Response::forge(\View::forge('super/login'));
+    }
+
+    public function action_logout(){
+        \Auth::logout();
+        \Session::destroy();
+        \Response::redirect('/admin/home/login');
     }
 }

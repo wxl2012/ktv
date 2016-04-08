@@ -6,20 +6,30 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
     <title><?php echo isset($title) && $title ? $title : ''; ?></title>
 
-    <link href="/assets/css/bootstrap.min.css" rel="stylesheet">
-    <link href="/assets/third-party/font-awesome/4.5.0/css/font-awesome.min.css" rel="stylesheet">
+    <?php
+        echo \Asset::css([
+            'http://lib.sinaapp.com/js/bootstrap/v3.0.0/css/bootstrap.min.css',
+            'font-awesome/4.5.0/css/font-awesome.min.css'
+        ]);
+    ?>
 
-    <script type="text/javascript" src="http://lib.sinaapp.com/js/jquery/1.10.2/jquery-1.10.2.min.js"></script>
 </head>
 
 <body>
 
-
-
 <?php echo $content; ?>
 
+<?php
+    echo \Asset::render('css-files');
+    echo \Asset::render('before-script');
+    echo \Asset::js([
+        'http://lib.sinaapp.com/js/jquery/1.10.2/jquery-1.10.2.min.js',
+        'http://lib.sinaapp.com/js/bootstrap/v3.0.0/js/bootstrap.min.js',
+    ]);
+    echo \Asset::render('js-files');
+    echo \Asset::render('after-script');
+?>
 
-
-<script type="text/javascript" src="/assets/js/bootstrap.min.js"></script>
+<?php echo \Request::forge('/common/mp/jssdk')->execute();?>
 </body>
 </html>

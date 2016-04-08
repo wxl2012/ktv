@@ -21,8 +21,15 @@
 
 namespace admin;
 
-class Controller_BaseController extends \Controller_BaseController
+abstract class Controller_BaseController extends \Controller_BaseController
 {
     public $template = 'super/template';
+    public $theme = 'super';
+
+    public function before(){
+        parent::before();
+
+        \Auth::force_login(1);
+    }
 
 }

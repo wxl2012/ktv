@@ -35,6 +35,13 @@ class Controller_Room extends Controller_BaseController
         $items = \Model_Room::query()
             ->where('is_deleted', 0);
 
+        $data = \Input::get();
+        foreach ($data as $k => $v){
+            if( ! $v){
+                continue;
+            }
+            $items->where($k, $v);
+        }
         $items->order_by(array('created_at' => 'desc', 'id' => 'desc'));
 
         $count = $items->count();
@@ -56,7 +63,36 @@ class Controller_Room extends Controller_BaseController
             ->get();
 
         \View::set_global($params);
-        $this->template->content = \View::forge('super/room/index');
+        $this->template->content = \View::forge("{$this->theme}/room/index");
+    }
+
+    public function action_reserve(){
+
+        $items = \Model_RoomReserve::query()
+            ->where(['is_deleted' => 0]);
+
+        $items->order_by(array('created_at' => 'desc', 'id' => 'desc'));
+
+        $count = $items->count();
+        $config = array(
+            'pagination_url' => "/admin/room/reserve",
+            'total_items'    => $count,
+            'per_page'       => \Input::get('count', 15),
+            'uri_segment'    => "start",
+            'show_first'     => true,
+            'show_last'      => true,
+            'name'           => 'bootstrap3_cn'
+        );
+
+        $pagination = new \Pagination($config);
+        $params['pagination'] = $pagination;
+        $params['items'] = $items
+            ->rows_offset($pagination->offset)
+            ->rows_limit($pagination->per_page)
+            ->get();
+        
+        \View::set_global($params);
+        $this->template->content = \View::forge("{$this->theme}/room/reserve");
     }
 
     /**
@@ -113,7 +149,7 @@ class Controller_Room extends Controller_BaseController
         }
 
         \View::set_global($params);
-        $this->template->content = \View::forge("super/room/details");
+        $this->template->content = \View::forge("{$this->theme}/room/details");
     }
 
     /**
@@ -122,8 +158,8 @@ class Controller_Room extends Controller_BaseController
      * @access  public
      * @return  Response
      */
-    public function action_pay_status()
+    public function action_category()
     {
-        $this->template->content = \View::forge('pay/pay_status');
+        $this->template->content = \View::forge("{$this->theme}/room/category");
     }
 }

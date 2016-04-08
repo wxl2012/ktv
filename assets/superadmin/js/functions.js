@@ -4,58 +4,58 @@ $(document).ready(function(){
     -----------------------------------------------------------*/
     
     var settings =  '<a id="settings" href="#changeSkin" data-toggle="modal">' +
-			'<i class="fa fa-gear"></i> Change Skin' +
+			'<i class="fa fa-gear"></i> 修改主题' +
 		    '</a>' +   
 		    '<div class="modal fade" id="changeSkin" tabindex="-1" role="dialog" aria-hidden="true">' +
 			'<div class="modal-dialog modal-lg">' +
 			    '<div class="modal-content">' +
 				'<div class="modal-header">' +
 				    '<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>' +
-				    '<h4 class="modal-title">Change Template Skin</h4>' +
+				    '<h4 class="modal-title">请选择一个模板主题</h4>' +
 				'</div>' +
 				'<div class="modal-body">' +
 				    '<div class="row template-skins">' +
 					'<a data-skin="skin-blur-violate" class="col-sm-2 col-xs-4" href="">' +
-					    '<img src="img/skin-violate.jpg" alt="">' +
+					    '<img src="/assets/superadmin/img/skin-violate.jpg" alt="">' +
 					'</a>' +
 					'<a data-skin="skin-blur-lights" class="col-sm-2 col-xs-4" href="">' +
-					    '<img src="img/skin-lights.jpg" alt="">' +
+					    '<img src="/assets/superadmin/img/skin-lights.jpg" alt="">' +
 					'</a>' +
 					'<a data-skin="skin-blur-city" class="col-sm-2 col-xs-4" href="">' +
-					    '<img src="img/skin-city.jpg" alt="">' +
+					    '<img src="/assets/superadmin/img/skin-city.jpg" alt="">' +
 					'</a>' +
 					'<a data-skin="skin-blur-greenish" class="col-sm-2 col-xs-4" href="">' +
-					    '<img src="img/skin-greenish.jpg" alt="">' +
+					    '<img src="/assets/superadmin/img/skin-greenish.jpg" alt="">' +
 					'</a>' +
 					'<a data-skin="skin-blur-night" class="col-sm-2 col-xs-4" href="">' +
-					    '<img src="img/skin-night.jpg" alt="">' +
+					    '<img src="/assets/superadmin/img/skin-night.jpg" alt="">' +
 					'</a>' +
 					'<a data-skin="skin-blur-blue" class="col-sm-2 col-xs-4" href="">' +
-					    '<img src="img/skin-blue.jpg" alt="">' +
+					    '<img src="/assets/superadmin/img/skin-blue.jpg" alt="">' +
 					'</a>' +
 					'<a data-skin="skin-blur-sunny" class="col-sm-2 col-xs-4" href="">' +
-					    '<img src="img/skin-sunny.jpg" alt="">' +
+					    '<img src="/assets/superadmin/img/skin-sunny.jpg" alt="">' +
 					'</a>' +
 					'<a data-skin="skin-cloth" class="col-sm-2 col-xs-4" href="">' +
-					    '<img src="img/skin-cloth.jpg" alt="">' +
+					    '<img src="/assets/superadmin/img/skin-cloth.jpg" alt="">' +
 					'</a>' +
 					'<a data-skin="skin-tectile" class="col-sm-2 col-xs-4" href="">' +
-					    '<img src="img/skin-tectile.jpg" alt="">' +
+					    '<img src="/assets/superadmin/img/skin-tectile.jpg" alt="">' +
 					'</a>' +
 					'<a data-skin="skin-blur-chrome" class="col-sm-2 col-xs-4" href="">' +
-					    '<img src="img/skin-chrome.jpg" alt="">' +
+					    '<img src="/assets/superadmin/img/skin-chrome.jpg" alt="">' +
 					'</a>' +
 					'<a data-skin="skin-blur-ocean" class="col-sm-2 col-xs-4" href="">' +
-					    '<img src="img/skin-ocean.jpg" alt="">' +
+					    '<img src="/assets/superadmin/img/skin-ocean.jpg" alt="">' +
 					'</a>' +
 					'<a data-skin="skin-blur-sunset" class="col-sm-2 col-xs-4" href="">' +
-					    '<img src="img/skin-sunset.jpg" alt="">' +
+					    '<img src="/assets/superadmin/img/skin-sunset.jpg" alt="">' +
 					'</a>' +
 					'<a data-skin="skin-blur-yellow" class="col-sm-2 col-xs-4" href="">' +
-					    '<img src="img/skin-yellow.jpg" alt="">' +
+					    '<img src="/assets/superadmin/img/skin-yellow.jpg" alt="">' +
 					'</a>' +
 					'<a  data-skin="skin-blur-kiwi"class="col-sm-2 col-xs-4" href="">' +
-					    '<img src="img/skin-kiwi.jpg" alt="">' +
+					    '<img src="/assets/superadmin/img/skin-kiwi.jpg" alt="">' +
 					'</a>' +
 				    '</div>' +
 				'</div>' +
@@ -65,10 +65,11 @@ $(document).ready(function(){
     $('#main').prepend(settings);
             
     $('body').on('click', '.template-skins > a', function(e){
-	e.preventDefault();
-	var skin = $(this).data('skin');
-	$('body').attr('id', skin);
-	$('#changeSkin').modal('hide');
+		e.preventDefault();
+		var skin = $(this).data('skin');
+		$('body').attr('id', skin);
+		$.post('/admin/home/setting_theme', {theme: skin});
+		$('#changeSkin').modal('hide');
     });
     
     /* --------------------------------------------------------
@@ -184,12 +185,12 @@ $(document).ready(function(){
     /* --------------------------------------------------------
 	Custom Scrollbar
     -----------------------------------------------------------*/
-    (function() {
+    /*(function() {
 	if($('.overflow')[0]) {
 	    var overflowRegular, overflowInvisible = false;
 	    overflowRegular = $('.overflow').niceScroll();
 	}
-    })();
+    })();*/
 
     /* --------------------------------------------------------
 	Messages + Notifications
@@ -285,7 +286,7 @@ $(document).ready(function(){
 	RSS Feed widget
     -----------------------------------------------------------*/
     (function(){
-	if($('#news-feed')[0]){
+	/*if($('#news-feed')[0]){
 	    $('#news-feed').FeedEk({
 		FeedUrl: 'http://rss.cnn.com/rss/edition.rss',
 		MaxCount: 5,
@@ -293,7 +294,7 @@ $(document).ready(function(){
 		ShowPubDate: true,
 		DescCharacterLimit: 0
 	    });
-	}
+	}*/
     })();
 
     /* --------------------------------------------------------

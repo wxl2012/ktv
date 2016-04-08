@@ -68,7 +68,7 @@ class Controller_Order extends Controller_BaseController
 
         $params['items'] = [];
         \View::set_global($params);
-        $this->template->content = \View::forge('super/order/reserve/index');
+        $this->template->content = \View::forge("{$this->theme}/order/reserve/index");
     }
 
     /**

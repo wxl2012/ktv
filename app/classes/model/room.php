@@ -42,6 +42,11 @@ class Model_Room extends \Orm\Model
             'model_to' => 'Model_Seller',
             'key_from' => 'seller_id',
             'key_to'   => 'id',
+        ),
+        'category' => array(
+            'model_to' => 'Model_Category',
+            'key_from' => 'category_id',
+            'key_to'   => 'id',
         )
     );
 

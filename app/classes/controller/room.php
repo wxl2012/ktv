@@ -30,10 +30,23 @@ class Controller_Room extends Controller_BaseController
      */
     public function action_index()
     {
-        $items = \Model_Room::query()
-            ->where(['is_deleted' => 0]);
+        $items = \Model_Room::query();
 
-        $items->order_by(array('created_at' => 'desc', 'id' => 'desc'));
+        $where = ['is_deleted' => 0];
+        if(\Input::get('seller_id', false)){
+            $where['seller_id'] = \Input::get('seller_id');
+        }
+        if(\Input::get('category_id', false)){
+            $where['category_id'] = \Input::get('category_id');
+        }
+        $items->where($where);
+
+        $sort = ['created_at' => 'desc', 'id' => 'desc'];
+        $filed = \Input::get('sort_filed', false);
+        if($filed){
+            $sort = ["{$filed}" => \Input::get('sort_value')];
+        }
+        $items->order_by($sort);
 
         $count = $items->count();
         $config = array(
@@ -52,6 +65,10 @@ class Controller_Room extends Controller_BaseController
             ->rows_offset($pagination->offset)
             ->rows_limit($pagination->per_page)
             ->get();
+
+        $cat = \Model_Category::find(1);
+
+        $params['cats'] = $cat->children()->get();
 
         \View::set_global($params);
 
@@ -88,8 +105,48 @@ class Controller_Room extends Controller_BaseController
             ->where(['is_deleted' => 0, 'status' => 'OPEN'])
             ->get();
 
+        if(\Input::method() == 'POST'){
+            $data = \Input::post();
+            if( ! \Security::check_token()){
+                die(json_encode(['status' => 'err', 'msg' => '请勿重复提交', 'errcode' => 10]));
+            }
+
+            $room = \Model_Room::find($data['room_id']);
+            $reserve = \Model_RoomReserve::forge($data);
+            $reserve->seller_id = $room->seller_id;
+            $reserve->begin_at = strtotime("{$data['arrival_date']} {$data['arrival_hour']}:{$data['arrival_minute']}:00");
+            if($reserve->save()){
+                die(json_encode(['status' => 'succ', 'msg' => '预订已提交', 'errcode' => 0, 'data' => $reserve->to_array()]));
+            }
+        }
+
+
         \View::set_global($params);
         $this->template->content = \View::forge('room/reserve');
+    }
+
+    /**
+     * 获取预订
+     */
+    public function action_cancel(){
+        if(\Input::method() == 'POST'){
+            $msg = ['status' => 'err', 'msg' => '', 'errcode' => 10];
+
+            $id = \Input::post('id', false);
+            if( ! $id){
+                die();
+            }
+            $reserve = \Model_RoomReserve::find($id);
+            $reserve->status = 'TIMEOUT';
+            if($reserve->save()){
+                $msg = ['status' => 'succ', 'msg' => '', 'errcode' => 0];
+            }
+
+            if(\Input::is_ajax()){
+                die(json_encode($msg));
+            }
+        }
+
     }
 
     /**
@@ -115,17 +172,5 @@ class Controller_Room extends Controller_BaseController
         }
 
         die(json_encode(['status' => 'succ', 'msg' => '', 'errcode' => 0, 'data' => $items, 'cats' => $result]));
-    }
-
-    /**
-     * The 404 action for the application.
-     *
-     * @access  public
-     * @return  Response
-     */
-    public function action_404()
-    {
-
-        return Response::forge(Presenter::forge('welcome/404'), 404);
     }
 }

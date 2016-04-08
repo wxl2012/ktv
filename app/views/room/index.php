@@ -50,26 +50,25 @@
     <div class="container-fluid" style="background-color: #fff; border: 1px solid #C6C0B3; border-bottom: 0px;">
         <div class="row" style="line-height: 40px;">
             <div class="col-xs-6 text-center" style="padding: 0px;">
-                <a href="javascript:;" role="filter">商家 <i class="fa fa-caret-<?php echo \Input::get('sort_field') == 'sale_count' && \Input::get('sort_value') == 'ASC' ? 'up' : 'down'; ?>"></i></a>
+                <a href="javascript:;" role="filter">容量 <i class="fa fa-caret-<?php echo \Input::get('sort_field') == 'sale_count' && \Input::get('sort_value') == 'ASC' ? 'up' : 'down'; ?>"></i></a>
             </div>
             <div class="col-xs-6 text-center" style="padding: 0px; border-left: 1px solid #C6C0B3;">
                 <a href="javascript:;" role="sort">按价格 <i class="fa fa-caret-<?php echo \Input::get('sort_field') == 'price' && \Input::get('sort_value') == 'ASC' ? 'up' : 'down'; ?>"></i></a>
             </div>
         </div>
         <ul class="list-group" id="filterPanel" style="display: none;">
-            <li class="list-group-item">
-                <a>销量最高</a>
-            </li>
-            <li class="list-group-item">
-                <a>销量最高</a>
-            </li>
+            <?php foreach ($cats as $cat){ ?>
+                <li class="list-group-item" data-id="<?php echo $cat->id; ?>">
+                    <?php echo $cat->name; ?>
+                </li>
+            <?php } ?>
         </ul>
         <ul class="list-group" id="sortPanel" style="display: none;">
-            <li class="list-group-item">
-                <a>销量最高</a>
+            <li class="list-group-item" data-sort="DESC">
+                销量从高到低
             </li>
-            <li class="list-group-item">
-                <a>销量最高</a>
+            <li class="list-group-item" data-sort="ASC">
+                销量从低到高
             </li>
         </ul>
     </div>
@@ -101,34 +100,6 @@
 
 <div class="modal" style="z-index: 1029;background-color: #000; opacity: 0.5;"></div>
 
-<script type="text/javascript">
-    $(function(){
-        $('a[role=sort]').click(function(){
-            $('#filterPanel').hide();
-            var a = $(this);
-            $('#sortPanel').slideToggle(function(){
-                if($('#sortPanel').is(':visible')){
-                    $('.modal').show();
-                    $(a).find('i').removeClass('fa fa-caret-down').addClass('fa fa-caret-up');
-                }else{
-                    $('.modal').hide();
-                    $(a).find('i').removeClass('fa fa-caret-up').addClass('fa fa-caret-down');
-                }
-            });
-        });
-
-        $('a[role=filter]').click(function(){
-            $('#sortPanel').hide();
-            var a = $(this);
-            $('#filterPanel').slideToggle(function(){
-                if($('#filterPanel').is(':visible')){
-                    $('.modal').show();
-                    $(a).find('i').removeClass('fa fa-caret-down').addClass('fa fa-caret-up');
-                }else{
-                    $('.modal').hide();
-                    $(a).find('i').removeClass('fa fa-caret-up').addClass('fa fa-caret-down');
-                }
-            });
-        });
-    });
-</script>
+<?php
+\Asset::js(['url_util.js', 'room/index.js'], [], 'js-files', false);
+?>

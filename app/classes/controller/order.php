@@ -37,11 +37,38 @@ class Controller_Order extends Controller_BaseController
     /**
      * 确认支付
      *
+     * @param int $id
      * @access  public
      * @return  Response
      */
-    public function action_pay_confirm()
+    public function action_pay_confirm($id = 0)
     {
+        if( ! $id){
+            die('param is inval');
+        }
+
+        $reserve = \Model_RoomReserve::find($id);
+
+        if(\Input::method() == 'POST'){
+            $data = \Input::post();
+
+            $msg = ['status' => 'err', 'msg' => '', 'errcode' => 10];
+            $order = \Model_Order::forge($data);
+            $order->order_no = "{$reserve->id}" . time();
+            if($order->save()){
+                $msg = ['status' => 'succ', 'msg' => '', 'errcode' => 0];
+            }
+
+            if(\Input::is_ajax()){
+                die(json_encode($msg));
+            }
+        }
+
+
+        $params = [
+            'reserve' => $reserve
+        ];
+        \View::set_global($params);
         $this->template->content = \View::forge('pay/pay_confirm');
     }
 

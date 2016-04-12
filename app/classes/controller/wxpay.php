@@ -18,7 +18,7 @@
  * @package  app
  * @extends  Controller
  */
-class Controller_WXPayController extends Controller_BaseController
+class Controller_WXPay extends Controller_BaseController
 {
 	public function before(){
     	parent::before();

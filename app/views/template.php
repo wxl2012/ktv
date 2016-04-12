@@ -19,6 +19,14 @@
 
 <?php echo $content; ?>
 
+
+<script type="text/javascript">
+    var _share_title = '';
+    var _share_url = '';
+    var _share_img = '';
+    var _share_desc = '';
+    var _share_src = '';
+</script>
 <?php
     echo \Asset::render('css-files');
     echo \Asset::render('before-script');

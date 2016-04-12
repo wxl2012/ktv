@@ -101,5 +101,12 @@
 <div class="modal" style="z-index: 1029;background-color: #000; opacity: 0.5;"></div>
 
 <?php
+
+$script = <<<js
+    
+js;
+
+\Asset::js($script, [], 'before-script', true);
+
 \Asset::js(['url_util.js', 'room/index.js'], [], 'js-files', false);
 ?>

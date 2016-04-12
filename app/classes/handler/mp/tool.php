@@ -323,7 +323,7 @@ class Tool {
             'remark' => \Input::get('remark', ''),
             'name' => \Input::get('name', ''),
             'name_stype' => \Input::get('name_style', ''),
-            'real_money' => \Input::get('total_fee', $order->original_money),
+            'real_money' => \Input::get('total_fee', $order->original_fee),
             'openid' => $openid
         );
         $trade = \Model_OrderTrade::forge($data);

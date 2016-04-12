@@ -333,7 +333,7 @@ class Tool {
         }
 
         //是否指定收款金额
-        $total_fee = $order->original_money;
+        $total_fee = $order->original_fee;
         if(\Input::get('total_fee', false)){
             $total_fee = floatval(\Input::get('total_fee'));
         }

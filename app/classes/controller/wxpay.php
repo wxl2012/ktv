@@ -28,9 +28,9 @@ class Controller_WXPay extends Controller_BaseController
 
         $msg = false;
 
-        if( ! \Input::get('account_id', false) && \Session::get('WXAccount', false)){
+        if( ! \Input::get('account_id', false) && ! \Session::get('WXAccount', false)){
             $msg = ['status' => 'err', 'msg' => '无效的公众号', 'errcode' => 10, 'title' => '错误'];
-        }else if(! \Input::get('openid', false) && \Session::get('OpenID', false)){
+        }else if(! \Input::get('openid', false) && ! \Session::get('OpenID', false)){
             $msg = ['status' => 'err', 'msg' => '无效的微信号', 'errcode' => 20, 'title' => '错误'];
         }else if( ! \Input::get('order_id', false)) {
             $msg = ['status' => 'err', 'msg' => '缺少必要参数:订单ID', 'errcode' => 30, 'title' => '错误'];

@@ -30,6 +30,53 @@ abstract class Controller_BaseController extends \Fuel\Core\Controller_Template
 		$this->load_wx_account();
 
 		$this->load_seller();
+
+		$this->load_wechat();
+	}
+
+	/**
+	 * 加载微信信息
+	 */
+	protected function load_wechat(){
+
+		$ua = \Input::user_agent();
+
+		if( ! preg_match('/MicroMessenger/i', $ua)){
+			//不是微信浏览器,无需进行相关操作
+			return;
+		}
+
+		//是否需要获取openid
+		$flag = $this->getNotOpenidAllowed();
+		if($flag){
+			return;
+		}
+
+		if(! \Session::get('wechat', false) && ! \Input::get('openid', false)){
+			//获取到openid之后跳转的参数列表
+			//$params = \handler\mp\UrlTool::createLinkstring(\Input::get());
+			//本站域名
+			$baseUrl = \Config::get('base_url');
+			$url = $baseUrl . \Input::server('REQUEST_URI');
+			$toUrl = urlencode($url);
+			$callback = "{$baseUrl}wxapi/oauth2_callback?to_url={$toUrl}";
+			$account = \Session::get('WXAccount', \Model_WXAccount::find(1));
+			$url = \handler\mp\Tool::createOauthUrlForCode($account->app_id, $callback);
+			\Response::redirect($url);
+		}else if( ! \Session::get('wechat', false)){
+			$wxopenid = \Model_WechatOpenid::query()
+				->where(['openid' => \Input::get('openid')])
+				->get_one();
+			if( ! $wxopenid){
+				\Session::set_flash('msg', ['status' => 'err', 'msg' => '未找到您的微信信息,无法确认您的身份! 系统无法为您提供服务!', 'title' => '拒绝服务']);
+				return $this->show_mesage();
+			}
+			\Session::set('wechat', $wxopenid->wechat);
+			\Session::set('OpenID', $wxopenid);
+			\Auth::force_login($wxopenid->wechat->user_id);
+		}else if( ! \Auth::check() && \Session::get('wechat')->user_id){
+			\Auth::force_login(\Session::get('wechat')->user_id);
+		}
 	}
 
 	/**

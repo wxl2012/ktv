@@ -16,7 +16,7 @@ $(function(){
             original_fee: _original_fee,
             from_id: _seller_id,
             order_type: 'RESERVE',
-
+            fuel_csrf_token: _token
         }
         $.post('', 
             params,
@@ -24,11 +24,12 @@ $(function(){
                 if(data.status == 'err'){
                     return;
                 }
+                /*if($('input[name=payment_type]').val() == 'wxpay'){
+                    wxpay();
+                 }*/
                 wxpay();
             }, 'json');
-        /*if($('input[name=payment_type]').val() == 'wxpay'){
-            wxpay();
-        }*/
+
     });
 
     $('#btnRetry').click(function(){

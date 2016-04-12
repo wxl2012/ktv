@@ -189,6 +189,9 @@
 </div>
 
 <?php
+
+$token = \Security::fetch_token();
+
 $appId = '';
 $timeStamp = '';
 $nonceStr = '';
@@ -212,7 +215,7 @@ $script = <<<js
     var _package = '{$package}';
     var _sign_type = '{$signType}';
     var _pay_sign = '{$paySign}';
-    
+    var _token = '{$token}';
 js;
 
 \Asset::js($script, [], 'before-script', true);

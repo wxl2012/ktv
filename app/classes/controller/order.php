@@ -52,6 +52,10 @@ class Controller_Order extends Controller_BaseController
         if(\Input::method() == 'POST'){
             $data = \Input::post();
 
+            if( ! Security::check_token()){
+                die(json_encode(['status' => 'err', 'msg' => '请勿重复提交订单!', 'errcode' => 10]));
+            }
+
             $msg = ['status' => 'err', 'msg' => '', 'errcode' => 10];
             $order = \Model_Order::forge($data);
             $order->order_no = "{$reserve->id}" . time();

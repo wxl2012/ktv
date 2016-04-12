@@ -85,3 +85,7 @@
         </div>
     </div>
 </nav>
+
+<?php
+\Asset::js(['swiper/3.2.7/js/swiper.jquery.min.js', 'room/view.js'], [], 'js-files', false);
+?>

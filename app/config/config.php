@@ -120,7 +120,7 @@ return array(
 		/**
 		 * A salt to make sure the generated security tokens are not predictable
 		 */
-		// 'token_salt'            => 'put your salt value here to make the token more secure',
+		 'token_salt'            => 'ktv',
 
 		/**
 		 * Allow the Input class to use X headers when present

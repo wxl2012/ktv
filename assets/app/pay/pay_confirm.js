@@ -1,11 +1,19 @@
 $(function(){
 
+    var ispay = false;
+
     $('input').iCheck({
         checkboxClass: 'icheckbox_flat-orange',
         radioClass: 'iradio_flat-orange'
     });
 
     $('#btnPay').click(function(){
+
+        if(ispay){
+            wxpay();
+            return;
+        }
+
         var params = {
             total_fee: _total_fee,
             order_name: '支付包房预订费用',
@@ -24,10 +32,23 @@ $(function(){
                 if(data.status == 'err'){
                     return;
                 }
-                /*if($('input[name=payment_type]').val() == 'wxpay'){
-                    wxpay();
-                 }*/
-                wxpay();
+
+                ispay = true;
+                $.get('/wxpay?order_id=' + data.data.id,
+                    function (data) {
+                        if(data.status == 'err'){
+                            return;
+                        }
+                        _app_id = data.data.appId;
+                        _time_stamp = data.data.timeStamp;
+                        _nonce_str = data.data.nonceStr;
+                        _package = data.data.package;
+                        _sign_type = data.data.signType;
+                        _pay_sign = data.data.paySign;
+                        _to_url = data.data.to_url;
+                        wxpay();
+                    }, 'json');
+
             }, 'json');
 
     });
@@ -65,6 +86,7 @@ $(function(){
 
 
 function wxpay(){
+    $('#payStatusModal').modal('show');
     wx.ready(function(){
          wx.chooseWXPay({
              appId: _app_id,

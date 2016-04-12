@@ -60,7 +60,7 @@ class Controller_Order extends Controller_BaseController
             $order = \Model_Order::forge($data);
             $order->order_no = "{$reserve->id}" . time();
             if($order->save()){
-                $msg = ['status' => 'succ', 'msg' => '', 'errcode' => 0];
+                $msg = ['status' => 'succ', 'msg' => '', 'errcode' => 0, 'data' => $order->to_array()];
             }
 
             if(\Input::is_ajax()){

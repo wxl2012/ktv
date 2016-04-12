@@ -248,7 +248,7 @@ class Tool {
         }
 
         //判断ticket是否过期
-        if( ! $account->wechat_ticket_valid && $account->wechat_ticket_valid < time()){
+        if( ! $account->wechat_ticket_valid || $account->wechat_ticket_valid < time()){
             if($account->temp_token_valid < time()){
                 $result = \handler\mp\Tool::generate_token($account->app_id, $account->app_secret);
                 $account->temp_token = $result['token'];

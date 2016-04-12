@@ -114,6 +114,34 @@ abstract class Controller_BaseController extends \Fuel\Core\Controller_Template
 		\Session::set($this->SESSION_SELLER_KEY, $seller);
 	}
 
+
+	/**
+	 * 允许没有openid下的访问列表
+	 *
+	 * @return array
+	 */
+	protected function getNotOpenidAllowed(){
+		$allowed = [
+			[
+				'module' => 'order',
+				'controller' => 'home',
+				'actions' => ['save_wxpay_qrcode']
+			]
+		];
+		foreach($allowed as $item){
+			if($item['module'] == \Uri::segment(1)
+				&& in_array(\Uri::segment(2), $item['actions'])){
+				return true;
+			}else if($item['module'] == \Uri::segment(1)
+				&& $item['controller'] == \Uri::segment(2)
+				&& in_array(\Uri::segment(3), $item['actions'])){
+				return true;
+			}
+		}
+		return false;
+	}
+
+
 	protected function show_message(){
 		return \Response::forge(\View::forge('message/moblie'));
 	}

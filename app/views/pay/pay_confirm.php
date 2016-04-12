@@ -192,7 +192,7 @@
 
 $token = \Security::fetch_token();
 
-$appId = $account->id;
+$appId = '';
 $timeStamp = '';
 $nonceStr = '';
 $package = '';

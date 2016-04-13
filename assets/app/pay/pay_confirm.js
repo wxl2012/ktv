@@ -25,11 +25,15 @@ $(function(){
             from_id: _seller_id,
             order_type: 'RESERVE',
             fuel_csrf_token: _token
-        }
+        };
+
+        $('#btnPay').addClass('disabled').html('<i class="fa fa-spinner fa-spin"></i> 处理中...');
         $.post('', 
             params,
             function (data) {
+                $('#btnPay').removeClass('disabled').html('确认支付');
                 if(data.status == 'err'){
+                    alert(data.msg);
                     return;
                 }
 
@@ -37,6 +41,7 @@ $(function(){
                 $.get('/wxpay?order_id=' + data.data.id,
                     function (data) {
                         if(data.status == 'err'){
+                            alert(data.msg);
                             return;
                         }
                         _app_id = data.data.appId;
@@ -106,4 +111,8 @@ function wxpay(){
              }
          });
      });
+}
+
+function finish() {
+    window.location.href = _to_url;
 }

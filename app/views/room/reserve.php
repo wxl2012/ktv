@@ -13,6 +13,11 @@
         border-bottom-left-radius: 0px;
         border-bottom-right-radius: 0px;
     }
+    .help-block{
+        margin-bottom: 0px;
+        font-size: 9pt;
+        color: #c20202;
+    }
 </style>
 <nav class="navbar navbar-blue">
     <div class="container-fluid">
@@ -103,6 +108,7 @@
                 </div>
                 <div class="col-xs-9">
                     <input type="text" value="" class="form-control" id="people_num" name="people_num" placeholder="人数" />
+                    <p class="help-block"></p>
                 </div>
             </div>
         </li>
@@ -113,6 +119,7 @@
                 </div>
                 <div class="col-xs-6">
                     <input type="text" value="" class="form-control" id="name" name="name" placeholder="姓名" />
+                    <p class="help-block"></p>
                 </div>
                 <div class="col-xs-3" style="padding-right: 15px; padding-left: 0px;">
                     <select class="form-control" id="gender" name="gender">
@@ -129,6 +136,7 @@
                 </div>
                 <div class="col-xs-9">
                     <input type="number" value="" class="form-control" placeholder="联系电话" id="phone" name="phone" />
+                    <p class="help-block"></p>
                 </div>
             </div>
         </li>

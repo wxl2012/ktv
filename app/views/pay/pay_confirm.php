@@ -8,6 +8,9 @@
     body{
         background-color: #f1f1f1;
     }
+    .modal-footer a{
+        text-decoration: none;
+    }
 </style>
 <style type="text/css">
     .navbar-blue{
@@ -117,7 +120,7 @@
             </div>
         </div>
     </li>
-    <li class="list-group-item">
+    <li class="list-group-item hide">
         <div class="row">
             <div class="col-xs-3">
                 优惠券
@@ -172,15 +175,19 @@
 <!-- 支付确认框 -->
 <div class="modal fade alert" id="payStatusModal" tabindex="-1" role="dialog" aria-labelledby="payStatusModalLabel">
     <div class="modal-dialog text-center" role="document">
-        <div class="modal-content">
+        <div class="modal-content" style="margin-top: 90px;">
             <div class="modal-body text-center">
                 <strong>请在微信支付完成支付！</strong>
             </div>
-            <div class="modal-footer">
+            <div class="modal-footer" style="padding-top: 0px; padding-bottom: 0px;">
                 <div class="container-fluid">
                     <div class="row">
-                        <div class="col-xs-6 text-center"><a id="btnRetry" href="javascript:;">重试</a></div>
-                        <div class="col-xs-6 text-center" style="border-left: 1px solid #E5E5E5;"><a href="javascript:;">完成支付</a></div>
+                        <div class="col-xs-6 text-center" style="padding-top: 10px;padding-bottom: 10px;">
+                            <a id="btnRetry" href="javascript:;">重试</a>
+                        </div>
+                        <div class="col-xs-6 text-center" style="border-left: 1px solid #E5E5E5;padding-top: 10px;padding-bottom: 10px;">
+                            <a href="javascript:finish();">完成支付</a>
+                        </div>
                     </div>
                 </div>
             </div>

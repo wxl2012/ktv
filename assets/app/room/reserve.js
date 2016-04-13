@@ -2,6 +2,36 @@ $(function () {
 
     $('#btnSubmit').click(function(){
 
+        var msg = '';
+        if($('#people_num').val().length < 1){
+            msg = '请填写预订人数';
+            $('#people_num').parent().addClass('has-error');
+            $('#people_num').next().text(msg);
+        }else if(isNaN($('#people_num').val())){
+            msg = '预订人数必须是数字!';
+            $('#people_num').parent().addClass('has-error');
+            $('#people_num').next().text(msg);
+        }
+
+        if($('#name').val().length < 1){
+            msg = '请填写预订人姓名';
+            $('#name').parent().addClass('has-error');
+            $('#name').next().text(msg);
+        }
+        if($('#phone').val().length < 1){
+            msg = '请填写预订人联系电话';
+            $('#phone').parent().addClass('has-error');
+            $('#phone').next().text(msg);
+        }else if(! ((/^1[3|4|5|8][0-9]\d{4,8}$/.test($('#phone').val())) && $('#phone').val().length == 11)){
+            msg = '预订人联系电话有误';
+            $('#phone').parent().addClass('has-error');
+            $('#phone').next().text(msg);
+        }
+
+        if(msg != ''){
+            return;
+        }
+
         $.post('',
             $('#frmReserve').serialize(),
             function(data){
@@ -11,6 +41,11 @@ $(function () {
                 
                 window.location.href = '/order/pay_confirm/' + data.data.id;
             }, 'json');
+    });
+    
+    $('#name,#phone,#people_num').click(function () {
+        $(this).parent().removeClass('has-error');
+        $(this).next().text('');
     });
 
     $('input[name=ckbAll]').click(function(){

@@ -41,12 +41,12 @@ class Model_Order extends \Orm\Model
 	 * @var array	has_many relationships
 	 */
 	protected static $_has_many = array(
-		/*'details' => array(
+		'details' => array(
 			'model_to' => 'Model_OrderDetail',
 			'key_from' => 'id',
 			'key_to'   => 'order_id',
 		),
-		'trades' => array(
+		/*'trades' => array(
 			'model_to' => 'Model_OrderTrade',
 			'key_from' => 'id',
 			'key_to'   => 'order_id',

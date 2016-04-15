@@ -68,19 +68,30 @@ class Controller_Order extends Controller_BaseController {
         );
 
         $pagination = new \Pagination($config);
-        $params['pagination'] = $pagination;
+        $params['pagination'] = [
+            'total_pages' => $pagination->total_pages,
+            'total_items' => $pagination->total_items,
+            'uri_segment' => $pagination->uri_segment,
+            'pagination_url' => $pagination->pagination_url,
+            'current_page' => $pagination->calculated_page
+        ];
         $params['items'] = $items
             ->rows_offset($pagination->offset)
             ->rows_limit($pagination->per_page)
             ->get();
 
         foreach ($params['items'] as $item){
+            $item->created_at = date('Y-m-d H:i', $item->created_at);
+            $item->order_label = \Model_Order::$_maps['labels'][$item->order_status];
+            $item->order_status = \Model_Order::$_maps['status'][$item->order_status];
             $item->details;
-            if($item->details){
-                current($item->details)->goods;
+            foreach ($item->details as $detail){
+                $detail->goods->title = \Str::truncate($detail->goods->title, 25, '...');
+
             }
         }
 
+        //sleep(5);
         $this->response(['status' => 'succ', 'msg' => '', 'data' => $params], 200);
     }
 }

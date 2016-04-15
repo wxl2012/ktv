@@ -1,7 +1,7 @@
 var scroll;
 var currentDirection;
 var flag = false;
-var currentPageIndex = 0;   //当前页面
+var currentPageIndex = 1;   //当前页面
 var lastId = 0;             //最后的一个ID
 $(function () {
 
@@ -40,6 +40,8 @@ $(function () {
     });
 
     document.addEventListener('touchmove', function (e) { e.preventDefault(); }, false);
+
+    loadMoreData();
 });
 
 /**
@@ -100,6 +102,15 @@ function loadNewData() {
                 return;
             }
 
+            var items = data.data.items;
+            if(ObjectEmpty(items)){
+                return;
+            }
+            
+            for(var index in items){
+                $('.list-group').prepend(orderItem, items[index], null);
+            }
+            
         }, 'json');
 }
 
@@ -118,9 +129,17 @@ function loadMoreData() {
             $('#pull-up').hide();
             $('#pull-up').find('i').removeClass('fa-spinner').removeClass('fa-spin').addClass('fa-arrow-up');
             $('#pull-up').find('span').text('上拉加载更多...');
-            console.log($('#scroller').scrollHeight());
             if(data.status == 'err'){
                 return;
+            }
+
+            var items = data.data.items;
+            if(ObjectEmpty(items)){
+                return;
+            }
+
+            for(var index in items){
+                $('.list-group').append(orderItem, items[index], null);
             }
         }, 'json');
 }

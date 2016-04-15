@@ -74,6 +74,13 @@ class Controller_Order extends Controller_BaseController {
             ->rows_limit($pagination->per_page)
             ->get();
 
-        die(json_encode(['status' => 'succ', 'msg' => '', 'data' => $params]));
+        foreach ($params['items'] as $item){
+            $item->details;
+            if($item->details){
+                current($item->details)->goods;
+            }
+        }
+
+        $this->response(['status' => 'succ', 'msg' => '', 'data' => $params], 200);
     }
 }

@@ -31,11 +31,11 @@
 }
 #pull-down, #pull-up{
     line-height: 30px;
-    font-size: 12pt;
+    font-size: 10pt;
     color: #aaaaaa;
 }
 #pull-down i, #pull-up{
-    font-size: 15pt;
+    font-size: 12pt;
 }
 #pull-up{
     margin-bottom: 10px;

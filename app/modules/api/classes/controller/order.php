@@ -83,7 +83,7 @@ class Controller_Order extends Controller_BaseController {
         foreach ($params['items'] as $item){
             $item->created_at = date('Y-m-d H:i', $item->created_at);
             $item->order_label = \Model_Order::$_maps['labels'][$item->order_status];
-            $item->order_status = \Model_Order::$_maps['status'][$item->order_status];
+            $item->order_status_title = \Model_Order::$_maps['status'][$item->order_status];
             $item->details;
             foreach ($item->details as $detail){
                 $detail->goods->title = \Str::truncate($detail->goods->title, 25, '...');

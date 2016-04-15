@@ -24,7 +24,7 @@ class Model_Order extends \Orm\Model
 	 * @var array	belongs_to relationships
 	 */
 	protected static $_belongs_to = array(
-		/*'buyer' => array(
+		'buyer' => array(
 			'model_to' => 'Model_People',
 			'key_from' => 'buyer_id',
 			'key_to'   => 'parent_id',
@@ -34,7 +34,12 @@ class Model_Order extends \Orm\Model
 			'key_from' => 'from_id',
 			'key_to'   => 'id',
 			'cascade_delete' => false,
-		),*/
+		),
+		'payment' => array(
+			'model_to' => 'Model_Bank',
+			'key_from' => 'payment_id',
+			'key_to'   => 'id'
+		),
 	);
 
 	/**

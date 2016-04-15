@@ -14,6 +14,11 @@ $(function () {
         loadMoreData();
     });
 
+    $('.list-group').delegate('div[original-href]', 'click', function () {
+        console.log('a');
+        window.location.href = $(this).attr('original-href');
+    });
+
     loadMoreData();
 });
 

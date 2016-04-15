@@ -30,7 +30,7 @@
     </div>
 </div>
 <script type="text/x-jquery-tmpl" id="orderItem">
-    <div class="list-group-item">
+    <div class="list-group-item" original-href="/ucenter/order/${id}">
         <div class="row">
             <div class="col-xs-7" style="padding-left: 5px; padding-right: 0px;">
                 订单号:${order_no}
@@ -41,7 +41,7 @@
         </div>
     </div>
     {{each(i, detail) details}}
-    <div class="list-group-item">
+    <div class="list-group-item" original-href="/room/view/${detail.goods.id}">
         <div class="row">
             <div class="col-xs-4" style="padding-left: 2px; padding-right: 0px;">
                 <img src="${detail.goods.thumbnail}" alt="${detail.goods.title}" style="width: 100%; height: 100%;">
@@ -58,12 +58,15 @@
     <div class="list-group-item" style="margin-bottom: 10px; padding-top: 5px; padding-bottom: 5px;">
         <div class="row">
             <div class="col-xs-3" style="padding-left: 5px; padding-right: 0px; line-height: 28px;">
-                <label class="label label-${order_label}">${order_status}</label>
+                <label class="label label-${order_label}">${order_status_title}</label>
             </div>
             <div class="col-xs-9 text-right" style="padding-left:0px; padding-right: 5px;">
-                <a class="btn btn-sm btn-danger">关闭订单</a>
+            {{if order_status == 'NONE' || order_status == 'FINISH' || order_status == 'SELLER_CANCEL' || order_status == 'BUYER_CANCEL'}}
                 <a class="btn btn-sm btn-danger">删除订单</a>
+            {{else order_status == 'WAIT_PAYMENT'}}
+                <a class="btn btn-sm btn-danger">取消订单</a>
                 <a class="btn btn-sm btn-warning">去支付</a>
+            {{/if}}
             </div>
         </div>
     </div>

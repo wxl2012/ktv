@@ -114,6 +114,22 @@ abstract class Controller_BaseController extends \Fuel\Core\Controller_Template
 		\Session::set($this->SESSION_SELLER_KEY, $seller);
 	}
 
+	/**
+	 * 加载推荐人信息
+	 */
+	protected function load_share_user(){
+		if( ! \Input::get('share_user_id', false)){
+			return;
+		}
+
+		$employee = \Session::get('employee', false);
+		if($employee && $employee->user_id == \Input::get('share_user_id', false)){
+			return;
+		}
+
+		$employee = \Model_User::find(\Input::get('share_user_id'));
+		\Session::set('employee', $employee);
+	}
 
 	/**
 	 * 允许没有openid下的访问列表

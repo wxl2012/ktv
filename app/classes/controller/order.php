@@ -59,7 +59,16 @@ class Controller_Order extends Controller_BaseController
             $msg = ['status' => 'err', 'msg' => '', 'errcode' => 10];
             $order = \Model_Order::forge($data);
             $order->order_no = "{$reserve->id}" . time();
+            $order->details = [
+                \Model_OrderDetail::forge([
+                    'goods_id' => $id,
+                    'num' => 1,
+                    'price' => $data['original_fee']
+                ])
+            ];
             if($order->save()){
+                $this->notice_buyer();
+                $this->notice_seller();
                 $msg = ['status' => 'succ', 'msg' => '', 'errcode' => 0, 'data' => $order->to_array()];
             }
 
@@ -86,4 +95,29 @@ class Controller_Order extends Controller_BaseController
     {
         $this->template->content = \View::forge('pay/pay_status');
     }
+
+    /**
+     * 通知商家
+     */
+    private function notice_seller(){
+        //微信模板通知
+        //短信消息通知
+    }
+
+    /**
+     * 通知买家
+     */
+    private function notice_buyer(){
+        //微信模板通知
+        //短信消息通知
+    }
+
+    /**
+     * 分润
+     */
+    private function share_profit(){
+
+    }
+
+
 }

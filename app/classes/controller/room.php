@@ -111,6 +111,17 @@ class Controller_Room extends Controller_BaseController
                 die(json_encode(['status' => 'err', 'msg' => '请勿重复提交', 'errcode' => 10]));
             }
 
+            $count = \Model_RoomReserve::query()
+                ->where([
+                    'room_id' => $data['room_id'],
+                    'begin_at' => strtotime("{$data['arrival_date']} {$data['arrival_hour']}:{$data['arrival_minute']}:00")
+                ])
+                ->count();
+
+            if($count > 0){
+                die(json_encode(['status' => 'err', 'msg' => '该房间在该时间段已被预订', 'errcode' => 10]));
+            }
+
             $room = \Model_Room::find($data['room_id']);
             $reserve = \Model_RoomReserve::forge($data);
             $reserve->seller_id = $room->seller_id;

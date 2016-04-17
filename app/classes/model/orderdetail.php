@@ -52,6 +52,11 @@ class Model_OrderDetail extends \Orm\Model
 			'model_to' => 'Model_Goods',
 			'key_from' => 'goods_id',
 			'key_to'   => 'id'
+		),
+		'reserve' => array(
+			'model_to' => 'Model_RoomReserve',
+			'key_from' => 'goods_id',
+			'key_to'   => 'id'
 		)
 	);
 

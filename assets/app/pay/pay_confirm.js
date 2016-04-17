@@ -42,6 +42,7 @@ $(function(){
                     function (data) {
                         if(data.status == 'err'){
                             alert(data.msg);
+                            window.location.href = '/ucenter/orders';
                             return;
                         }
                         _app_id = data.data.appId;

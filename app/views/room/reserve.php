@@ -202,9 +202,12 @@
 </script>
 
 <?php
+$room_id = \Input::get('id', 0);
 $seller_id = \Input::get('seller_id', 0);
 $script = <<<js
     var _seller_id = {$seller_id};
+    var _room_id = {$room_id};
+    var _dates = [];
 js;
 
     \Asset::js($script, [], 'before-script', true);

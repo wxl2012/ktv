@@ -84,10 +84,14 @@ class Controller_Order extends Controller_BaseController {
             $item->created_at = date('Y-m-d H:i', $item->created_at);
             $item->order_label = \Model_Order::$_maps['labels'][$item->order_status];
             $item->order_status_title = \Model_Order::$_maps['status'][$item->order_status];
-            $item->details;
             foreach ($item->details as $detail){
-                $detail->goods->title = \Str::truncate($detail->goods->title, 25, '...');
-
+                if($item->order_type == 'RESERVE'){
+                    $detail->reserve->room;
+                    $detail->reserve->reserve_date = date('Y年m月d日', $detail->reserve->begin_at);
+                    $detail->reserve->reserve_time = date('H:i', $detail->reserve->begin_at) . ' 至 ' . date('H:i', $detail->reserve->end_at);
+                }else{
+                    $detail->goods->title = \Str::truncate($detail->goods->title, 25, '...');
+                }
             }
         }
 

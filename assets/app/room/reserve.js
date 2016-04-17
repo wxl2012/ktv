@@ -58,6 +58,21 @@ $(function () {
 
     $('#seller_id').change(getData);
 
+    $('#arrival_date').change(function () {
+
+        /*for(var i = 0; i < _dates.length; i ++){
+            if($(this).val() == _dates[i].date){
+                for(var h = 0; h < _dates[i].hour.length; h ++){
+                    $('#arrival_date').append('<option value="' + _dates[i].hour[h].hour + '">' + _dates[i].hour[h].hour + '</option>');
+                }
+            }
+        }*/
+    });
+
+    if(_room_id > 0){
+        //loadRoomDate(_room_id);
+    }
+
     getData();
 });
 
@@ -87,5 +102,25 @@ function loadData(cats, items){
         $('#myTab').append(navItem, cats[i], null);
         $('.tab-content').append(tabItem, {category_id: cats[i], items: items});
     }
+}
 
+/**
+ * 加载可选日期
+ * @param id
+ */
+function loadRoomDate(id) {
+    $.get('/api/room/dates',
+        {
+            access_token: _access_token,
+            id: id
+        },
+        function (data) {
+            if(data.status == 'err'){
+                return;
+            }
+            _dates = data.data;
+            for(var i = 0; i < _dates; i ++){
+                $('#arrival_date').append('<option value="' + _dates[i].date + '">' + _dates[i].date + '</option>');
+            }
+        }, 'json');
 }

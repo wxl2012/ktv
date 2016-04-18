@@ -18,6 +18,9 @@
         font-size: 9pt;
         color: #c20202;
     }
+    .list-group-item .row .col-xs-3:first-child{
+        line-height: 30px;
+    }
 </style>
 <nav class="navbar navbar-blue">
     <div class="container-fluid">

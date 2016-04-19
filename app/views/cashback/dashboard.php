@@ -28,7 +28,7 @@
     }
 </style>
 <ul class="list-group">
-    <li class="list-group-item">
+    <li class="list-group-item" original-url="/ucenter/profile">
         <div class="row">
             <div class="col-xs-3 pl0 pr0">
                 <img src="http://img1.3lian.com/gif/more/11/201301/e47524afabdc211536e595743be46e92.jpg" alt="" style="width: 100%;"/>

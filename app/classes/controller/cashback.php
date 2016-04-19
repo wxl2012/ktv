@@ -64,6 +64,17 @@ class Controller_Cashback extends Controller_BaseController
      * @return  Response
      */
     public function action_orders(){
+        $params = [
+            'title' => '我的订单'
+        ];
+
+        $order = \Model_Order::query();
+        if( ! \Input::get('cashback_status', false)){
+
+        }
+
+        $params['orders'] = $order->get();
+        \View::set_global($params);
         $this->template->content = \View::forge('employee/orders');
     }
 }

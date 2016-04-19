@@ -60,7 +60,7 @@ class Model_People extends \Orm\Model
         ),*/
         'user' => array(
             'model_to' => 'Model_User',
-            'key_from' => 'user_id',
+            'key_from' => 'parent_id',
             'key_to'   => 'id',
         ),
         'parent' => array(
@@ -123,6 +123,14 @@ class Model_People extends \Orm\Model
             'key_through_to' => 'perms_id',
         ),
     );*/
+
+    public static $_maps = [
+        'gender' => [
+            'none' => '保密',
+            'male' => '男',
+            'female' => '女'
+        ]
+    ];
 
     /**
      * before_insert observer event method

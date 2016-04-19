@@ -28,6 +28,21 @@ class Controller_UCenter extends Controller_BaseController
         parent::before();
         \Auth::force_login(1);
     }
+
+    /**
+     * 我的资料
+     */
+    public function action_profile(){
+        $params = [
+            'title' => '我的资料'
+        ];
+
+        $params['item'] = \Model_People::find(\Auth::get_user()->id);
+        
+        \View::set_global($params);
+        $this->template->content = \View::forge('ucenter/profile');
+    }
+
     /**
      * 订单首页
      *

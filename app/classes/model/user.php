@@ -12,7 +12,7 @@
  * @extends  	\Orm\Auth_User
  */
 
-class Model_User extends \Model\Auth_User
+class Model_User extends \Auth\Model\Auth_User
 {
 
 	/**

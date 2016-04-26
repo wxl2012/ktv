@@ -343,7 +343,7 @@ class Tool {
             'body' => $order->order_body ? $order->order_body : '',
             'out_trade_no' => $order_no,
             'total_fee' => $total_fee  * 100,
-            'notify_url' => \Config::get('base_url') . 'services/gateway/notice_wxpay',
+            'notify_url' => \Config::get('base_url') . 'wxpay/notice',
             'trade_type' => $trade_type,
             'appid' => $account->app_id,
             'mch_id' => $access->access_id,

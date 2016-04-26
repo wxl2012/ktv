@@ -75,4 +75,67 @@ class Controller_WXPay extends Controller_BaseController
         return \Response::forge(\View::forge('pay/wxpay', $params));
     }
 
+    public function action_notice(){
+        //获取微信支付服务器提供的数据
+        $xml = $GLOBALS['HTTP_RAW_POST_DATA'];
+        $result = \handler\common\Tool::xmlToArray($xml);
+
+        //获取商户的支付配置信息
+        $trade = \Model_OrderTrade::query()
+            ->where('out_trade_no', $result['out_trade_no'])
+            ->get_one();
+
+        if( ! $trade){
+            die('trade empty');
+        }
+
+        //订单交易对象
+        $trade->response_msg = json_encode($result);
+        $trade->return_trade_no = $result['transaction_id'];
+        $trade->real_money = $result['total_fee'] / 100;
+        $trade->updated_at = time();
+
+        //订单对象
+        $order = $trade->order;
+
+        //支付配置
+        $access = \Model_AccessConfig::query()
+            ->where('access_type', 'wxpay')
+            ->where('seller_id', $order->from_id)
+            ->where('enable', 'ENABLE')
+            ->get_one();
+
+        //检验签名
+        $tmpSign = $result;
+        unset($tmpSign['sign']);
+        $sign = handler\mp\Tool::getWxPaySign($tmpSign, $access->access_key);
+
+        $params = array(
+            'return_code' => 'SUCCESS'
+        );
+        if($result['sign'] != $sign){
+            $order->order_status = 'PAYMENT_ERROR';
+            $trade->return_status = 'ERROR';
+            $params = array(
+                'return_code' => 'FAIL',
+                'return_msg' => '签名失败'
+            );
+        }else if($order->order_status == 'WAIT_PAYMENT'){
+            $order->paid_fee += $result['total_fee'] / 100;
+            $order->pay_at = time();
+            if($order->paid_fee >= $order->original_money){
+                $order->order_status = 'PAYMENT_SUCCESS';
+            }
+            $trade->return_status = 'SUCCESS';
+            $trade->return_trade_no = $result['transaction_id'];
+            $trade->response_msg = json_encode($result);
+        }
+        if($order->save() && $order->remark == 'qrcode'){
+            \Model_Order::delivery($order->id);
+        }
+        $trade->save();
+
+        $data = \handler\common\Tool::arrayToXml($params);
+        die($data);
+    }
 }

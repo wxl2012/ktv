@@ -59,6 +59,7 @@ class Controller_Order extends Controller_BaseController
             $msg = ['status' => 'err', 'msg' => '', 'errcode' => 10];
             $order = \Model_Order::forge($data);
             $order->order_no = "{$reserve->id}" . time();
+            $order->buyer_id = \Auth::check() ? \Auth::get_user()->id : 0;
             $order->details = [
                 \Model_OrderDetail::forge([
                     'goods_id' => $id,

@@ -37,7 +37,9 @@ $(function () {
             function(data){
                 if(data.status == 'err'){
                     alert(data.msg);
-                    $('#form_fuel_csrf_token').val(data.token);
+                    if(data.token){
+                        $('#form_fuel_csrf_token').val(data.token);
+                    }
                     return;
                 }
                 

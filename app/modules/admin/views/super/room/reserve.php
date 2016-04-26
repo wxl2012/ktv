@@ -49,7 +49,7 @@
                 <tfoot>
                 <tr>
                     <td colspan="7" class="text-right">
-                        <?php echo $pagination;?>
+                        <?php echo htmlspecialchars_decode($pagination);?>
                     </td>
                 </tr>
                 </tfoot>

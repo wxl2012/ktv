@@ -62,10 +62,20 @@ class Controller_Home extends Controller_BaseController
 
             $flag = $val->run();
             if ($flag){
-                if(\Auth::login()){
-                    \Response::redirect('/admin/home');
+                if( ! \Auth::login()){
+                    $msg = ['status' => 'err', 'msg' => '密码错误', 'errcode' => 10];
+                }else{
+                    $employee = \Model_Employee::query()
+                        ->where('user_id', \Auth::get_user()->id)
+                        ->get_one();
+                    if(! $employee){
+                        $msg['msg'] = '非法登录';
+                    }else{
+                        \Session::set('employee', $employee);
+                        \Session::set('seller', $employee->seller);
+                        \Response::redirect('/admin/home');
+                    }
                 }
-                $msg = ['status' => 'err', 'msg' => '密码错误', 'errcode' => 10];
             }else{
                 foreach ($val->error() as $key => $value) {
                     $errors[$key] = (string)$value;

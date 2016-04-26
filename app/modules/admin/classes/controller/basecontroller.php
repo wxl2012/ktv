@@ -28,8 +28,6 @@ abstract class Controller_BaseController extends \Controller_BaseController
 
     public function before(){
         parent::before();
-
-        \Auth::force_login(1);
     }
 
 }

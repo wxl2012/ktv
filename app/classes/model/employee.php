@@ -39,14 +39,6 @@ class Model_Employee extends \Orm\Model
 		)
 	);
 
-	// EAV container for user metadata
-    protected static $_eav = array(
-        'metadata' => array(
-            'attribute' => 'key',
-            'value' => 'value',
-        ),
-    );
-
 	/**
 	 * @var array	belongs_to relationships
 	 */
@@ -102,18 +94,6 @@ class Model_Employee extends \Orm\Model
 		),
 	);*/
 
-	/**
-	 * @var array	has_many relationships
-	 */
-	protected static $_has_many = array(
-		'metadata' => array(
-			'model_to' => '\Model_EmployeeMtadata',
-			'key_from' => 'id',
-			'key_to'   => 'parent_id',
-			'cascade_delete' => true,
-		)
-	);
-
 
 	/**
 	 * before_insert observer event method
@@ -130,60 +110,5 @@ class Model_Employee extends \Orm\Model
 	public function _event_before_update()
 	{
 		$this->_event_before_insert();
-	}
-
-	/**
-	* 根据查询条件、排序条件获取数据
-	* @param $fields String 显示字段列表
-	* @param $params Array 查询条件
-	* @param $tables Array 多表查询
-	* @param $order_by Array 排序字段(array('字段名' => 'ASC|DESC'))
-	* @param $limit int 限制条数
-	* @param $page int 分页状态(0.不分页 1.分页)
-	*/
-	public static function getItems($fields = '*', $params = array(), $tables = array(), $order_by = array(), $limit = 0, $page = 0){
-		$items = Model_Employee::query();
-		//判断是否多表查询
-		if($tables){
-			$items->related($tables);
-		}
-		
-		if( ! isset($params['is_delete'])){
-			$params['is_delete'] = 0;
-		}
-
-		//判断是否有查询条件
-		if($params){
-			foreach ($params as $key => $value) {
-				if(is_array($value)){
-					$items->where($key, $value[0], $value[1]);
-				}else{
-					$items->where($key, $value);
-				}
-				
-			}
-		}
-
-		//判断是否有排序条件
-		if($order_by){
-			foreach ($order_by as $key => $value) {
-				if(is_numeric($key)){
-					$items->order_by($value);
-				}else{
-					$items->order_by($key, $value);
-				}				
-			}
-		}
-
-		if($limit){
-			$items->limit($limit);
-		}
-		
-		//判断是否分页
-		if($page){
-			return $items;
-		}else{
-			return $items->get();
-		}
 	}
 }

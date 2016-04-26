@@ -70,6 +70,10 @@ class Controller_Room extends Controller_BaseController
 
         $items = \Model_RoomReserve::query()
             ->where(['is_deleted' => 0]);
+        
+        if(\Session::get('seller', false)){
+            $items->where('seller_id', \Session::get('seller')->id);
+        }
 
         $items->order_by(array('created_at' => 'desc', 'id' => 'desc'));
 

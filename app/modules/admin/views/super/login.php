@@ -8,7 +8,7 @@
     <meta name="description" content="Violate Responsive Admin Template">
     <meta name="keywords" content="Super Admin, Admin, Template, Bootstrap">
 
-    <title>登录</title>
+    <title>登录 —— 祥盟娱乐</title>
 
     <!-- CSS -->
     <?php
@@ -24,8 +24,8 @@
 <body id="skin-blur-violate">
 <section id="login">
     <header>
-        <h1>KTV</h1>
-        <p>在线预订系统管理平台</p>
+        <h1>祥盟娱乐</h1>
+        <p>KTV包房在线预订系统管理平台</p>
     </header>
 
     <div class="clearfix"></div>

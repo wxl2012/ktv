@@ -119,7 +119,7 @@ class Controller_Room extends Controller_BaseController
                 ->count();
 
             if($count > 0){
-                die(json_encode(['status' => 'err', 'msg' => '该房间在该时间段已被预订', 'errcode' => 10]));
+                die(json_encode(['status' => 'err', 'msg' => '该房间在该时间段已被预订', 'errcode' => 10, 'token' => \Security::fetch_token()]));
             }
 
             $room = \Model_Room::find($data['room_id']);

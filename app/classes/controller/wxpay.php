@@ -66,7 +66,7 @@ class Controller_WXPay extends Controller_BaseController
         );
 
         $params['paySign'] = \handler\mp\Tool::getWxPaySign($params, $access->access_key);
-        $params['to_url'] = "/order/pay_status";
+        $params['to_url'] = "/order/pay_status/{$order->id}";
 
         if(\Input::is_ajax()){
            die(json_encode(['status' => 'succ', 'msg' => '', 'errcode' => 0, 'data' => $params]));

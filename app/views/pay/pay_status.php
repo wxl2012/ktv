@@ -11,14 +11,15 @@
 </style>
 <div class="container">
     <div class="text-center" style="padding-top: 20px;">
-        <i class="fa fa-check-circle" style="font-size: 8em; color: green"></i>
+        <?php $status = $order->order_stataus == 'PAYMENT_SUCCESS';?>
+        <i class="fa fa-<?php echo $status ? 'check' : 'times'; ?>-circle" style="font-size: 8em; color: <?php echo $status ? '#5cb85c' : '#d9534f'; ?>"></i>
     </div>
     <div class="text-center" style="padding-top: 20px; font-size: 20pt;">
-        支付完成
+        <?php echo $status ? '支付完成' : '支付失败';?>
     </div>
     <div class="text-center" style="padding-top: 20px; font-size: 20pt;">
         <i class="fa fa-cny"></i>
-        2.00
+        <?php echo $order->original_fee;?>
     </div>
     <div class="text-center" style="padding-top: 20px;">
         <a href="javascript:;" class="btn btn-success" style="width: 100%;">完成</a>

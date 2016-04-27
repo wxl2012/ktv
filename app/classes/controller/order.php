@@ -89,11 +89,21 @@ class Controller_Order extends Controller_BaseController
     /**
      * 支付状态显示
      *
+     * @param int $id 订单ID
      * @access  public
      * @return  Response
      */
-    public function action_pay_status()
+    public function action_pay_status($id = 0)
     {
+        $order = \Model_Order::find($id);
+        if( ! $order){
+            die('order not found');
+        }
+
+        $params = [
+            'order' => $order
+        ];
+        \View::set_global($params);
         $this->template->content = \View::forge('pay/pay_status');
     }
 

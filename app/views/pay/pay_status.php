@@ -22,6 +22,20 @@
         <?php echo $order->original_fee;?>
     </div>
     <div class="text-center" style="padding-top: 20px;">
-        <a href="javascript:;" class="btn btn-success" style="width: 100%;">完成</a>
+        <a href="javascript:;" class="btn btn-success" style="width: 100%;" id="btnFinish">
+            <?php echo $order->order_status == 'PAYMENT_SUCCESS' ? '完成' : '重新支付'; ?>
+        </a>
     </div>
 </div>
+
+<?php
+
+$pay_status = $order->order_status == 'PAYMENT_SUCCESS' ? 'true' : 'false';
+$script = <<<js
+    var _pay_status = {$pay_status};
+js;
+
+\Asset::js($script, [], 'before-script', true);
+\Asset::js(['pay/pay_status.js'], [], 'js-files', false);
+
+?>

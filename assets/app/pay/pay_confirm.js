@@ -24,6 +24,7 @@ $(function(){
             original_fee: _original_fee,
             from_id: _seller_id,
             order_type: 'RESERVE',
+            order_status: 'WAIT_PAYMENT',
             fuel_csrf_token: _token
         };
 

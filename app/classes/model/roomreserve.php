@@ -47,6 +47,11 @@ class Model_RoomReserve extends \Orm\Model
             'model_to' => 'Model_Room',
             'key_from' => 'room_id',
             'key_to'   => 'id',
+        ),
+        'order' => array(
+            'model_to' => 'Model_Order',
+            'key_from' => 'order_id',
+            'key_to'   => 'id',
         )
     );
 

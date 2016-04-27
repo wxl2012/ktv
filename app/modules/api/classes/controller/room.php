@@ -1,6 +1,6 @@
 <?php
 /**
- * 商家控制器
+ * 包房控制器
  *
  * @package    app
  * @version    1.0
@@ -12,7 +12,7 @@
 
 namespace api;
 
-class Controller_Seller extends Controller_BaseController {
+class Controller_Room extends Controller_BaseController {
 
     public function before(){
         parent::before();
@@ -21,15 +21,12 @@ class Controller_Seller extends Controller_BaseController {
     /**
      * 获取支付方式
      */
-    public function action_payments(){
-        $address = \Model_Payment::query()
-            ->where(['status' => 'ENABLE', 'seller_id' => \Session::get('seller')->id])
+    public function action_dates(){
+        $items = \Model_RoomReserve::query()
+            ->where('room_id', \Input::get('id', 0))
+            ->where('begin_at', '>', time())
+            ->where('status', 'IN', ['SUCCESS', 'NONE'])
             ->get();
-
-        $items = [];
-        foreach($address as $item){
-            array_push($items, $item->to_array());
-        }
 
         $data = ['status' => 'succ', 'msg' => '', 'errcode' => 0, 'data' => $items];
         $this->response($data, 200);

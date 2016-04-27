@@ -37,7 +37,7 @@ class Controller_Order extends Controller_BaseController
     /**
      * 确认支付
      *
-     * @param int $id
+     * @param int $id 预订ID
      * @access  public
      * @return  Response
      */
@@ -82,6 +82,40 @@ class Controller_Order extends Controller_BaseController
         $params = [
             'reserve' => $reserve
         ];
+        \View::set_global($params);
+        $this->template->content = \View::forge('pay/pay_confirm');
+    }
+
+    /**
+     * 发起支付
+     *
+     * @param int $id 订单ID
+     */
+    public function action_pay($id = 0){
+        if( ! $id){
+            die('param is inval');
+        }
+
+
+        if(\Input::method() == 'POST'){
+            $msg = ['status' => 'err', 'msg' => '找不到对象', 'errcode' => 0];
+
+            $reserve = \Model_RoomReserve::find($id);
+
+            if($reserve->order){
+                $msg = ['status' => 'succ', 'msg' => '', 'errcode' => 0, 'data' => $reserve->order->to_array()];
+            }
+
+            if(\Input::is_ajax()){
+                die(json_encode($msg));
+            }
+        }
+
+        $order = \Model_Order::find($id);
+        $params = [
+            'reserve' => current($order->details)->reserve
+        ];
+
         \View::set_global($params);
         $this->template->content = \View::forge('pay/pay_confirm');
     }

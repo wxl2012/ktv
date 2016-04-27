@@ -1,15 +1,20 @@
 <style type="text/css">
+    .navbar-blue{
+        background-color: #337ab7;
+    }
     .list-group{
         margin-bottom: 0px;
     }
 </style>
-<nav class="navbar navbar-default navbar-fixed-top">
+<nav class="navbar navbar-blue navbar-fixed-top">
     <div class="container">
         <div class="row">
             <div class="col-xs-3" style="line-height: 50px;">
-                <a href="javascript:history.back(-1);"><i class="fa fa-angle-left" style="font-size: 1.5em;"></i></a>
+                <a href="javascript:history.back(-1);">
+                    <i class="fa fa-angle-left" style="font-size: 2em; color: #fff;"></i>
+                </a>
             </div>
-            <div class="col-xs-6 text-center" style="line-height: 50px;">
+            <div class="col-xs-6 text-center" style="color: #fff; font-size: 13pt; font-weight: 600;line-height: 50px;">
                 我的订单
             </div>
             <div class="col-xs-3">
@@ -76,7 +81,7 @@
         </div>
     </div>
     {{/each}}
-    <div class="list-group-item" style="margin-bottom: 10px; padding-top: 5px; padding-bottom: 5px;">
+    <div class="list-group-item" style="margin-bottom: 10px; padding-top: 5px; padding-bottom: 5px;" data-id="${id}">
         <div class="row">
             <div class="col-xs-3" style="padding-left: 5px; padding-right: 0px; line-height: 28px;">
                 <label class="label label-${order_label}">${order_status_title}</label>
@@ -86,7 +91,7 @@
                 <a class="btn btn-sm btn-danger">删除订单</a>
             {{else order_status == 'WAIT_PAYMENT'}}
                 <a class="btn btn-sm btn-danger">取消订单</a>
-                <a class="btn btn-sm btn-warning">去支付</a>
+                <a class="btn btn-sm btn-warning" role="pay">去支付</a>
             {{/if}}
             </div>
         </div>
@@ -94,6 +99,7 @@
 </script>
 
 <?php
+
 \Asset::js(['jquery-tmpl/jquery.tmpl.min.js', 'jquery-tmpl/jquery.tmplPlus.min.js', 'tool.js', 'ucenter/order/index.js'], [], 'js-files', false);
 
 ?>

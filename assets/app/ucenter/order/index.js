@@ -3,6 +3,10 @@ var pagination = false;
 
 $(function () {
 
+    $('.container').delegate('a[role="pay"]', 'click', function () {
+        window.location.href = '/order/pay/' + $(this).parents('.list-group-item').attr('data-id');
+    });
+
     $('#btnMore').click(function(){
         console.log(pagination);
         if(pagination == false

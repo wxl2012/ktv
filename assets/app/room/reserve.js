@@ -113,7 +113,7 @@ function loadData(cats, items){
  * @param id
  */
 function loadRoomDate(id) {
-    $.get('/api/room/dates',
+    $.get('/api/room/dates.json',
         {
             access_token: _access_token,
             id: id
@@ -123,7 +123,7 @@ function loadRoomDate(id) {
                 return;
             }
             _dates = data.data;
-            for(var i = 0; i < _dates; i ++){
+            for (var date in _dates){
                 $('#arrival_date').append('<option value="' + _dates[i].date + '">' + _dates[i].date + '</option>');
             }
         }, 'json');

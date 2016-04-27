@@ -112,10 +112,8 @@ class Controller_Room extends Controller_BaseController
             }
 
             $count = \Model_RoomReserve::query()
-                ->where([
-                    'room_id' => $data['room_id'],
-                    'begin_at' => strtotime("{$data['arrival_date']} {$data['arrival_hour']}:{$data['arrival_minute']}:00")
-                ])
+                ->where('begin_at', '<=', strtotime("{$data['arrival_date']} {$data['arrival_hour']}:{$data['arrival_minute']}:00"))
+                ->where('end_at', '>=', strtotime("{$data['arrival_date']} {$data['arrival_hour']}:{$data['arrival_minute']}:00"))
                 ->count();
 
             if($count > 0){
@@ -126,6 +124,7 @@ class Controller_Room extends Controller_BaseController
             $reserve = \Model_RoomReserve::forge($data);
             $reserve->seller_id = $room->seller_id;
             $reserve->begin_at = strtotime("{$data['arrival_date']} {$data['arrival_hour']}:{$data['arrival_minute']}:00");
+            $reserve->end_at = $reserve->begin_at + $room->duration;
             if($reserve->save()){
                 die(json_encode(['status' => 'succ', 'msg' => '预订已提交', 'errcode' => 0, 'data' => $reserve->to_array()]));
             }

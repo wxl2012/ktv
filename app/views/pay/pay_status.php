@@ -11,7 +11,7 @@
 </style>
 <div class="container">
     <div class="text-center" style="padding-top: 20px;">
-        <?php $status = $order->order_stataus == 'PAYMENT_SUCCESS';?>
+        <?php $status = $order->order_status == 'PAYMENT_SUCCESS';?>
         <i class="fa fa-<?php echo $status ? 'check' : 'times'; ?>-circle" style="font-size: 8em; color: <?php echo $status ? '#5cb85c' : '#d9534f'; ?>"></i>
     </div>
     <div class="text-center" style="padding-top: 20px; font-size: 20pt;">

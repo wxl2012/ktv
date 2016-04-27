@@ -123,7 +123,7 @@ class Controller_WXPay extends Controller_BaseController
         }else if($order->order_status == 'WAIT_PAYMENT'){
             $order->paid_fee += $result['total_fee'] / 100;
             $order->pay_at = time();
-            if($order->paid_fee >= $order->original_money){
+            if($order->paid_fee >= $order->original_fee){
                 $order->order_status = 'PAYMENT_SUCCESS';
             }
             $trade->return_status = 'SUCCESS';

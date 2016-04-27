@@ -55,7 +55,11 @@
         </div>
     </div>
     {{each(i, detail) details}}
-    <div class="list-group-item" original-href="/room/view/${detail.goods.id}">
+    {{if order_type == 'SELL' || order_type == 'MARKET' || order_type == 'GROUPBUY'}}
+        <div class="list-group-item" original-href="/room/view/${detail.goods.id}">
+    {{else order_type == 'RESERVE'}}
+        <div class="list-group-item" original-href="/room/view/${detail.reserve.room.id}">
+    {{/if}}
         <div class="row">
             <div class="col-xs-4" style="padding-left: 2px; padding-right: 0px;">
                 {{if order_type == 'SELL' || order_type == 'MARKET' || order_type == 'GROUPBUY'}}

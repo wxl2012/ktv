@@ -26,7 +26,6 @@ class Controller_UCenter extends Controller_BaseController
 
     public function before() {
         parent::before();
-        \Auth::force_login(1);
     }
 
     /**

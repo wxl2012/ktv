@@ -66,6 +66,9 @@ class Controller_Room extends Controller_BaseController
         $this->template->content = \View::forge("{$this->theme}/room/index");
     }
 
+    /**
+     * 查询预订信息
+     */
     public function action_reserve(){
 
         $items = \Model_RoomReserve::query()
@@ -73,6 +76,9 @@ class Controller_Room extends Controller_BaseController
         
         if(\Session::get('seller', false)){
             $items->where('seller_id', \Session::get('seller')->id);
+        }
+        if(\Input::get('status', false)){
+            $items->where('status', \Input::get('status'));
         }
 
         $items->order_by(array('created_at' => 'desc', 'id' => 'desc'));
@@ -97,6 +103,22 @@ class Controller_Room extends Controller_BaseController
         
         \View::set_global($params);
         $this->template->content = \View::forge("{$this->theme}/room/reserve");
+    }
+
+    /**
+     * 修改预订状态
+     * @throws \Exception
+     */
+    public function action_change_reserve_status(){
+        if(\Input::method() == 'POST'){
+            $data = \Input::post();
+
+            $reserve = \Model_RoomReserve::find($data['id']);
+            $reserve->status = $data['status'];
+            if($reserve->save()){
+                die(json_encode(['status' => 'succ', 'msg' => '操作成功', 'errcode' => 0]));
+            }
+        }
     }
 
     /**

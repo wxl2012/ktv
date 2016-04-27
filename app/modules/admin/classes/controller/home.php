@@ -52,6 +52,10 @@ class Controller_Home extends Controller_BaseController
 
     public function action_login(){
 
+        if(\Auth::check()){
+            \Response::redirect('/admin');
+        }
+
         if(\Input::method() == 'POST'){
             $msg = ['status' => 'err', 'msg' => '表单验证错误', 'errcode' => 10];
 

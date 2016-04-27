@@ -17,7 +17,7 @@
             <tbody>
             <?php if($items){ ?>
                 <?php foreach ($items as $item) { ?>
-                    <tr>
+                    <tr data-id="<?php echo $item->id; ?>">
                         <td><?php echo date('Y-m-d', $item->begin_at); ?></td>
                         <td><?php echo date('H:i', $item->begin_at); ?></td>
                         <td>
@@ -33,6 +33,10 @@
                                 <a href="javascript:;" class="btn btn-danger" title="删除预订"><i class="fa fa-trash-o"></i></a>
                             <?php }else if($item->status == 'NONE'){ ?>
                                 <a href="javascript:;" class="btn btn-reply" title="撤消预订"><i class="fa fa-reply"></i></a>
+                            <?php }else if($item->status == 'SUCCESS'){ ?>
+                                <a href="javascript:;" class="btn btn-success-outline" title="消费" role="action-use"><i class="fa fa-check"></i></a>
+                                <!--<a href="javascript:;" class="btn btn-success-outline" title="延缓消费时间"><i class="fa fa-clock-o"></i></a>
+                                <a href="javascript:;" class="btn btn-reply" title="撤消预订"><i class="fa fa-reply"></i></a>-->
                             <?php } ?>
                         </td>
                     </tr>
@@ -58,3 +62,7 @@
         </table>
     </div>
 </div>
+
+<?php
+\Asset::js(['modules/admin/super/room/reserve.js'], [], 'js-files', false);
+?>

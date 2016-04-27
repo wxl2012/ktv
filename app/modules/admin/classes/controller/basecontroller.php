@@ -28,6 +28,10 @@ abstract class Controller_BaseController extends \Controller_BaseController
 
     public function before(){
         parent::before();
+
+        if( ! \Auth::check() && \Uri::segment(2) != 'login'){
+            \Response::redirect('/admin/login');
+        }
     }
 
 }

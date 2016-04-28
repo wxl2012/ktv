@@ -33,7 +33,7 @@ function loadMoreData() {
     $('#btnMore').html('<i class="fa fa-spin fa-spinner"></i>加载中...');
     $.get('/api/order/list',
         {
-            access_token: 'MGE3MTYyYjIzODYzNjY5NDRiYzE2NTUwM2U2ZGQ5ODI=',
+            access_token: _access_token,
             start: pagination == false ? 1 : ++ pagination.current_page
         },
         function (data) {

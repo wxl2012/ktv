@@ -103,6 +103,12 @@
 </script>
 
 <?php
+$token = \Session::get('access_token', '');
+$script = <<<js
+    var _access_token = '{$token}';
+js;
+
+\Asset::js($script, [], 'before-script', true);
 
 \Asset::js(['jquery-tmpl/jquery.tmpl.min.js', 'jquery-tmpl/jquery.tmplPlus.min.js', 'tool.js', 'ucenter/order/index.js'], [], 'js-files', false);
 

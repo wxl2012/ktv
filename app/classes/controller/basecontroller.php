@@ -34,6 +34,10 @@ abstract class Controller_BaseController extends \Fuel\Core\Controller_Template
 		$this->load_wechat();
 	}
 
+	protected function token(){
+		\Session::set('access_token', 'MGE3MTYyYjIzODYzNjY5NDRiYzE2NTUwM2U2ZGQ5ODI=');
+	}
+
 	/**
 	 * 加载微信信息
 	 */

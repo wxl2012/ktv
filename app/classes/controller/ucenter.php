@@ -54,19 +54,6 @@ class Controller_UCenter extends Controller_BaseController
             'title' => '我的订单',
         ];
 
-        $params['items'] = \Model_Order::query()
-            ->where(['buyer_id' => \Auth::get_user()->id, 'is_deleted' => 0])
-            ->get();
-
-        if(\Input::is_ajax()){
-            //sleep(5);
-            $items = [];
-            foreach ($params['items'] as $item) {
-                array_push($items, $item->to_array());
-            }
-            die(json_encode(['status' => 'succ', 'data' => $items]));
-        }
-
         \View::set_global($params);
         $this->template->content = \View::forge('order/index');
     }

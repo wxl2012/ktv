@@ -11,6 +11,10 @@ $(function () {
             msg = '预订人数必须是数字!';
             $('#people_num').parent().addClass('has-error');
             $('#people_num').next().text(msg);
+        }else if( ! /^[0-9]*[1-9][0-9]*$/.test($('#people_num').val())){
+            msg = '预订人数必须是正整数!';
+            $('#people_num').parent().addClass('has-error');
+            $('#people_num').next().text(msg);
         }
 
         if($('#name').val().length < 1){

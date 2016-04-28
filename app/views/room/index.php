@@ -77,25 +77,33 @@
 <div style="height: 92px;"></div>
 
 <ul class="list-group" id="rooms">
-    <?php foreach($items as $item){ ?>
-        <li class="list-group-item">
-            <a href="/room/view/<?php echo $item->id;?>">
-                <div class="row">
-                    <div class="col-xs-5" style="padding-left: 0px; padding-right: 0px;">
-                        <img src="http://bpic.pic138.com/12/16/91/22bOOOPIC57_1024.jpg" alt="" style="width: 100%;"/>
+    <?php if($items){ ?>
+        <?php foreach($items as $item){ ?>
+            <li class="list-group-item">
+                <a href="/room/view/<?php echo $item->id;?>">
+                    <div class="row">
+                        <div class="col-xs-5" style="padding-left: 0px; padding-right: 0px;">
+                            <img src="http://bpic.pic138.com/12/16/91/22bOOOPIC57_1024.jpg" alt="" style="width: 100%;"/>
+                        </div>
+                        <div class="col-xs-7">
+                            <dl>
+                                <dt><?php echo $item->name; ?></dt>
+                                <dd class="hide">地址: 汉台区学院路29号天河商业广场5楼</dd>
+                                <dd class="clearfix"><span class="pull-left">会员价折</span> <span class="pull-right">人均消费</span></dd>
+                                <dd>免费WIFI/免费停车</dd>
+                            </dl>
+                        </div>
                     </div>
-                    <div class="col-xs-7">
-                        <dl>
-                            <dt><?php echo $item->name; ?></dt>
-                            <dd class="hide">地址: 汉台区学院路29号天河商业广场5楼</dd>
-                            <dd class="clearfix"><span class="pull-left">会员价折</span> <span class="pull-right">人均消费</span></dd>
-                            <dd>免费WIFI/免费停车</dd>
-                        </dl>
-                    </div>
-                </div>
-            </a>
+                </a>
+            </li>
+        <?php } ?>
+    <?php } else { ?>
+        <li class="list-group-item text-center" style="border: 0px; padding-top: 70px; color: #efefef;">
+            <p><i class="fa fa-frown-o" style="font-size: 8em;"></i></p>
+            <p style="font-size: 13pt;">未找到相关数据!</p>
         </li>
     <?php } ?>
+
 </ul>
 
 <div class="modal" style="z-index: 1029;background-color: #000; opacity: 0.5;"></div>

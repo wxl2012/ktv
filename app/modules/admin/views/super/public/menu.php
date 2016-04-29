@@ -8,7 +8,7 @@ $seller = \Session::get('seller', false);
     <div class="side-widgets overflow">
         <!-- Profile Menu -->
         <div class="text-center s-widget m-b-25 dropdown" id="profile-menu">
-            <a href="" data-toggle="dropdown">
+            <a href="javascript:;" data-toggle="dropdown">
                 <img class="profile-pic animated" src="/assets/superadmin/img/profile-pic.jpg" alt="">
             </a>
             <ul class="dropdown-menu profile-menu">
@@ -112,8 +112,8 @@ $seller = \Session::get('seller', false);
                 <li><a href="/admin/room/reserve?status=TIMEOUT">超时的预订</a></li>
             </ul>
         </li>
-        <li class="dropdown">
-            <a class="sa-side-form" href="">
+        <li class="dropdown hide">
+            <a class="sa-side-form" href="javascript:;">
                 <span class="menu-item">订单管理</span>
             </a>
             <ul class="list-unstyled menu-item">

@@ -28,7 +28,7 @@
 
 <header id="header" class="media">
     <a href="" id="menu-toggle"></a>
-    <a class="logo pull-left" href="index.html">
+    <a class="logo pull-left" href="/admin">
         <!--KTV RESERVE 1.0-->
         KTV在线预订系统1.0
     </a>
@@ -36,16 +36,16 @@
     <div class="media-body">
         <div class="media" id="top-menu">
             <div class="pull-left tm-icon">
-                <a data-drawer="messages" class="drawer-toggle" href="">
+                <a data-drawer="messages" class="drawer-toggle" href="javascript:;">
                     <i class="sa-top-message"></i>
-                    <i class="n-count animated">5</i>
+                    <!--<i class="n-count animated">5</i>-->
                     <span>系统消息</span>
                 </a>
             </div>
             <div class="pull-left tm-icon">
-                <a data-drawer="notifications" class="drawer-toggle" href="">
+                <a data-drawer="notifications" class="drawer-toggle" href="javascript:;">
                     <i class="sa-top-updates"></i>
-                    <i class="n-count animated">9</i>
+                    <!--<i class="n-count animated">9</i>-->
                     <span>更新内容</span>
                 </a>
             </div>

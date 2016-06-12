@@ -2,9 +2,10 @@ $(function () {
 
     $(function () {
         $('#btnUpload').uploadifive({
+            buttonText: '上传图片',
             height        : 30,
-            uploader      : '/uploadify/uploadify.php',
-            width         : 120
+            uploadScript  : '/api/filemanager/upload.json',
+            width         : 100
         });
     });
 

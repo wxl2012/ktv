@@ -5,6 +5,9 @@
     .select{
         border: 2px dashed green
     }
+    .uploadifive-queue-item{
+        background-color: #333333 !important;
+    }
 </style>
 <div class="block-area">
     <h3 class="block-title">基本信息</h3>

@@ -67,6 +67,34 @@ class Controller_Seller extends Controller_BaseController
      */
     public function action_save($id = 0)
     {
+        $params = [];
+
+        if(\Input::method() == 'POST'){
+
+            $msg = ['status' => 'err', 'msg' => '', 'errcode' => 10];
+
+            $data = \Input::post();
+
+            $seller = \Model_Seller::find($id);
+            if( ! $seller){
+                $seller = \Model_Seller::forge();
+            }
+
+            $seller->set($data);
+            if($seller->save()){
+                \Session::set('seller', $seller);
+                $msg['status'] = 'succ';
+                $msg['msg'] = '操作成功';
+            }
+
+            if(\Input::is_ajax()){
+                die(json_encode($msg));
+            }
+
+            \Session::set_flash('msg', $msg);
+        }
+
+        \View::set_global($params);
         $this->template->content = \View::forge("{$this->theme}/seller/details");
     }
 

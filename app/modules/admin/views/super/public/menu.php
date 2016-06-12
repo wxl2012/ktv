@@ -91,7 +91,7 @@ $seller = \Session::get('seller', false);
     <!-- Side Menu -->
     <ul class="list-unstyled side-menu">
         <li class="active">
-            <a class="sa-side-home" href="index.html">
+            <a class="sa-side-home" href="javascript:;">
                 <span class="menu-item">包房管理</span>
             </a>
             <ul class="list-unstyled menu-item">
@@ -158,6 +158,15 @@ $seller = \Session::get('seller', false);
                 <ul class="list-unstyled menu-item">
                     <li><a href="/admin/seller/save">新增商户</a></li>
                     <li><a href="/admin/seller">所有商户</a></li>
+                </ul>
+            </li>
+        <?php } else { ?>
+            <li class="dropdown">
+                <a class="sa-list-week" href="">
+                    <span class="menu-item">系统设置</span>
+                </a>
+                <ul class="list-unstyled menu-item">
+                    <li><a href="/admin/seller/save/<?= \Session::get('seller')->id; ?>">基本信息设置</a></li>
                 </ul>
             </li>
         <?php } ?>

@@ -108,6 +108,7 @@
                         </div>
                         <div class="tab-pane" id="local">
                             本地上传图片
+                            <a id="btnUpload" class="btn btn-default">上传图片</a>
                         </div>
                     </div>
                 </div>
@@ -128,7 +129,7 @@
 
 <?php
 
-    \Asset::css(['lightbox.css'], [], 'css-files', false);
-    \Asset::js(['jquery-tmpl/jquery.tmpl.min.js', 'jquery-tmpl/jquery.tmplPlus.min.js', 'pirobox.min.js', 'modules/admin/super/room/details.js'], [], 'js-files', false);
+    \Asset::css(['lightbox.css', 'uploadifive/css/uploadifive.css'], [], 'css-files', false);
+    \Asset::js(['jquery-tmpl/jquery.tmpl.min.js', 'jquery-tmpl/jquery.tmplPlus.min.js', 'pirobox.min.js', 'modules/admin/super/room/details.js', 'uploadifive/js/jquery.uploadifive.min.js'], [], 'js-files', false);
 
 ?>

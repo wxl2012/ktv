@@ -52,7 +52,7 @@
                     <td><?php echo $item->sale_total; ?></td>
                     <td class="text-center">
                         <?php echo $item->galleries ? "共有" . count($item->galleries) . "张图片<br>" : "点击管理图库" ?>
-                        <a href="javascript:;" class="btn"><?php echo "点击管理图库" ?></a>
+                        <a href="/admin/room/save/<?= $item->id; ?>" class="btn"><?php echo "点击管理图库" ?></a>
                     </td>
                     <td>
                         <a href="javascript:;" class="btn btn-primary" title="保存"><i class="fa fa-check"></i></a>

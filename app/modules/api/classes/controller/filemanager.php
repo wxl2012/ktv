@@ -46,4 +46,55 @@ class Controller_FileManager extends Controller_BaseController {
 
         $this->response($params, 200);
     }
+
+    public function action_upload(){
+        \Config::load('global');
+
+        $msg = array('status' => 'err', 'msg' => '文件上传失败!', 'errcode' => 10);
+
+        $path = \handler\common\UploadHandler::get_upload_path(\Input::get('module', 4), \Input::post('path'));
+
+        $config = array(
+            'path' => "{$path['root_directory']}/{$path['path']}"
+        );
+
+        //检测文件目录是否存在
+        if( ! file_exists($config['path'])){
+            if( ! \handler\common\UploadHandler::create_directory($path['root_directory'], $path['path'])){
+                die(json_encode(array('status' => 'err', 'msg' => '文件目录不存在，无法存储文件!', 'errcode' => 10001)));
+            }
+        }
+
+        \Upload::process($config);
+
+        if( ! \Upload::is_valid()){
+            $msg['errdata'] = array();
+            foreach (\Upload::get_errors() as $key => $value) {
+                array_push($msg['errdata'], $value['errors']);
+            }
+            die(json_encode($msg));
+        }
+
+        \Upload::save();
+
+
+        $urls = array();
+        foreach(\Upload::get_files() as $file) {
+            $url = "{$path['url']}{$file['saved_as']}";
+
+            $data = array(
+                'user_id' => \Auth::check() ? \Auth::get_user()->id : 0,
+                'seller_id' => \Session::get('seller')->id,
+                'file_name' => $file['saved_as'],
+                'type' => \Input::post('type', 'image'),
+                'url' => $url
+            );
+            $attachment = \Model_Attachment::forge($data);
+            $attachment->save();
+            array_push($urls, $attachment->to_array());
+        }
+
+        $msg = array('status' => 'succ', 'msg' => '文件上传成功!', 'data' => $urls, 'errcode' => 0);
+        die(json_encode($msg));
+    }
 }

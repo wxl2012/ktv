@@ -1,5 +1,13 @@
 $(function () {
 
+    $(function () {
+        $('#btnUpload').uploadifive({
+            height        : 30,
+            uploader      : '/uploadify/uploadify.php',
+            width         : 120
+        });
+    });
+
     $('#btnAddGallery').click(function(){
         
     });

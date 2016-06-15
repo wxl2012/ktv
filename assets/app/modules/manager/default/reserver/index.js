@@ -1,0 +1,58 @@
+
+var pagination = false;
+
+$(function () {
+
+    $('.container').delegate('a[role="pay"]', 'click', function () {
+        window.location.href = '/order/pay/' + $(this).parents('.list-group-item').attr('data-id');
+    });
+
+    $('#btnMore').click(function(){
+        console.log(pagination);
+        if(pagination == false
+            || parseInt(pagination.current_page) >= pagination.total_pages){
+            $('#btnMore').text('已经是最后一页了');
+            return;
+        }
+
+        loadMoreData();
+    });
+
+    $('.list-group').delegate('div[original-href]', 'click', function () {
+        console.log('a');
+        window.location.href = $(this).attr('original-href');
+    });
+
+    loadMoreData();
+});
+
+/**
+ * 加载更多数据
+ */
+function loadMoreData() {
+    $('#btnMore').html('<i class="fa fa-spin fa-spinner"></i>加载中...');
+    $.get('/api/order/reserve/list',
+        {
+            access_token: _access_token,
+            start: pagination == false ? 1 : ++ pagination.current_page
+        },
+        function (data) {
+            $('#btnMore').text('点击加载更多');
+            if(data.status == 'err'){
+                return;
+            }
+            pagination = data.data.pagination;
+            var items = data.data.items;
+            if(ObjectEmpty(items)){
+                isNextPage = false;
+                return;
+            }
+
+            for(var index in items){
+                items[index].create_date = getLocalTime(items[index].created_at);
+                items[index].reserve_date = getLocalTime(items[index].begin_at);
+                items[index].reserve_time = getLocalTime(items[index].end_at);
+                $('.list-group').append(orderItem, items[index], null);
+            }
+        }, 'json');
+}

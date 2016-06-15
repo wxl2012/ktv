@@ -31,3 +31,12 @@ function countDown(unixtime, elementDay, elementHour, elementMinute, elementSeco
     $('#' + elementMinute).html((minute < 10 ? '0' : '') + minute);
     $('#' + elementSecond).html((second < 10 ? '0' : '') + second);
 }
+
+/**
+ * 转换为本地日期时间格式
+ * @param time  时间戳
+ * @returns {string}
+ */
+function getLocalTime(time) {
+    return new Date(parseInt(time) * 1000).toLocaleString().replace(/:\d{1,2}$/,' ');
+}

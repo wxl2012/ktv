@@ -5,7 +5,13 @@ $(function () {
             buttonText: '上传图片',
             height        : 30,
             uploadScript  : '/api/filemanager/upload.json',
-            width         : 100
+            width         : 100,
+            onComplete    : function (event, ID, file, response, data) {
+                console.log('onComplete');
+            },
+            onUploadSuccess: function (file, data, response) {
+                console.log('onUploadSuccess');
+            }
         });
     });
 

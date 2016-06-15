@@ -102,12 +102,6 @@
 
                     <div class="tab-content">
                         <div class="tab-pane active" id="zone">
-                            <?php for($j = 0; $j < 3; $j ++){?>
-                            <?php for ($i = 1; $i < 6; $i ++){ ?>
-                                <a href="/assets/superadmin/img/gallery/<?php echo $i; ?>.jpg" data-rel="gallery"  class="pirobox_gall img-popup" title="Lovely evening in Noreway">
-                                    <img src="/assets/superadmin/img/gallery/thumbs/<?php echo $i; ?>.jpg" class="img-thumbnail m-r-10 m-b-10" alt="">
-                                </a>
-                            <?php } }?>
                         </div>
                         <div class="tab-pane" id="local">
                             本地上传图片

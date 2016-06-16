@@ -30,7 +30,7 @@ $(function () {
         }
         submiting = true;
 
-        $.post('',
+        $.post('/api/order/reserve/save.json?id=0',
             $('#frmReserve').serialize(),
             function (data) {
                 submiting = false;

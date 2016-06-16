@@ -19,14 +19,14 @@ class Controller_Order_Reserve extends Controller_BaseController {
     }
 
     /**
-     * 订单
+     * 预约默认方法
      */
     public function action_index(){
 
     }
 
     /**
-     * 我的订单列表
+     * 预约列表
      */
     public function action_list(){
         $items = \Model_RoomReserve::query()
@@ -85,7 +85,41 @@ class Controller_Order_Reserve extends Controller_BaseController {
             $item->order;
         }
 
-        //sleep(5);
         $this->response(['status' => 'succ', 'msg' => '', 'data' => $params], 200);
+    }
+
+    /**
+     * 保存预订
+     */
+    public function action_save(){
+
+        $id = \Input::get('id');
+
+        $reserve = false;
+        if($id){
+            $reserve = \Model_RoomReserve::find($id);
+        }
+
+
+        if(\Input::method() == 'POST'){
+            $data = \Input::post();
+
+            if( ! $reserve){
+                $reserve = \Model_RoomReserve::forge();
+            }
+
+            $reserve->begin_at = strtotime("{$data['date']} {$data['time']}:00");
+
+            $reserve->set($data);
+            $reserve->remark = "{$data['date']} {$data['time']}";
+
+
+            if($reserve->save()){
+                $msg = ['status' => 'succ', 'msg' => '', 'data' => $reserve->to_array(), 'errcode' => 0];
+            }else{
+                $msg = ['status' => 'err', 'msg' => '操作失败', 'errcode' => 20];
+            }
+            $this->response($msg, 200);
+        }
     }
 }

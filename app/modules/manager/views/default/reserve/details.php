@@ -65,7 +65,7 @@
                 <div class="row">
                     <div class="col-xs-3 tit">姓名</div>
                     <div class="col-xs-9">
-                        <input type="text" id="name" name="name" value="" placeholder="姓名">
+                        <input type="text" id="name" name="name" value="" class="form-control" placeholder="姓名">
                     </div>
                 </div>
             </div>
@@ -74,7 +74,7 @@
                 <div class="row">
                     <div class="col-xs-3 tit">电话</div>
                     <div class="col-xs-9">
-                        <input type="text" id="phone" name="phone" value="" placeholder="联系电话">
+                        <input type="text" id="phone" name="phone" value="" class="form-control" placeholder="联系电话">
                     </div>
                 </div>
             </div>

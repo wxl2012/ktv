@@ -32,35 +32,7 @@ class Controller_Room extends Controller_BaseController
      */
     public function action_index()
     {
-        $items = \Model_Room::query()
-            ->where('is_deleted', 0);
-
-        $data = \Input::get();
-        foreach ($data as $k => $v){
-            if( ! $v){
-                continue;
-            }
-            $items->where($k, $v);
-        }
-        $items->order_by(array('created_at' => 'desc', 'id' => 'desc'));
-
-        $count = $items->count();
-        $config = array(
-            'pagination_url' => "/admin/room",
-            'total_items'    => $count,
-            'per_page'       => \Input::get('count', 15),
-            'uri_segment'    => "start",
-            'show_first'     => true,
-            'show_last'      => true,
-            'name'           => 'bootstrap3_cn'
-        );
-
-        $pagination = new \Pagination($config);
-        $params['pagination'] = $pagination;
-        $params['items'] = $items
-            ->rows_offset($pagination->offset)
-            ->rows_limit($pagination->per_page)
-            ->get();
+        $params = [];
 
         \View::set_global($params);
         $this->template->content = \View::forge("{$this->theme}/room/index");

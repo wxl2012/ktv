@@ -69,10 +69,10 @@
             </div>
             <div class="col-xs-9 text-right" style="padding-left:0px; padding-right: 5px;">
                 {{if status == 'SUCCESS'}}
-                    <a class="btn btn-sm btn-danger">取消预约</a>
-                    <a class="btn btn-sm btn-info">已使用</a>
+                    <a class="btn btn-sm btn-danger" role="cancel">取消预约</a>
+                    <a class="btn btn-sm btn-primary" role="use">使用</a>
                 {{else status == 'TIMEOUT'}}
-                    <a class="btn btn-sm btn-danger">删除预约</a>
+                    <a class="btn btn-sm btn-danger" role="del">删除预约</a>
                 {{else status == 'USED'}}
                 {{/if}}
             </div>

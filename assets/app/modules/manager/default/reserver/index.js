@@ -7,6 +7,42 @@ $(function () {
         window.location.href = '/order/pay/' + $(this).parents('.list-group-item').attr('data-id');
     });
 
+    $('.list-group').delegate('a[role="cancel"]', 'click', function () {
+        $.post('/manager/reserve/cancel/' + $(this).parents('.list-group-item').attr('data-id'),
+            function (data) {
+                if(data.status == 'err'){
+                    alert(data.msg);
+                    return;
+                }
+
+                alert('预约已取消');
+            }, 'json');
+    });
+
+    $('.list-group').delegate('a[role="use"]', 'click', function () {
+        $.post('/manager/reserve/use/' + $(this).parents('.list-group-item').attr('data-id'),
+            function (data) {
+                if(data.status == 'err'){
+                    alert(data.msg);
+                    return;
+                }
+
+                alert('预约状态已变更');
+            }, 'json');
+    });
+
+    $('.list-group').delegate('a[role="del"]', 'click', function () {
+        $.post('/manager/reserve/delete/' + $(this).parents('.list-group-item').attr('data-id'),
+            function (data) {
+                if(data.status == 'err'){
+                    alert(data.msg);
+                    return;
+                }
+
+                alert('预约状态已变更');
+            }, 'json');
+    });
+
     $('#btnMore').click(function(){
         console.log(pagination);
         if(pagination == false
@@ -19,7 +55,6 @@ $(function () {
     });
 
     $('.list-group').delegate('div[original-href]', 'click', function () {
-        console.log('a');
         window.location.href = $(this).attr('original-href');
     });
 

@@ -39,6 +39,39 @@ class Controller_Reserve extends Controller_BaseController
     }
 
     /**
+     * 删除预约
+     * @param $id 预约ID
+     */
+    public function action_delete($id){
+        $reserver = \Model_RoomReserve::find($id);
+        if( ! $reserver){
+            die();
+        }
+
+        if( ! $reserver->delete()){
+            die();
+        }
+    }
+
+    /**
+     * 使用预约
+     *
+     * @param $id 预约ID
+     */
+    public function action_use($id){
+
+    }
+
+    /**
+     * 取消预约
+     *
+     * @param $id 预约ID
+     */
+    public function action_cancel($id){
+
+    }
+
+    /**
      * 保存订单信息
      *
      * @access  public

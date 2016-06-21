@@ -3,8 +3,16 @@ var pagination = false;
 
 $(function () {
 
-    $('.container').delegate('a[role="pay"]', 'click', function () {
-        window.location.href = '/order/pay/' + $(this).parents('.list-group-item').attr('data-id');
+    $('.list-group').delegate('a[role="pay"]', 'click', function () {
+        $.post('/manager/reserve/pay/' + $(this).parents('.list-group-item').attr('data-id'),
+            function (data) {
+                if(data.status == 'err'){
+                    alert(data.msg);
+                    return;
+                }
+
+                alert('预约状态已变更');
+            }, 'json');
     });
 
     $('.list-group').delegate('a[role="cancel"]', 'click', function () {
@@ -39,7 +47,7 @@ $(function () {
                     return;
                 }
 
-                alert('预约状态已变更');
+                alert('预约已删除');
             }, 'json');
     });
 
@@ -69,7 +77,9 @@ function loadMoreData() {
     $.get('/api/order/reserve/list',
         {
             access_token: _access_token,
-            start: pagination == false ? 1 : ++ pagination.current_page
+            start: pagination == false ? 1 : ++ pagination.current_page,
+            begin: _begin_at,
+            end: _end_at,
         },
         function (data) {
             $('#btnMore').text('点击加载更多');

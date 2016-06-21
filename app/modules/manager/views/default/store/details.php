@@ -41,16 +41,16 @@
                 <div class="row">
                     <div class="col-xs-3 tit">名称</div>
                     <div class="col-xs-9">
-                        <input type="text" id="name" name="name" value="" placeholder="店铺名称" class="form-control"/>
+                        <input type="text" id="name" name="name" value="<?= $seller->name; ?>" placeholder="店铺名称" class="form-control"/>
                     </div>
                 </div>
             </div>
 
             <div class="list-group-item">
                 <div class="row">
-                    <div class="col-xs-3 tit">名称</div>
+                    <div class="col-xs-3 tit">简介</div>
                     <div class="col-xs-9">
-                        <textarea name="summary" class="form-control" placeholder="店铺简介"></textarea>
+                        <textarea name="summary" class="form-control" placeholder="店铺简介"><?= htmlspecialchars_decode($seller->summary); ?></textarea>
                     </div>
                 </div>
             </div>
@@ -59,7 +59,7 @@
                 <div class="row">
                     <div class="col-xs-3 tit">电话</div>
                     <div class="col-xs-9">
-                        <input type="text" id="tel" name="tel" value="" placeholder="预订电话" class="form-control"/>
+                        <input type="text" id="tel" name="tel" value="<?= $seller->tel; ?>" placeholder="预订电话" class="form-control"/>
                     </div>
                 </div>
             </div>
@@ -68,7 +68,7 @@
                 <div class="row">
                     <div class="col-xs-3 tit">地址</div>
                     <div class="col-xs-9">
-                        <input type="text" id="address" name="address" value="" placeholder="店铺地址" class="form-control"/>
+                        <input type="text" id="address" name="address" value="<?= $seller->address; ?>" placeholder="店铺地址" class="form-control"/>
                     </div>
                 </div>
             </div>
@@ -78,8 +78,8 @@
                     <div class="col-xs-3 tit">营业状态</div>
                     <div class="col-xs-9">
                         <select class="form-control" name="status">
-                            <option value="OPEN">营业中</option>
-                            <option value="CLOSE">暂停营业</option>
+                            <option value="OPEN"<?= $seller->status == 'OPEN' ? ' selected' : ''; ?>>营业中</option>
+                            <option value="CLOSE"<?= $seller->status == 'CLOSE' ? ' selected' : ''; ?>>暂停营业</option>
                         </select>
                     </div>
                 </div>

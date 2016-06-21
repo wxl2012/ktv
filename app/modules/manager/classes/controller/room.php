@@ -32,8 +32,54 @@ class Controller_Room extends Controller_BaseController
      */
     public function action_index()
     {
-        $params = [];
+        $params = [
+            'title' => '包房管理'
+        ];
 
+        if(\Input::method() == 'POST'){
+            $data = \Input::post();
+
+            $wheres = [];
+            foreach ($data as $key => $value){
+                $flag = false;
+                $filed = strpos($key, 'num_') === false ? 'price' : 'total';
+                echo $filed . '#';
+                $id = str_replace('num_', '', $key);
+                $id = str_replace('price_', '', $id);
+                foreach ($wheres as $k => $v){
+                    if($v['id'] == intval($id)){
+                        $wheres[$k][$filed] = $value;
+                        $flag = true;
+                        break;
+                    }
+                }
+
+                if($flag){
+                    continue;
+                }
+
+                array_push($wheres, [
+                    'id' => $id,
+                    "{$filed}" => $value
+                ]);
+            }
+
+            if($wheres){
+                foreach ($wheres as $where){
+                    $room = \Model_Room::find($where['id']);
+                    $room->total = $where['total'];
+                    $room->price = $where['price'];
+                    $room->save();
+                }
+                die(json_encode(['status' => 'succ', 'errcode' => 10, 'msg' => '']));
+            }
+        }
+
+        $rooms = \Model_Room::query()
+            ->where(['seller_id' => \Session::get('seller')->id])
+            ->get();
+
+        $params['rooms'] = $rooms;
         \View::set_global($params);
         $this->template->content = \View::forge("{$this->theme}/room/index");
     }

@@ -32,54 +32,23 @@
 <div class="container-fluid">
     <form id="frmReserve">
         <div class="list-group">
-
-            <div class="list-group-item">
-                <div class="row">
-                    <div class="col-xs-3 tit">大包</div>
-                    <div class="col-xs-9">
-                        <div class="row">
-                            <div class="col-xs-6">
-                                <input type="text" id="big_num" name="big_num" value="" placeholder="数量" class="form-control"/>
-                            </div>
-                            <div class="col-xs-6">
-                                <input type="text" id="big_fee" name="big_fee" value="" placeholder="金额" class="form-control"/>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="list-group-item">
-                <div class="row">
-                    <div class="col-xs-3 tit">中包</div>
-                    <div class="col-xs-9">
-                        <div class="row">
-                            <div class="col-xs-6">
-                                <input type="text" id="big_num" name="big_num" value="" placeholder="数量" class="form-control"/>
-                            </div>
-                            <div class="col-xs-6">
-                                <input type="text" id="big_fee" name="big_fee" value="" placeholder="金额" class="form-control"/>
+            <?php foreach ($rooms as $room){ ?>
+                <div class="list-group-item" data-id="<?= $room->id; ?>">
+                    <div class="row">
+                        <div class="col-xs-3 tit"><?= $room->category->name; ?></div>
+                        <div class="col-xs-9">
+                            <div class="row">
+                                <div class="col-xs-6">
+                                    <input type="text" name="num_<?= $room->id; ?>" value="<?= $room->total; ?>" placeholder="数量" class="form-control"/>
+                                </div>
+                                <div class="col-xs-6">
+                                    <input type="text" name="price_<?= $room->id; ?>" value="<?= $room->price; ?>" placeholder="金额" class="form-control"/>
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
-            </div>
-
-            <div class="list-group-item">
-                <div class="row">
-                    <div class="col-xs-3 tit">小包</div>
-                    <div class="col-xs-9">
-                        <div class="row">
-                            <div class="col-xs-6">
-                                <input type="text" id="big_num" name="big_num" value="" placeholder="数量" class="form-control"/>
-                            </div>
-                            <div class="col-xs-6">
-                                <input type="text" id="big_fee" name="big_fee" value="" placeholder="金额" class="form-control"/>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
+            <?php } ?>
 
         </div>
     </form>

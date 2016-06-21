@@ -44,9 +44,9 @@
         </div>
         <div class="col-xs-8">
             <dl style="margin-bottom: 0px">
-                <dt>XXX XXX XXXX</dt>
-                <dd>余额：<i class="fa fa-cny"></i> 0 </dd>
-                <dd>预订：100/人次</dd>
+                <dt><?= $seller->name; ?></dt>
+                <dd>余额：<i class="fa fa-cny"></i> <?= $seller->balance; ?> </dd>
+                <dd>预订：<?= $reserver_count; ?>/人次</dd>
             </dl>
         </div>
     </div>
@@ -59,7 +59,7 @@
         <img src="/assets/img/clock.png" alt=""/>
         <p>所有预约</p>
     </div>
-    <div class="list-group-item b0" origal-url="/manager/reserve?begin_at=<?= strtotime(date('Y-m-d')) ?>">
+    <div class="list-group-item b0" origal-url="/manager/reserve?begin_at=<?= strtotime(date('Y-m-d')) ?>&end_at=<?= time()?>">
         <img src="/assets/img/clock.png" alt=""/>
         <p>今日到店</p>
     </div>

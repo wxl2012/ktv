@@ -49,7 +49,7 @@
             </div>
             <div class="col-xs-8">
                 <dl style="margin-top: 0px; margin-bottom: 0px;">
-                    <dt><i class="fa fa-home"></i> 大、中、小包间</dt>
+                    <dt><i class="fa fa-home"></i> ${room.category.name}间</dt>
                     <dd><i class="fa fa-calendar"></i> ${reserve_date}</dd>
                     <dd><i class="fa fa-clock-o"></i> ${reserve_time}</dd>
                 </dl>
@@ -59,8 +59,11 @@
     <div class="list-group-item" style="margin-bottom: 10px; padding-top: 5px; padding-bottom: 5px;" data-id="${id}">
         <div class="row">
             <div class="col-xs-3" style="padding-left: 5px; padding-right: 0px; line-height: 28px;">
+
                 {{if status == 'SUCCESS'}}
                     <label class="label label-success">预约成功</label>
+                {{else status == 'NONE'}}
+                    <label class="label label-warning">未付款的预约</label>
                 {{else status == 'TIMEOUT'}}
                     <label class="label label-warning">超时未使用</label>
                 {{else status == 'USED'}}
@@ -71,8 +74,10 @@
                 {{if status == 'SUCCESS'}}
                     <a class="btn btn-sm btn-danger" role="cancel">取消预约</a>
                     <a class="btn btn-sm btn-primary" role="use">使用</a>
+                {{else status == 'NONE'}}
+                    <a class="btn btn-sm btn-danger" role="pay">付款</a>
                 {{else status == 'TIMEOUT'}}
-                    <a class="btn btn-sm btn-danger" role="del">删除预约</a>
+                    <a class="btn btn-sm btn-danger hide" role="del">删除预约</a>
                 {{else status == 'USED'}}
                 {{/if}}
             </div>
@@ -82,8 +87,12 @@
 
 <?php
 $token = \Session::get('access_token', '');
+$begin_at = \Input::get('begin_at', 0);
+$end_at = \Input::get('end_at', time());
 $script = <<<js
     var _access_token = '{$token}';
+    var _begin_at = {$begin_at};
+    var _end_at = {$end_at};
 js;
 
 \Asset::js($script, [], 'before-script', true);

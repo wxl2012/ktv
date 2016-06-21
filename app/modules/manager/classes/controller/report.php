@@ -31,7 +31,9 @@ class Controller_Report extends Controller_BaseController
      */
     public function action_index()
     {
-        $params = [];
+        $params = [
+            'title' => '数据统计'
+        ];
 
         \View::set_global($params);
         $this->template->content = \View::forge("{$this->theme}/report/index");

@@ -31,7 +31,9 @@ class Controller_Store extends Controller_BaseController
      */
     public function action_index()
     {
-        $params = [];
+        $params = [
+            'title' => '店铺管理'
+        ];
 
         \View::set_global($params);
         $this->template->content = \View::forge("{$this->theme}/reserve/index");
@@ -50,6 +52,19 @@ class Controller_Store extends Controller_BaseController
             'menu' => 'store-details',
         );
 
+        if(\Input::method() == 'POST'){
+            $data = \Input::post();
+            $seller = \Session::get('seller');
+            $seller->set($data);
+
+            if($seller->save()){
+                \Session::set('seller', $seller);
+                die(json_encode(['status' => 'succ', 'errcode' => 0, 'msg' => '操作成功']));
+            }
+            die(json_encode(['status' => 'err', 'errcode' => 10, 'msg' => '操作失败']));
+        }
+
+        $params['seller'] = \Session::get('seller');
         \View::set_global($params);
         $this->template->content = \View::forge("{$this->theme}/store/details");
     }

@@ -27,6 +27,20 @@ abstract class Controller_BaseController extends \Controller_BaseController
 
     public function before(){
         parent::before();
+        
+        $account = \Session::get('WXAccount', false);
+        $employee = \Session::get('employee', false);
+        
+        if( ! $employee){
+            $employee = \Model_Employee::query()
+                ->where([
+                    'user_id' => \Auth::get_user()->id,
+                    'seller_id' => $account->seller_id
+                ])
+                ->get_one();
+            \Session::set('employee', $employee);
+        }
+
     }
 
 }

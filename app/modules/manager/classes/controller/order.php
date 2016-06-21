@@ -32,6 +32,10 @@ class Controller_Order extends Controller_BaseController
      */
     public function action_index()
     {
+        $params = [
+            'title' => '订单管理'
+        ];
+
         $items = \Model_Order::query()
             ->where('is_deleted', 0)
             ->where('from_id', \Session::get('seller')->id);
@@ -71,6 +75,10 @@ class Controller_Order extends Controller_BaseController
      * 查询预订信息
      */
     public function action_reserve(){
+
+        $params = [
+            '预订管理'
+        ];
 
         $items = \Model_RoomReserve::query()
             ->where(['is_deleted' => 0]);

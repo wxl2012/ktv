@@ -32,10 +32,32 @@ class Controller_Reserve extends Controller_BaseController
      */
     public function action_index()
     {
-        $params = [];
+        $params = [
+            'title' => '预订管理'
+        ];
 
         \View::set_global($params);
         $this->template->content = \View::forge("{$this->theme}/reserve/index");
+    }
+
+    /**
+     * 预约支付
+     * @param $id 预约ID
+     */
+    public function action_pay($id){
+        $msg = ['status' => 'err', 'msg' => '', 'errcode' => 10];
+        $reserver = \Model_RoomReserve::find($id);
+        if( ! $reserver){
+            $msg['msg'] = '预约不存在';
+            die(json_encode($msg));
+        }
+
+        $reserver->status = 'SUCCESS';
+        if( ! $reserver->save()){
+            $msg['msg'] = '操作失败';
+            die(json_encode($msg));
+        }
+        die(json_encode(['status' => 'succ', 'msg' => '操作成功', 'errcode' => 0]));
     }
 
     /**
@@ -43,14 +65,18 @@ class Controller_Reserve extends Controller_BaseController
      * @param $id 预约ID
      */
     public function action_delete($id){
+        $msg = ['status' => 'err', 'msg' => '', 'errcode' => 10];
         $reserver = \Model_RoomReserve::find($id);
         if( ! $reserver){
-            die();
+            $msg['msg'] = '预约不存在';
+            die(json_encode($msg));
         }
 
         if( ! $reserver->delete()){
-            die();
+            $msg['msg'] = '操作失败';
+            die(json_encode($msg));
         }
+        die(json_encode(['status' => 'succ', 'msg' => '操作成功', 'errcode' => 0]));
     }
 
     /**
@@ -59,7 +85,19 @@ class Controller_Reserve extends Controller_BaseController
      * @param $id 预约ID
      */
     public function action_use($id){
+        $msg = ['status' => 'err', 'msg' => '', 'errcode' => 10];
+        $reserver = \Model_RoomReserve::find($id);
+        if( ! $reserver){
+            $msg['msg'] = '预约不存在';
+            die(json_encode($msg));
+        }
 
+        $reserver->status = 'USED';
+        if( ! $reserver->save()){
+            $msg['msg'] = '操作失败';
+            die(json_encode($msg));
+        }
+        die(json_encode(['status' => 'succ', 'msg' => '操作成功', 'errcode' => 0]));
     }
 
     /**
@@ -68,7 +106,19 @@ class Controller_Reserve extends Controller_BaseController
      * @param $id 预约ID
      */
     public function action_cancel($id){
+        $msg = ['status' => 'err', 'msg' => '', 'errcode' => 10];
+        $reserver = \Model_RoomReserve::find($id);
+        if( ! $reserver){
+            $msg['msg'] = '预约不存在';
+            die(json_encode($msg));
+        }
 
+        $reserver->is_deleted = 1;
+        if( ! $reserver->save()){
+            $msg['msg'] = '操作失败';
+            die(json_encode($msg));
+        }
+        die(json_encode(['status' => 'succ', 'msg' => '操作成功', 'errcode' => 0]));
     }
 
     /**

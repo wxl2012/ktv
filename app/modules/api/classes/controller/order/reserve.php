@@ -83,6 +83,7 @@ class Controller_Order_Reserve extends Controller_BaseController {
 
         foreach ($params['items'] as $item){
             $item->order;
+            $item->room->category;
         }
 
         $this->response(['status' => 'succ', 'msg' => '', 'data' => $params], 200);
@@ -111,7 +112,7 @@ class Controller_Order_Reserve extends Controller_BaseController {
             $reserve->begin_at = strtotime("{$data['date']} {$data['time']}:00");
 
             $reserve->set($data);
-            $reserve->remark = "{$data['date']} {$data['time']}";
+            //$reserve->remark = "{$data['date']} {$data['time']}";
 
 
             if($reserve->save()){

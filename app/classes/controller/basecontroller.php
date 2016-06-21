@@ -26,7 +26,7 @@ abstract class Controller_BaseController extends \Fuel\Core\Controller_Template
 
 	public function before(){
 		parent::before();
-
+		
 		$this->load_wx_account();
 
 		$this->load_seller();
@@ -73,13 +73,20 @@ abstract class Controller_BaseController extends \Fuel\Core\Controller_Template
 				->get_one();
 			if( ! $wxopenid){
 				\Session::set_flash('msg', ['status' => 'err', 'msg' => '未找到您的微信信息,无法确认您的身份! 系统无法为您提供服务!', 'title' => '拒绝服务']);
-				return $this->show_mesage();
+				return $this->show_message();
 			}
 			\Session::set('wechat', $wxopenid->wechat);
 			\Session::set('OpenID', $wxopenid);
 			\Auth::force_login($wxopenid->wechat->user_id);
 		}else if( ! \Auth::check() && \Session::get('wechat')->user_id){
 			\Auth::force_login(\Session::get('wechat')->user_id);
+		}
+
+		$account = \Session::get($this->SESSION_WXACCOUNT_KEY, false);
+		if( ! $account && ! \Input::get('account_id', false)){
+			$account = \Session::get('OpenID')->account;
+			\Session::set($this->SESSION_WXACCOUNT_KEY, $account);
+			$this->load_seller($account->seller_id);
 		}
 	}
 

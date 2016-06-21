@@ -31,6 +31,21 @@ class Controller_Home extends Controller_BaseController
      */
     public function action_index()
     {
+        
+        $seller = \Session::get('seller', false);
+        if( ! $seller){
+            \Session::set_flash('msg', ['msg' => '您无权操作该功能！', 'title' => '非法请求', 'status' => 'err']);
+            return $this->show_message();
+        }
+
+        $params = [
+            'title' => '管理中心',
+            'seller' => $seller
+        ];
+
+        $params['reserver_count'] = \Model_RoomReserve::query()->count();
+
+        \View::set_global($params);
         $this->template->content = \View::forge("{$this->theme}/index");
     }
 }

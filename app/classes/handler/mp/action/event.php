@@ -54,7 +54,14 @@ class Event extends Base{
                 $this->data->EventKey;
                 $handle = new \handler\mp\action\event\View();
                 break;
+            case 'MASSSENDJOBFINISH':
+                \Log::error('群发通知');
+                break;
+            default:
+                \Log::error("未找到处理对象：｛$this->data->Event｝");
+                break;
         }
+        
         $handle->handle();
     }
 

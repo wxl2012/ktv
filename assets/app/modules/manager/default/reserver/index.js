@@ -74,6 +74,7 @@ $(function () {
  */
 function loadMoreData() {
     $('#btnMore').html('<i class="fa fa-spin fa-spinner"></i>加载中...');
+    
     $.get('/api/order/reserve/list',
         {
             access_token: _access_token,

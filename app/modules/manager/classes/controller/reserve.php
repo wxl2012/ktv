@@ -127,7 +127,7 @@ class Controller_Reserve extends Controller_BaseController
      * @access  public
      * @return  Response
      */
-    public function action_save($id = 0)
+    public function action_save()
     {
         $params = array(
             'title' => '新增预约',

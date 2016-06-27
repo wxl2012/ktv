@@ -104,5 +104,5 @@ js;
 
 \Asset::js($script, [], 'before-script', true);
 
-\Asset::js(['jquery-tmpl/jquery.tmpl.min.js', 'jquery-tmpl/jquery.tmplPlus.min.js', 'tool.js', 'modules/manager/default/room/index.js'], [], 'js-files', false);
+\Asset::js(['jquery-tmpl/jquery.tmpl.min.js', 'jquery-tmpl/jquery.tmplPlus.min.js', 'tool.js', 'modules/manager/default/store/details.js'], [], 'js-files', false);
 ?>

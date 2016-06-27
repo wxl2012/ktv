@@ -43,7 +43,6 @@ class Controller_Room extends Controller_BaseController
             foreach ($data as $key => $value){
                 $flag = false;
                 $filed = strpos($key, 'num_') === false ? 'price' : 'total';
-                echo $filed . '#';
                 $id = str_replace('num_', '', $key);
                 $id = str_replace('price_', '', $id);
                 foreach ($wheres as $k => $v){

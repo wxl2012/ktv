@@ -130,49 +130,11 @@ class Controller_Reserve extends Controller_BaseController
     public function action_save($id = 0)
     {
         $params = array(
-            'title' => '订单详情——订单管理',
+            'title' => '新增预约',
             'menu' => 'goods-details',
         );
 
-        $room = false;
-        if($id){
-            $room = \Model_Room::find($id);
-        }
-
-        if(\Input::method() == 'POST'){
-            $data = \Input::post();
-            $data['published_at'] = isset($data['published_at']) && $data['published_at'] ? strtotime($data['published_at']) : 0;
-            $data['expire_at'] = isset($data['expire_at']) && $data['expire_at'] ? strtotime($data['expire_at']) : 0;
-
-            if($room){
-                $room->set($data);
-            }else{
-
-                $data['seller_id'] = \Session::get('seller')->id;
-                $room = \Model_Room::forge($data);
-                $room->galleries = array();
-                foreach (explode(',', $data['images']) as $key => $value) {
-                    array_push($room->galleries, \Model_RoomGallery::forge(array('attachment_id' => $value)));
-                }
-            }
-
-
-            if($room->save()){
-                $msg = array('status' => 'succ', 'msg' => '操作成功', 'errcode' => 0);
-            }else{
-                $msg = array('status' => 'err', 'msg' => '操作失败', 'errcode' => 20);
-            }
-            if(\Input::is_ajax()){
-                die(json_encode($msg));
-            }
-            \Session::set_flash('msg', $msg);
-        }
-
-        if($room){
-            $params['item'] = $room;
-        }else if(\Input::get('id', false)){
-            $params['item'] = \Model_Room::find(\Input::get('id'));
-        }
+        $params['items'] = \Model_Room::query()->where(['seller_id' => \Session::get('seller')->id])->get();
 
         \View::set_global($params);
         $this->template->content = \View::forge("{$this->theme}/reserve/details");

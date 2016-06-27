@@ -52,12 +52,12 @@
 
             <div class="list-group-item">
                 <div class="row">
-                    <div class="col-xs-3 tit">容量</div>
+                    <div class="col-xs-3 tit">包间</div>
                     <div class="col-xs-9">
                         <div class="btn-group" role="group" aria-label="...">
-                            <button type="button" class="btn btn-default active" data-id="1" role="big">大包</button>
-                            <button type="button" class="btn btn-default" data-id="2" role="middle">中包</button>
-                            <button type="button" class="btn btn-default" data-id="3" role="small">小包</button>
+                            <?php foreach ($rooms as $room){ ?>
+                                <button type="button" class="btn btn-default" data-id="<?= $room->id; ?>"><?= $room->category->name; ?></button>
+                            <?php }?>
                         </div>
                     </div>
                 </div>
@@ -149,5 +149,5 @@ js;
 
 \Asset::js($script, [], 'before-script', true);
 
-\Asset::js(['jquery-tmpl/jquery.tmpl.min.js', 'jquery-tmpl/jquery.tmplPlus.min.js', 'tool.js', 'modules/manager/default/reserver/default.js'], [], 'js-files', false);
+\Asset::js(['jquery-tmpl/jquery.tmpl.min.js', 'jquery-tmpl/jquery.tmplPlus.min.js', 'tool.js', 'modules/manager/default/reserver/details.js'], [], 'js-files', false);
 ?>

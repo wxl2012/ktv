@@ -48,4 +48,24 @@ class Controller_Home extends Controller_BaseController
         \View::set_global($params);
         $this->template->content = \View::forge("{$this->theme}/index");
     }
+
+    public function action_login(){
+
+        if(\Input::method() == 'POST'){
+            $msg = ['status' => 'err', 'msg' => '用户名或密码错误！', 'errcode' => 10];
+            if(\Auth::login()){
+                $employee = \Model_Employee::query()
+                    ->where([
+                        'user_id' => \Auth::get_user()->id
+                    ])
+                    ->get_one();
+                \Session::set('employee', $employee);
+                \Session::set('seller', $employee->seller);
+                $msg = ['status' => 'succ', 'msg' => 'ok', 'errcode' => 0];
+            }
+
+            die(json_encode($msg));
+        }
+        $this->template->content = \View::forge("{$this->theme}/login");
+    }
 }

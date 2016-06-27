@@ -27,6 +27,14 @@ abstract class Controller_BaseController extends \Controller_BaseController
 
     public function before(){
         parent::before();
+
+        if($this->getNotOpenidAllowed()){
+            return;
+        }
+
+        if( ! \Auth::check() && \Uri::segment(2) != 'login'){
+            \Response::redirect('/manager/login');
+        }
         
         $account = \Session::get('WXAccount', false);
         $employee = \Session::get('employee', false);

@@ -158,6 +158,11 @@ abstract class Controller_BaseController extends \Fuel\Core\Controller_Template
 				'module' => 'wxapi',
 				'controller' => 'oauth2_callback',
 				'actions' => []
+			],
+			[
+				'module' => 'manager',
+				'controller' => 'login',
+				'actions' => []
 			]
 		];
 		foreach($allowed as $item){

@@ -46,6 +46,7 @@
 <div style="height: 55px"></div>
 <div class="container-fluid">
     <form id="frmReserve">
+        <input type="hidden" id="room_id" name="room_id" value="1">
         <div class="list-group">
 
             <div class="list-group-item">
@@ -53,9 +54,9 @@
                     <div class="col-xs-3 tit">容量</div>
                     <div class="col-xs-9">
                         <div class="btn-group" role="group" aria-label="...">
-                            <button type="button" class="btn btn-default active" role="big">大包</button>
-                            <button type="button" class="btn btn-default" role="middle">中包</button>
-                            <button type="button" class="btn btn-default" role="small">小包</button>
+                            <button type="button" class="btn btn-default active" data-id="1" role="big">大包</button>
+                            <button type="button" class="btn btn-default" data-id="2" role="middle">中包</button>
+                            <button type="button" class="btn btn-default" data-id="3" role="small">小包</button>
                         </div>
                     </div>
                 </div>

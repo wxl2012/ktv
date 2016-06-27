@@ -5,6 +5,7 @@ $(function () {
     $('.btn-group button').click(function () {
         $('.btn-group button').removeClass('active');
         $(this).addClass('active');
+        $('#room_id').val($(this).attr('data-id'));
     });
 
     $('#btnSubmit').click(function () {

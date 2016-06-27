@@ -134,7 +134,7 @@ class Controller_Reserve extends Controller_BaseController
             'menu' => 'goods-details',
         );
 
-        $params['items'] = \Model_Room::query()->where(['seller_id' => \Session::get('seller')->id])->get();
+        $params['rooms'] = \Model_Room::query()->where(['seller_id' => \Session::get('seller')->id])->get();
 
         \View::set_global($params);
         $this->template->content = \View::forge("{$this->theme}/reserve/details");

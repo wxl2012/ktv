@@ -47,6 +47,7 @@
 <div class="container-fluid">
     <form id="frmReserve">
         <input type="hidden" id="room_id" name="room_id" value="1">
+        <input type="hidden" name="status" value="SUCCESS">
         <div class="list-group">
 
             <div class="list-group-item">

@@ -108,10 +108,13 @@
                 <div class="row">
                     <div class="col-xs-3 tit">预约时间</div>
                     <div class="col-xs-6 pr0" style="line-height: 27px">
-                        <div class="input-group">
-                            <input type="text" id="date" name="date" class="form-control" placeholder="预约日期" aria-describedby="basic-addon2" value="<?= date('Y-m-d'); ?>">
-                            <span class="input-group-addon" id="basic-addon2"><i class="fa fa-calendar"></i></span>
-                        </div>
+                        <select id="date" name="date" class="form-control">
+                            <?php $date = time(); ?>
+                            <?php for($i = 0; $i < 10; $i ++){ ?>
+                                <?php $date += (60 * 60 * 24); ?>
+                                <option value="<?php echo date('Y-m-d', $date);?>"><?php echo date('Y-m-d', $date);?> <?php echo \Model_RoomReserve::$_maps['week'][date('w', $date)];?></option>
+                            <?php } ?>
+                        </select>
                     </div>
                     <div class="col-xs-3" style="padding-left: 1px;">
                         <input type="text" id="time" name="time" class="form-control text-center" value="" name="" placeholder="时间" />

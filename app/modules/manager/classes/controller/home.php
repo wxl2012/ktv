@@ -43,8 +43,12 @@ class Controller_Home extends Controller_BaseController
             'seller' => $seller
         ];
 
-        $params['reserver_count'] = \Model_RoomReserve::query()->count();
-
+        $params['reserver_count'] = \Model_RoomReserve::query()
+            ->where([
+                'seller_id' => $seller->id
+            ])
+            ->where('status', '<>', 'NONE')
+            ->count();
         \View::set_global($params);
         $this->template->content = \View::forge("{$this->theme}/index");
     }

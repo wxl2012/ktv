@@ -1,3 +1,25 @@
+var backgroundColors = [
+    'rgba(255, 99, 132, 0.2)',
+    'rgba(54, 162, 235, 0.2)',
+    'rgba(255, 206, 86, 0.2)',
+    'rgba(75, 192, 192, 0.2)',
+    'rgba(153, 102, 255, 0.2)',
+    'rgba(255, 159, 64, 0.2)',
+    'rgba(255, 159, 64, 0.2)',
+    'rgba(255, 159, 64, 0.2)'
+];
+
+var borderColors = [
+    'rgba(255,99,132,1)',
+    'rgba(54, 162, 235, 1)',
+    'rgba(255, 206, 86, 1)',
+    'rgba(75, 192, 192, 1)',
+    'rgba(153, 102, 255, 1)',
+    'rgba(255, 159, 64, 1)',
+    'rgba(255, 159, 64, 1)',
+    'rgba(255, 159, 64, 1)'
+];
+
 $(function () {
 
     loadOrder();
@@ -13,49 +35,40 @@ function loadOrder() {
                 return;
             }
 
-            var chartData = {
-                labels: ["10日", "11日", "12日", "13日", "14日", "15日", "16日", "17日"],
-                datasets: [{
-                    label: '过去7日实收金额统计',
-                    data: [12, 19, 3, 5, 2, 3, 33, 88],
-                    backgroundColor: [
-                        'rgba(255, 99, 132, 0.2)',
-                        'rgba(54, 162, 235, 0.2)',
-                        'rgba(255, 206, 86, 0.2)',
-                        'rgba(75, 192, 192, 0.2)',
-                        'rgba(153, 102, 255, 0.2)',
-                        'rgba(255, 159, 64, 0.2)',
-                        'rgba(255, 159, 64, 0.2)',
-                        'rgba(255, 159, 64, 0.2)'
-                    ],
-                    borderColor: [
-                        'rgba(255,99,132,1)',
-                        'rgba(54, 162, 235, 1)',
-                        'rgba(255, 206, 86, 1)',
-                        'rgba(75, 192, 192, 1)',
-                        'rgba(153, 102, 255, 1)',
-                        'rgba(255, 159, 64, 1)',
-                        'rgba(255, 159, 64, 1)',
-                        'rgba(255, 159, 64, 1)'
-                    ],
-                    borderWidth: 1
-                }]
-            };
+            var items = data.data;
 
-            var options = {
-                scales: {
-                    yAxes: [{
-                        ticks: {
-                            beginAtZero:true
-                        }
-                    }]
-                }
-            };
+            var datasets = [{
+                label: '过去7日实收金额统计',
+                data: [],
+                backgroundColor: [],
+                borderColor: [],
+                borderWidth: 1
+            }];
+
+
+            var labels = [];
+            for (var i = 0; i < items.length; i ++){
+                labels[labels.length] = items[i].date;
+                datasets[datasets.length].data[datasets[datasets.length].data.length] = items[i].total_fee;
+                datasets[datasets.length].backgroundColor[datasets[datasets.length].backgroundColor.length] = backgroundColors[datasets[datasets.length].backgroundColor.length];
+                datasets[datasets.length].borderColor[datasets[datasets.length].borderColor.length] = borderColors[datasets[datasets.length].backgroundColor.length];
+            }
 
             var ctx = new Chart($('#chartOrder'), {
                 type: 'bar',
-                data: chartData,
-                options: options
+                data: {
+                    labels: labels,
+                    datasets: datasets
+                },
+                options: {
+                    scales: {
+                        yAxes: [{
+                            ticks: {
+                                beginAtZero:true
+                            }
+                        }]
+                    }
+                }
             });
 
         }, 'json');
@@ -69,76 +82,40 @@ function loadReserve() {
                 return;
             }
 
-            var chartData = {
-                labels: ["10日", "11日", "12日", "13日", "14日", "15日", "16日", "17日"],
-                datasets: [
-                    {
-                        label: '过去7日应消费数量',
-                        data: [50, 80, 60, 58, 25, 53, 53, 68],
-                        backgroundColor: [
-                            'rgba(255, 99, 132, 0.2)',
-                            'rgba(54, 162, 235, 0.2)',
-                            'rgba(255, 206, 86, 0.2)',
-                            'rgba(75, 192, 192, 0.2)',
-                            'rgba(153, 102, 255, 0.2)',
-                            'rgba(255, 159, 64, 0.2)',
-                            'rgba(255, 159, 64, 0.2)',
-                            'rgba(255, 159, 64, 0.2)'
-                        ],
-                        borderColor: [
-                            'rgba(255,99,132,1)',
-                            'rgba(54, 162, 235, 1)',
-                            'rgba(255, 206, 86, 1)',
-                            'rgba(75, 192, 192, 1)',
-                            'rgba(153, 102, 255, 1)',
-                            'rgba(255, 159, 64, 1)',
-                            'rgba(255, 159, 64, 1)',
-                            'rgba(255, 159, 64, 1)'
-                        ],
-                        borderWidth: 1
-                    },
-                    {
-                        label: '过去7日已消费数量',
-                        data: [40, 100, 30, 38, 46, 73, 33, 88],
-                        backgroundColor: [
-                            'rgba(255, 99, 132, 0.2)',
-                            'rgba(54, 162, 235, 0.2)',
-                            'rgba(255, 206, 86, 0.2)',
-                            'rgba(75, 192, 192, 0.2)',
-                            'rgba(153, 102, 255, 0.2)',
-                            'rgba(255, 159, 64, 0.2)',
-                            'rgba(255, 159, 64, 0.2)',
-                            'rgba(255, 159, 64, 0.2)'
-                        ],
-                        borderColor: [
-                            'rgba(255,99,132,1)',
-                            'rgba(54, 162, 235, 1)',
-                            'rgba(255, 206, 86, 1)',
-                            'rgba(75, 192, 192, 1)',
-                            'rgba(153, 102, 255, 1)',
-                            'rgba(255, 159, 64, 1)',
-                            'rgba(255, 159, 64, 1)',
-                            'rgba(255, 159, 64, 1)'
-                        ],
-                        borderWidth: 1
-                    }
-                ]
-            };
+            var items = data.data;
 
-            var options = {
-                scales: {
-                    yAxes: [{
-                        ticks: {
-                            beginAtZero:true
-                        }
-                    }]
-                }
-            };
+            var datasets = [{
+                label: '过去7日包间预订数量统计',
+                data: [],
+                backgroundColor: [],
+                borderColor: [],
+                borderWidth: 1
+            }];
+
+
+            var labels = [];
+            for (var i = 0; i < items.length; i ++){
+                labels[labels.length] = items[i].date;
+                datasets[datasets.length].data[datasets[datasets.length].data.length] = items[i].count;
+                datasets[datasets.length].backgroundColor[datasets[datasets.length].backgroundColor.length] = backgroundColors[datasets[datasets.length].backgroundColor.length];
+                datasets[datasets.length].borderColor[datasets[datasets.length].borderColor.length] = borderColors[datasets[datasets.length].backgroundColor.length];
+            }
 
             var ctx = new Chart($('#chartReserve'), {
                 type: 'bar',
-                data: chartData,
-                options: options
+                data: {
+                    labels: labels,
+                    datasets: datasets
+                },
+                options: {
+                    scales: {
+                        yAxes: [{
+                            ticks: {
+                                beginAtZero:true
+                            }
+                        }]
+                    }
+                }
             });
         }, 'json');
 }

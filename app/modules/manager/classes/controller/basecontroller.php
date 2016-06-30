@@ -46,6 +46,10 @@ abstract class Controller_BaseController extends \Controller_BaseController
                     'seller_id' => $account->seller_id
                 ])
                 ->get_one();
+            if( ! $employee){
+                \Session::set_flash('msg', ['status' => 'err', 'msg' => '您无权使用该功能!', 'title' => '非法请求']);
+                return $this->show_message();
+            }
             \Session::set('employee', $employee);
         }
 

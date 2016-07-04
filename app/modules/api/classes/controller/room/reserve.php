@@ -162,4 +162,32 @@ sql;
             $this->response($msg, 200);
         }
     }
+
+    /**
+     * 获取可预订房间数
+     */
+    public function action_get_rooms(){
+
+        if(\Input::method() == 'POST'){
+            $msg = ['status' => 'err', 'msg' => '', 'errcode' => 10];
+            $data = \Input::post();
+            if(! (isset($data['date']) && $data['date'])
+                || ! (isset($data['room_id']) && $data['room_id'])){
+                $msg['msg'] = '缺少必要参数';
+                die(json_encode($msg));
+            }
+
+            $room = \Model_Room::find($data['room_id']);
+            if(! $room){
+                $msg['msg'] = '参数不合法';
+                die(json_encode($msg));
+            }
+
+            $rooms = \Model_RoomReserve::getReserveCount($data['room_id'], $data['date']);
+
+            $msg['status'] = 'succ';
+            $msg['data'] = $room->total - $rooms;
+            die(json_encode($msg));
+        }
+    }
 }

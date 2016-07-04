@@ -78,4 +78,43 @@ class Model_RoomReserve extends \Orm\Model
             'USED' => 'primary'
         ]
     ];
+
+    /**
+     * 检查是否可预订包间
+     * 
+     * @param $room_id  包间
+     * @param $date     预订日期
+     * @return bool|string
+     */
+    public static function isReserve($room_id, $date){
+        $room = \Model_Room::find($room_id);
+        if(! $room){
+            return '包间不存在';
+        }
+
+        $count = \Model_RoomReserve::getReserveCount($room_id, $date);
+        if($room->total < $count){
+            return '无空包可订';
+        }
+
+        return true;
+    }
+
+    /**
+     * 获取某包间在某时间段的预订数量
+     *
+     * @param $room_id  房间ID
+     * @param $date     预订时间
+     * @return mixed
+     */
+    public static function getReserveCount($room_id, $date){
+        $count = \Model_RoomReserve::query()
+            ->where([
+                'room_id' => $room_id
+            ])
+            ->where('begin_at', 'BETWEEN', [strtotime($date), strtotime("{$date} 23:59:59")])
+            ->count();
+
+        return $count;
+    }
 }

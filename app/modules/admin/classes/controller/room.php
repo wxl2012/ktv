@@ -35,6 +35,14 @@ class Controller_Room extends Controller_BaseController
         $items = \Model_Room::query()
             ->where('is_deleted', 0);
 
+        if(\Auth::get_user()->username != 'admin'){
+            $items->where(['seller_id' => \Session::get('seller')->id]);
+        }
+
+        if(\Input::get('date', false) == 'today'){
+            $items->where('begin_at', 'BETWEEN', [time(), strtotime(date('Y-m-d 23:59:59'))]);
+        }
+
         $data = \Input::get();
         foreach ($data as $k => $v){
             if( ! $v){
@@ -187,5 +195,42 @@ class Controller_Room extends Controller_BaseController
     public function action_category()
     {
         $this->template->content = \View::forge("{$this->theme}/room/category");
+    }
+
+    /**
+     * 添加预订信息
+     */
+    public function action_add_reserve(){
+
+        if(\Input::method() == 'POST'){
+            $msg = ['status' => 'err', 'msg' => '', 'errcode' => 10];
+
+            $data = \Input::post();
+
+            if(! \Security::check_token()){
+                $msg = ['status' => 'err', 'msg' => 'token失效或重复提交！', 'errcode' => 10];
+            }else if(\Model_RoomReserve::isReserve($data['room_id'], $data['reserve_date']) !== true){
+                $msg = ['status' => 'err', 'msg' => '预订失败，无可用包间！', 'errcode' => 10];
+            }else{
+                $data['begin_at'] = strtotime("{$data['reserve_date']} {$data['reserve_time']}:00");
+                $data['seller_id'] = \Session::get('seller')->id;
+                $data['status'] = 'SUCCESS';
+                $reserve = \Model_RoomReserve::forge($data);
+                if($reserve->save()){
+                    $msg = ['status' => 'succ', 'msg' => '预订成功', 'errcode' => 0];
+                }
+            }
+
+            \Session::set_flash('msg', $msg);
+        }
+
+        $items = \Model_Room::query()
+            ->where(['is_deleted' => 0])
+            ->where('seller_id', \Session::get('seller')->id)
+            ->order_by(array('created_at' => 'desc', 'id' => 'desc'));
+
+        $params['items'] = $items->get();
+        \View::set_global($params);
+        $this->template->content = \View::forge("{$this->theme}/room/add_reserve");
     }
 }

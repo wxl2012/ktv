@@ -91,25 +91,20 @@ $seller = \Session::get('seller', false);
     <!-- Side Menu -->
     <ul class="list-unstyled side-menu">
         <li class="active">
-            <a class="sa-side-home" href="javascript:;">
+            <a class="sa-side-home" href="/admin/room">
                 <span class="menu-item">包房管理</span>
             </a>
-            <ul class="list-unstyled menu-item">
-                <li><a href="/admin/room/save">添加包房</a></li>
-                <li><a href="/admin/room">所有包房</a></li>
-                <li><a href="/admin/room/category">包房房型</a></li>
-            </ul>
         </li>
         <li class="dropdown">
             <a class="sa-side-calendar" href="">
                 <span class="menu-item">预订管理</span>
             </a>
             <ul class="list-unstyled menu-item">
-                <li><a href="/admin/room/reserve">空闲包房</a></li>
-                <li><a href="/admin/room/reserve?status=NONE">未付款的预订</a></li>
-                <li><a href="/admin/room/reserve?status=SUCCESS">未使用的预订</a></li>
-                <li><a href="/admin/room/reserve?status=USED">已使用的预订</a></li>
-                <li><a href="/admin/room/reserve?status=TIMEOUT">超时的预订</a></li>
+                <li><a href="/admin/room/add_reserve">新增预订</a></li>
+                <li><a href="/admin/room/reserve">所有预订</a></li>
+                <li><a href="/admin/room/reserve?date=today">今日到店</a></li>
+                <li><a href="/admin/room/reserve?status=USED">已消费的预订</a></li>
+                <li><a href="/admin/room/reserve?status=TIMEOUT">过期的预订</a></li>
             </ul>
         </li>
         <li class="dropdown hide">
@@ -158,6 +153,16 @@ $seller = \Session::get('seller', false);
                 <ul class="list-unstyled menu-item">
                     <li><a href="/admin/seller/save">新增商户</a></li>
                     <li><a href="/admin/seller">所有商户</a></li>
+                </ul>
+            </li>
+            <li class="dropdown">
+                <a class="sa-list-week" href="">
+                    <span class="menu-item">微信设置</span>
+                </a>
+                <ul class="list-unstyled menu-item">
+                    <li><a href="/admin/wxaccount/save">微信设置</a></li>
+                    <li><a href="/admin/wxaccount/wxpay">微支付配置</a></li>
+                    <li><a href="/admin/mp/function/menu">菜单设置</a></li>
                 </ul>
             </li>
         <?php } else { ?>

@@ -61,7 +61,7 @@
             <div class="col-md-12">
                 <div class="bs-callout bs-callout-success">
                     <span id="labelTip">关键字：</span>
-                    <input type="text" id="value" action="click" style="width: 80%;" />
+                    <input type="text" class="form-control" id="value" action="click" style="width: 80%;" />
 
                     <table class="table">
                         <thead>

@@ -51,9 +51,4 @@ abstract class Base {
         $this->seller = $arg;
     }
 
-    protected function reply_text($content){
-        $response = new \handler\mp\Response($this->account, $this->data);
-        $response->text($content);
-    }
-
 }

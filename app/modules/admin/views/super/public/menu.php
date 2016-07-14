@@ -147,7 +147,22 @@ $seller = \Session::get('seller', false);
         </li>
         <?php if(\Auth::check() && \Auth::get_user()->group_id == 6){ ?>
             <li class="dropdown">
-                <a class="sa-list-week" href="">
+                <a href="javascript:;">
+                    <span class="icon" style="font-size: 2.2em;"></span>
+                    <span class="menu-item">财务数据统计</span>
+                </a>
+                <ul class="list-unstyled menu-item">
+                    <li><a href="/admin/report">收入统计</a></li>
+                    <li><a href="/admin/report/details">收入明细</a></li>
+                    <!--<li><a href="messages.html">Messages</a></li>
+                    <li><a href="login.html">Login</a></li>
+                    <li><a href="404.html">404 Error</a></li>-->
+                </ul>
+            </li>
+
+            <li class="dropdown">
+                <a href="javascript:;">
+                    <span class="icon" style="font-size: 2.4em;"></span>
                     <span class="menu-item">商户管理</span>
                 </a>
                 <ul class="list-unstyled menu-item">
@@ -156,7 +171,8 @@ $seller = \Session::get('seller', false);
                 </ul>
             </li>
             <li class="dropdown">
-                <a class="sa-list-week" href="">
+                <a href="">
+                    <span class="icon" style="font-size: 2em;"></span>
                     <span class="menu-item">微信设置</span>
                 </a>
                 <ul class="list-unstyled menu-item">
@@ -167,7 +183,8 @@ $seller = \Session::get('seller', false);
             </li>
         <?php } else { ?>
             <li class="dropdown">
-                <a class="sa-list-week" href="">
+                <a href="">
+                    <span class="icon" style="font-size: 2em;"></span>
                     <span class="menu-item">系统设置</span>
                 </a>
                 <ul class="list-unstyled menu-item">

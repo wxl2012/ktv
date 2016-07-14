@@ -170,4 +170,42 @@ class Model_Order extends \Orm\Model
 	{
 		$this->_event_before_insert();
 	}
+
+	/**
+	 * 统计某时间实际收入金额
+	 *
+	 * @param $begin 开始时间
+	 * @param $end	结束时间
+	 */
+	public static function get_fee($begin, $end){
+		$sql = <<<sql
+SELECT SUM(original_fee) AS fee FROM orders
+ WHERE created_at BETWEEN {$begin} AND {$end}
+ 	AND order_status IN('PAYMENT_SUCCESS', 'FINISH')
+sql;
+		$result = \DB::query($sql)->execute()->as_array();
+		return current($result)['fee'];
+	}
+
+	/**
+	 * 分组统计某时段实际收入金额
+	 *
+	 * @param $begin 开始时间
+	 * @param $end	结束时间
+	 */
+	public static function get_fee_group($begin, $end){
+		$sql = <<<sql
+SELECT o.from_id, s.name, 
+	SUM(total_fee) AS total_fee, 
+	SUM(original_fee) AS original_fee, 
+	SUM(preferential_fee) AS preferential_fee
+ FROM orders AS o 
+ 	LEFT JOIN sellers AS s ON o.from_id = s.id
+ WHERE o.created_at BETWEEN {$begin} AND {$end}
+ 	AND order_status IN('PAYMENT_SUCCESS', 'FINISH')
+ GROUP BY from_id
+sql;
+		$result = \DB::query($sql)->execute()->as_array();
+		return $result;
+	}
 }

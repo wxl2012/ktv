@@ -11,9 +11,9 @@
  */
 
 /**
- * 微信公众号控制器
+ * 报表控制器
  *
- * 包房相关处理方法
+ * 报表相关处理方法
  *
  * @package  app
  * @extends  Controller
@@ -21,13 +21,44 @@
 
 namespace admin;
 
-class Controller_WXAccount extends Controller_BaseController
+class Controller_Report extends Controller_BaseController
 {
+
+    /**
+     * 报表数据
+     *
+     * @access  public
+     * @return  Response
+     */
+    public function action_index()
+    {
+        $date = \Input::get('date', '7');
+        switch ($date){
+            case '7':
+                break;
+            case '15':
+                break;
+            case '30':
+                break;
+            case '3m':
+                break;
+        }
+        $begin = \Input::get('begin', date('Y-m-d 00:00:00', strtotime('-8 day')));
+        $end = \Input::get('end', date('Y-m-d 23:59:59', strtotime('-1 day')));
+
+        $begin = strtotime($begin);
+        $end = strtotime($end);
+
+        $params['items'] = \Model_Order::get_fee_group($begin, $end);
+
+        \View::set_global($params);
+        $this->template->content = \View::forge("{$this->theme}/report/dashboard");
+    }
 
     /**
      * 查询预订信息
      */
-    public function action_wxpay(){
+    public function action_reserve(){
 
         $items = \Model_RoomReserve::query()
             ->where(['is_deleted' => 0]);
@@ -61,6 +92,22 @@ class Controller_WXAccount extends Controller_BaseController
 
         \View::set_global($params);
         $this->template->content = \View::forge("{$this->theme}/room/reserve");
+    }
+
+    /**
+     * 修改预订状态
+     * @throws \Exception
+     */
+    public function action_change_reserve_status(){
+        if(\Input::method() == 'POST'){
+            $data = \Input::post();
+
+            $reserve = \Model_RoomReserve::find($data['id']);
+            $reserve->status = $data['status'];
+            if($reserve->save()){
+                die(json_encode(['status' => 'succ', 'msg' => '操作成功', 'errcode' => 0]));
+            }
+        }
     }
 
     /**
@@ -117,6 +164,54 @@ class Controller_WXAccount extends Controller_BaseController
         }
 
         \View::set_global($params);
-        $this->template->content = \View::forge("{$this->theme}/mp/account/details");
+        $this->template->content = \View::forge("{$this->theme}/room/details");
+    }
+
+    /**
+     * 支付状态显示
+     *
+     * @access  public
+     * @return  Response
+     */
+    public function action_category()
+    {
+        $this->template->content = \View::forge("{$this->theme}/room/category");
+    }
+
+    /**
+     * 添加预订信息
+     */
+    public function action_add_reserve(){
+
+        if(\Input::method() == 'POST'){
+            $msg = ['status' => 'err', 'msg' => '', 'errcode' => 10];
+
+            $data = \Input::post();
+
+            if(! \Security::check_token()){
+                $msg = ['status' => 'err', 'msg' => 'token失效或重复提交！', 'errcode' => 10];
+            }else if(\Model_RoomReserve::isReserve($data['room_id'], $data['reserve_date']) !== true){
+                $msg = ['status' => 'err', 'msg' => '预订失败，无可用包间！', 'errcode' => 10];
+            }else{
+                $data['begin_at'] = strtotime("{$data['reserve_date']} {$data['reserve_time']}:00");
+                $data['seller_id'] = \Session::get('seller')->id;
+                $data['status'] = 'SUCCESS';
+                $reserve = \Model_RoomReserve::forge($data);
+                if($reserve->save()){
+                    $msg = ['status' => 'succ', 'msg' => '预订成功', 'errcode' => 0];
+                }
+            }
+
+            \Session::set_flash('msg', $msg);
+        }
+
+        $items = \Model_Room::query()
+            ->where(['is_deleted' => 0])
+            ->where('seller_id', \Session::get('seller')->id)
+            ->order_by(array('created_at' => 'desc', 'id' => 'desc'));
+
+        $params['items'] = $items->get();
+        \View::set_global($params);
+        $this->template->content = \View::forge("{$this->theme}/room/add_reserve");
     }
 }

@@ -31,6 +31,19 @@ class Controller_Home extends Controller_BaseController
      */
     public function action_index()
     {
+        $params = [
+            'total' => 100,
+            'month' => 100,
+            'week' => 50,
+            'today' => 32
+        ];
+
+        $params['today'] = \Model_Order::get_fee(strtotime(date('Y-m-d h:i:s')), time());
+        $params['week'] = \Model_Order::get_fee(strtotime(date('Y-m-d 00:00:00', strtotime('-8 day'))), time());
+        $params['month'] = \Model_Order::get_fee(strtotime(date('Y-m-01 00:00:00')), time());
+        $params['total'] = \Model_Order::get_fee(strtotime('2016-01-01 00:00:00'), time());
+
+        \View::set_global($params);
         $this->template->content = \View::forge('super/dashboard');
     }
 

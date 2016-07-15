@@ -109,8 +109,13 @@ class Controller_Seller extends Controller_BaseController
      * @access  public
      * @return  Response
      */
-    public function action_pay_status()
+    public function action_delete($id)
     {
-        $this->template->content = \View::forge('pay/pay_status');
+        $seller = \Model_Seller::find($id);
+        $seller->is_deleted = 1;
+
+        if($seller->save()){
+            \Response::redirect('/admin/seller/');
+        }
     }
 }

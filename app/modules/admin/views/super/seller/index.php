@@ -23,6 +23,8 @@
                         <td><?php echo $item->status; ?></td>
                         <td>
                             <a class="btn btn-default" data-toggle="modal" data-target="#myModal">绑定职员</a>
+                            <a class="btn btn-default" href="/admin/seller/save/<?= $item->id;?>"><i class="fa fa-edit"></i></a>
+                            <a class="btn btn-default" href="/admin/seller/delete/<?= $item->id;?>"><i class="fa fa-trash-o"></i></a>
                         </td>
                     </tr>
                 <?php }?>

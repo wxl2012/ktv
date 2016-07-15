@@ -75,16 +75,20 @@ class Controller_Seller extends Controller_BaseController
 
             $data = \Input::post();
 
-            $seller = \Model_Seller::find($id);
-            if( ! $seller){
-                $seller = \Model_Seller::forge();
-            }
+            if(! \Security::check_token()){
+                $msg = ['status' => 'err', 'msg' => 'token失效或重复提交！', 'errcode' => 10];
+            }else{
+                $seller = \Model_Seller::find($id);
+                if( ! $seller){
+                    $seller = \Model_Seller::forge();
+                }
 
-            $seller->set($data);
-            if($seller->save()){
-                \Session::set('seller', $seller);
-                $msg['status'] = 'succ';
-                $msg['msg'] = '操作成功';
+                $seller->set($data);
+                if($seller->save()){
+                    \Session::set('seller', $seller);
+                    $msg['status'] = 'succ';
+                    $msg['msg'] = '操作成功';
+                }
             }
 
             if(\Input::is_ajax()){
@@ -94,6 +98,7 @@ class Controller_Seller extends Controller_BaseController
             \Session::set_flash('msg', $msg);
         }
 
+        $params['seller'] = \Model_Seller::find($id);
         \View::set_global($params);
         $this->template->content = \View::forge("{$this->theme}/seller/details");
     }

@@ -81,14 +81,18 @@ class Model_WXAccount extends \Orm\Model
             'subscribe' => '订阅号',
             'company' => '企业号',
         ),
-        'status' => array(
+        'auth_status' => array(
             'NONE' => '未认证',
             'AUTH' => '已认证'
         ),
         'status_label' => array(
             'NONE' => 'danger',
             'AUTH' => 'success'
-        )
+        ),
+        'status' => [
+            'NONE' => '未接入',
+            'ACTIVED' => '已接入'
+        ]
     );
 
     public static function createAccount($data){

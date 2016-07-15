@@ -194,8 +194,11 @@ sql;
 	 * @param $end	结束时间
 	 */
 	public static function get_fee_group($begin, $end){
+		$beginAt = date('Y-m-d H:i:s', $begin);
+		$endAt = date('Y-m-d H:i:s', $end);
 		$sql = <<<sql
 SELECT o.from_id, s.name, 
+	'{$beginAt} - {$endAt}' AS `span`,
 	SUM(total_fee) AS total_fee, 
 	SUM(original_fee) AS original_fee, 
 	SUM(preferential_fee) AS preferential_fee
@@ -205,7 +208,7 @@ SELECT o.from_id, s.name,
  	AND order_status IN('PAYMENT_SUCCESS', 'FINISH')
  GROUP BY from_id
 sql;
-		
+
 		$result = \DB::query($sql)->execute()->as_array();
 		return $result;
 	}

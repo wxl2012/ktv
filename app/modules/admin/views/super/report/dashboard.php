@@ -19,11 +19,16 @@
         </h3>
         <div class="pull-right">
             <select id="createAt" name="createAt" class="form-control input-sm">
-                <option value="7">今日收入</option>
-                <option value="7">过去7天</option>
-                <option value="15">过去15天</option>
-                <option value="30">过去30天</option>
-                <option value="3m">过去三个月</option>
+                <?php $dates = [
+                    '1' => '今日收入',
+                    '7' => '过去7天',
+                    '15' => '过去15天',
+                    '30' => '过去30天',
+                    '3m' => '过去三个月',
+                ];?>
+                <?php foreach ($dates as $k => $v) { ?>
+                    <option value="<?= $k?>"<?= $k == \Input::get('date', '1') ? 'selected' : ''; ?>><?= $v;?></option>
+            <?php }?>
             </select>
         </div>
     </div>
@@ -41,9 +46,9 @@
             <tbody>
             <?php if(isset($items) && $items){ ?>
                 <?php foreach ($items as $item) { ?>
-                    <tr data-id="<?php echo $item->id; ?>">
+                    <tr>
                         <td><?= $item['name']; ?></td>
-                        <td><?= '7日内'; ?></td>
+                        <td><?= $item['span']; ?></td>
                         <td><?= $item['total_fee']; ?></td>
                         <td><?= $item['original_fee']; ?></td>
                         <td><?= $item['preferential_fee']; ?></td>

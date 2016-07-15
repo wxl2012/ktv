@@ -25,46 +25,24 @@ class Controller_WXAccount extends Controller_BaseController
 {
 
     /**
-     * 查询预订信息
+     * 公众号列表
      */
-    public function action_wxpay(){
-
-        $items = \Model_RoomReserve::query()
-            ->where(['is_deleted' => 0]);
-
-        if(\Session::get('seller', false)){
-            $items->where('seller_id', \Session::get('seller')->id);
-        }
-        if(\Input::get('status', false)){
-            $items->where('status', \Input::get('status'));
-        }
-
-        $items->order_by(array('created_at' => 'desc', 'id' => 'desc'));
-
-        $count = $items->count();
-        $config = array(
-            'pagination_url' => "/admin/room/reserve",
-            'total_items'    => $count,
-            'per_page'       => \Input::get('count', 15),
-            'uri_segment'    => "start",
-            'show_first'     => true,
-            'show_last'      => true,
-            'name'           => 'bootstrap3_cn'
-        );
-
-        $pagination = new \Pagination($config);
-        $params['pagination'] = $pagination;
-        $params['items'] = $items
-            ->rows_offset($pagination->offset)
-            ->rows_limit($pagination->per_page)
+    public function action_index(){
+        $items = \Model_WXAccount::query()
+            ->where(['seller_id' => \Session::get('seller')->id])
             ->get();
+        if(count($items) < 2){
+            \Response::redirect('/admin/wxaccount/save/' . (count($items) < 1 ? 0 : current($items)->id));
+        }
+
+        $params['items'] = $items;
 
         \View::set_global($params);
-        $this->template->content = \View::forge("{$this->theme}/room/reserve");
+        $this->template->content = \View::forge("{$this->theme}/mp/account/index");
     }
 
     /**
-     * 保存包房信息
+     * 公众号详情信息
      *
      * @access  public
      * @return  Response
@@ -72,51 +50,81 @@ class Controller_WXAccount extends Controller_BaseController
     public function action_save($id = 0)
     {
         $params = array(
-            'title' => '包房详情——包房管理',
-            'menu' => 'goods-details',
+            'title' => '公众号详情——微信公众号管理',
+            'menu' => 'wxaccount-details',
         );
 
-        $room = false;
+        $account = false;
         if($id){
-            $room = \Model_Room::find($id);
+            $account = \Model_WXAccount::find($id);
         }
 
         if(\Input::method() == 'POST'){
             $data = \Input::post();
-            $data['published_at'] = isset($data['published_at']) && $data['published_at'] ? strtotime($data['published_at']) : 0;
-            $data['expire_at'] = isset($data['expire_at']) && $data['expire_at'] ? strtotime($data['expire_at']) : 0;
 
-            if($room){
-                $room->set($data);
+            if(! \Security::check_token()){
+                $msg = ['status' => 'err', 'msg' => 'token失效或重复提交！', 'errcode' => 10];
             }else{
+                if( ! $account){
+                    $data['seller_id'] = \Session::get('seller')->id;
+                    $account = \Model_Room::forge($data);
+                }
 
-                $data['seller_id'] = \Session::get('seller')->id;
-                $room = \Model_Room::forge($data);
-                $room->galleries = array();
-                foreach (explode(',', $data['images']) as $key => $value) {
-                    array_push($room->galleries, \Model_RoomGallery::forge(array('attachment_id' => $value)));
+                $account->set($data);
+
+                if($account->save()){
+                    $msg = array('status' => 'succ', 'msg' => '操作成功', 'errcode' => 0);
+                }else{
+                    $msg = array('status' => 'err', 'msg' => '操作失败', 'errcode' => 20);
                 }
             }
 
 
-            if($room->save()){
-                $msg = array('status' => 'succ', 'msg' => '操作成功', 'errcode' => 0);
-            }else{
-                $msg = array('status' => 'err', 'msg' => '操作失败', 'errcode' => 20);
-            }
             if(\Input::is_ajax()){
                 die(json_encode($msg));
             }
             \Session::set_flash('msg', $msg);
         }
 
-        if($room){
-            $params['item'] = $room;
-        }else if(\Input::get('id', false)){
-            $params['item'] = \Model_Room::find(\Input::get('id'));
-        }
+        $params['item'] = $account;
 
         \View::set_global($params);
         $this->template->content = \View::forge("{$this->theme}/mp/account/details");
+    }
+
+    public function action_wxpay($id = 0){
+
+        $item = \Model_AccessConfig::query()
+            ->where(['seller_id' => \Session::get('seller')->id, 'access_type' => 'wxpay'])
+            ->get_one();
+
+        if(\Input::method() == 'POST'){
+            $data = \Input::post();
+
+            if(! \Security::check_token()){
+                $msg = ['status' => 'err', 'msg' => 'token失效或重复提交！', 'errcode' => 10];
+            }else{
+                if(! $item){
+                    $item = \Model_AccessConfig::forge();
+                }
+                $item->set($data);
+
+                if($item->save()){
+                    $msg = array('status' => 'succ', 'msg' => '操作成功', 'errcode' => 0);
+                }else{
+                    $msg = array('status' => 'err', 'msg' => '操作失败', 'errcode' => 20);
+                }
+            }
+
+            if(\Input::is_ajax()){
+                die(json_encode($msg));
+            }
+            \Session::set_flash('msg', $msg);
+        }
+
+        $params['item'] = $item;
+
+        \View::set_global($params);
+        $this->template->content = \View::forge("{$this->theme}/mp/account/wxpay");
     }
 }

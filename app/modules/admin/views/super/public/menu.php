@@ -176,7 +176,7 @@ $seller = \Session::get('seller', false);
                     <span class="menu-item">微信设置</span>
                 </a>
                 <ul class="list-unstyled menu-item">
-                    <li><a href="/admin/wxaccount/save">微信设置</a></li>
+                    <li><a href="/admin/wxaccount">微信设置</a></li>
                     <li><a href="/admin/wxaccount/wxpay">微支付配置</a></li>
                     <li><a href="/admin/mp/function/menu">菜单设置</a></li>
                 </ul>

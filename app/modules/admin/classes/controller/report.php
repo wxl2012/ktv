@@ -34,8 +34,8 @@ class Controller_Report extends Controller_BaseController
     {
         $date = \Input::get('date', '7');
 
-        $begin = \Input::get('begin', date('Y-m-d 00:00:00', strtotime('-8 day')));
-        $end = \Input::get('end', date('Y-m-d 23:59:59', strtotime('-1 day')));
+        $begin = \Input::get('begin', date('Y-m-d 00:00:00'));
+        $end = \Input::get('end', date('Y-m-d 23:59:59'));
 
         switch ($date){
             case '7':
@@ -61,5 +61,5 @@ class Controller_Report extends Controller_BaseController
         \View::set_global($params);
         $this->template->content = \View::forge("{$this->theme}/report/dashboard");
     }
-    
+
 }

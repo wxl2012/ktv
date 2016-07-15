@@ -19,6 +19,7 @@
         </h3>
         <div class="pull-right">
             <select id="createAt" name="createAt" class="form-control input-sm">
+                <option value="7">今日收入</option>
                 <option value="7">过去7天</option>
                 <option value="15">过去15天</option>
                 <option value="30">过去30天</option>

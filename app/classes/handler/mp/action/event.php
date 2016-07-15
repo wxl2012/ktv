@@ -54,6 +54,10 @@ class Event extends Base{
                 break;
         }
 
+        if(!$handle){
+            \Log::error('未找到处理对象：' . json_encode($this->data));
+            die('success');
+        }
         $handle->setWechat($this->wechat);
         $handle->setAccount($this->account);
         $handle->setPostData($this->data);

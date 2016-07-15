@@ -18,6 +18,40 @@ class UnSubscribe extends \handler\mp\action\Event {
         # code...
     }
 
-    function handle(){}
+    function handle(){
+
+
+        $items = \Model_Marketing::query()->where(['account_id' => $this->account->id])->get();
+        foreach ($items as $item){
+            $recordKey = md5("record_{$this->data->FromUserName}_{$item->id}");
+            try{
+                $record = \Cache::get($recordKey);
+
+                if(isset($record['candidates']) && $record['candidates']){
+                    $candidates = explode(',', $record['candidates']);
+                    foreach ($candidates as $candidate){
+                        $key = md5("candidate_{$candidate}");
+                        $candidateItem = \Cache::get($key);
+                        $candidateItem['total_gain'] -= 1;
+                        \Cache::set($key, $candidateItem);
+                    }
+
+                    $record['candidates'] = '';
+                    \Cache::set($recordKey, $record);
+                }
+            }catch (\CacheNotFoundException $e){
+                continue;
+            }
+        }
+
+
+        $where = [
+            'openid' => $this->data->FromUserName,
+        ];
+        $result = \DB::delete("marketing_records")
+            ->where($where)
+            ->execute();
+
+    }
 
 }

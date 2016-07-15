@@ -110,4 +110,21 @@ class Model_WXAccount extends \Orm\Model
 
         return $account;
     }
+
+    /**
+     * 检测token是否过期,过期则重新获取token
+     * @throws Exception
+     */
+    public function checkToken(){
+        if($this->temp_token_valid <= time()){
+            $token = \handler\mp\Tool::generate_token($this->app_id, $this->app_secret);
+
+            $this->temp_token = $token['token'];
+            $this->temp_token_valid = $token['valid'];
+            $this->save();
+            if(\Session::get('WXAccount')->id == $this->id){
+                \Session::set('WXAccount', $this);
+            }
+        }
+    }
 }

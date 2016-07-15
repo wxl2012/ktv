@@ -46,7 +46,12 @@ class Subscribe extends \handler\mp\action\Event {
 
         //是否扫码关注
         if($this->qrcode_key){
-            $result = \Model_MemberRecommendRelation::addRelation($this->qrcode_key, $this->wechat->user_id, 2);
+            //$result = \Model_MemberRecommendRelation::addRelation($this->qrcode_key, $this->wechat->user_id, 2);
+        }
+
+        if(isset($this->account->subscribe_reply) && $this->account->subscribe_reply){
+            $response = new \handler\mp\Response($this->account, $this->data);
+            $response->text($this->account->subscribe_reply);
         }
 
     }

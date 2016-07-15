@@ -23,37 +23,34 @@ class Text extends Base {
      * 处理请求
      */
     public function handle(){
-        if(strpos($this->data->content, 'bind') !== false){
-            $this->bind_employee();
+        $reply = false;
+
+        $px = substr($this->data->Content, 0, 1);
+        $no = intval(substr($this->data->Content, 1));
+
+        if(strpos($this->data->Content, '命运') !== false){
+            $reply = new \handler\mp\action\text\ReplyFateImage();
+        }else if($this->data->Content == '微信价值'){
+            $reply = new \handler\mp\action\text\ReplyValuationImage();
+        }else if(intval($this->data->Content) > 0 ||
+                (($px >= 'a' && $px <= 'z') || ($px >= 'A' && $px <= 'Z')) && $no > 0){
+            $reply = new \handler\mp\action\text\ReplyVote();
+        }else if(strpos($this->data->Content, '查询') !== false){
+            $reply = new \handler\mp\action\text\ReplyVoteNum();
+        }else{
+            $response = new \handler\mp\Response($this->account, $this->data);
+            $response->text('回复选手编号如"209"进行投票。回复“查询+编号”如“查询209”,查询其他选手成绩。');
+            die('success');
         }
+        
+        $reply->setWechat($this->wechat);
+        $reply->setAccount($this->account);
+        $reply->setPostData($this->data);
+        $reply->handle();
     }
 
-    /**
-     * 创建职员
-     */
-    private function bind_employee(){
-        $key = str_replace('bind ', '', $this->data->content);
-        $data = false;
-        try{
-            $data = \Cache::get("bind_employee_{$key}");
-        }catch (\CacheNotFoundException $e){
-            $this->reply_text('不存在的或错误的绑定编号！');
-        }
-
-        
-        $data = unserialize($data);
-        $count = \Model_Employee::query()
-            ->where([
-                'seller_id' => $data['seller_id']
-            ])
-            ->count();
-        
-        if($count > 0){
-            $this->reply_text('您已绑定过其它商户管理员！不能再次绑定其它商户。如需绑定请联系管理员！');
-        }
-
-        $employee = \Model_Employee::forge($data);
-        $employee->save();
-        $this->reply_text('恭喜您！绑定成功！');
+    protected function reply_text($content){
+        $response = new \handler\mp\Response($this->account, $this->data);
+        $response->text($content);
     }
 }

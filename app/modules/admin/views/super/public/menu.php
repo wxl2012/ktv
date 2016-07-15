@@ -153,8 +153,8 @@ $seller = \Session::get('seller', false);
                 </a>
                 <ul class="list-unstyled menu-item">
                     <li><a href="/admin/report">收入统计</a></li>
-                    <li><a href="/admin/report/details">收入明细</a></li>
-                    <!--<li><a href="messages.html">Messages</a></li>
+                    <!--<li><a href="/admin/report">收入明细</a></li>
+                    <li><a href="messages.html">Messages</a></li>
                     <li><a href="login.html">Login</a></li>
                     <li><a href="404.html">404 Error</a></li>-->
                 </ul>

@@ -205,6 +205,7 @@ SELECT o.from_id, s.name,
  	AND order_status IN('PAYMENT_SUCCESS', 'FINISH')
  GROUP BY from_id
 sql;
+		
 		$result = \DB::query($sql)->execute()->as_array();
 		return $result;
 	}

@@ -90,6 +90,7 @@ $seller = \Session::get('seller', false);
 
     <!-- Side Menu -->
     <ul class="list-unstyled side-menu">
+        <?php if(! (\Auth::check() && \Auth::get_user()->group_id == 6)){ ?>
         <li class="active">
             <a class="sa-side-home" href="/admin/room">
                 <span class="menu-item">包房管理</span>
@@ -107,6 +108,7 @@ $seller = \Session::get('seller', false);
                 <li><a href="/admin/room/reserve?status=TIMEOUT">过期的预订</a></li>
             </ul>
         </li>
+        <?php } ?>
         <li class="dropdown hide">
             <a class="sa-side-form" href="javascript:;">
                 <span class="menu-item">订单管理</span>

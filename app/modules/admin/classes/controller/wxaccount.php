@@ -96,10 +96,14 @@ class Controller_WXAccount extends Controller_BaseController
 
     public function action_wxpay($id = 0){
 
-        $item = \Model_AccessConfig::query()
-            ->where(['seller_id' => \Session::get('seller')->id, 'access_type' => 'wxpay'])
-            ->get_one();
+        $config = \Model_AccessConfig::query();
 
+        if(\Session::get('seller')){
+            $config->where(['seller_id' => \Session::get('seller')->id, 'access_type' => 'wxpay']);
+        }
+
+        $item = $config->get_one();
+        
         if(\Input::method() == 'POST'){
             $data = \Input::post();
 

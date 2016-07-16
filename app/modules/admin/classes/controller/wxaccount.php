@@ -28,9 +28,11 @@ class Controller_WXAccount extends Controller_BaseController
      * 公众号列表
      */
     public function action_index(){
-        $items = \Model_WXAccount::query()
-            ->where(['seller_id' => \Session::get('seller')->id])
-            ->get();
+        $account = \Model_WXAccount::query();
+        if(\Session::get('seller')){
+            $account->where(['seller_id' => \Session::get('seller')->id]);
+        }
+        $items = $account->get();
         if(count($items) < 2){
             \Response::redirect('/admin/wxaccount/save/' . (count($items) < 1 ? 0 : current($items)->id));
         }

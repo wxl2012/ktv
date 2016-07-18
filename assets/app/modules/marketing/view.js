@@ -23,7 +23,7 @@ $(function () {
 });
 
 function loadRecordData() {
-    $.get('/api/marketing/luck/records/' + _marketing_id + '.json',
+    $.get('/api/marketing/luck/records/' + _marketing_id + '.json?access_token=',
         function (data) {
             if(data.status == 'err'){
                 return;
@@ -48,7 +48,7 @@ function loadRecordData() {
 }
 
 function isExists() {
-    $.get('/api/order/marketing/exists.json',
+    $.get('/api/order/marketing/exists.json?access_token=',
         {
             buyer_id: _buyer_id
         },
@@ -71,7 +71,7 @@ function createOrder() {
         }
     ];
 
-    $.post('/api/order/marketing/create.json',
+    $.post('/api/order/marketing/create.json?access_token=',
         {
             marketings: marketing,
             order_name: '参与1元购活动',

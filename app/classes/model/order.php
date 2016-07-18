@@ -1,7 +1,7 @@
 <?php
 /**
  * 订单数据模型
- * 
+ *
  * @package    apps
  * @version    1.0
  * @author     Ray
@@ -21,6 +21,18 @@ class Model_Order extends \Orm\Model
 	protected static $_primary_key = array('id');
 
 	/**
+	 * @var array	has_one relationships
+	 */
+	protected static $_has_one = array(
+		'reserve' => array(
+			'model_to' => 'Model_OrderReserve',
+			'key_from' => 'id',
+			'key_to'   => 'order_id',
+			'cascade_delete' => false,
+		)
+	);
+
+	/**
 	 * @var array	belongs_to relationships
 	 */
 	protected static $_belongs_to = array(
@@ -35,11 +47,6 @@ class Model_Order extends \Orm\Model
 			'key_to'   => 'id',
 			'cascade_delete' => false,
 		),
-		'payment' => array(
-			'model_to' => 'Model_Bank',
-			'key_from' => 'payment_id',
-			'key_to'   => 'id'
-		),
 	);
 
 	/**
@@ -51,11 +58,21 @@ class Model_Order extends \Orm\Model
 			'key_from' => 'id',
 			'key_to'   => 'order_id',
 		),
-		/*'trades' => array(
+		'rates' => array(
+			'model_to' => 'Model_OrderRate',
+			'key_from' => 'id',
+			'key_to'   => 'order_id',
+		),
+		'trades' => array(
 			'model_to' => 'Model_OrderTrade',
 			'key_from' => 'id',
 			'key_to'   => 'order_id',
-		)*/
+		),
+		'transports' => array(
+			'model_to' => 'Model_OrderTransport',
+			'key_from' => 'id',
+			'key_to'   => 'order_id'
+		)
 	);
 
 	/**
@@ -80,6 +97,28 @@ class Model_Order extends \Orm\Model
 			'property' => 'user_id'
 		),
 	);
+
+	/**
+	 * @var array	many_many relationships
+	 */
+	/*protected static $_many_many = array(
+		'roles' => array(
+			'key_from' => 'id',
+			'model_to' => 'Model\\Auth_Role',
+			'key_to' => 'id',
+			'table_through' => null,
+			'key_through_from' => 'group_id',
+			'key_through_to' => 'role_id',
+		),
+		'permissions' => array(
+			'key_from' => 'id',
+			'model_to' => 'Model\\Auth_Permission',
+			'key_to' => 'id',
+			'table_through' => null,
+			'key_through_from' => 'group_id',
+			'key_through_to' => 'perms_id',
+		),
+	);*/
 
 	public static $_maps = array(
 		'type' => array(
@@ -106,14 +145,14 @@ class Model_Order extends \Orm\Model
 			'WAIT_SURE' => '待确认',
 			'SURE' => '确认',
 			'WAIT_SHIPPED' => '待发货',
-            'SHIPPED' => '已发货',
-            'FORRECEIVABLES' =>  '待收款',
-            'REFUNDMENT' =>  '退款中',
+			'SHIPPED' => '已发货',
+			'FORRECEIVABLES' =>  '待收款',
+			'REFUNDMENT' =>  '退款中',
 			'RECEIVED' => '已签收',
 			'CHECKED' => '核对完成',
 			'SYSTEM_STOP' => '系统中止',
 			'FINISH' => '已完成',
-			'BUYER_CANCEL' => '买家取消',
+			'BUYER_CANCEL' => '用户取消',
 			'SELLER_WAIT_SURE' => '待商户确认',
 			'BUYER_WAIT_SURE','待买家确认',
 			'BUYER_RECEIVED' => '购买已收货',
@@ -138,6 +177,7 @@ class Model_Order extends \Orm\Model
 			'PAYMENT_SUCCESS' => 'success',
 			'SELLER_CANCEL' => 'danger',
 			'USER_CANCEL' => 'danger',
+			'BUYER_CANCEL' => 'danger',
 			'WAIT_SURE' => 'warning',
 			'SURE' => 'info',
 			'WAIT_SHIPPED' => 'warning',
@@ -160,7 +200,7 @@ class Model_Order extends \Orm\Model
 		if(! $this->user_id){
 			$this->user_id = ($this->user_id = \Auth::get_user_id()) ? $this->user_id[1] : 0;
 		}
-		
+
 	}
 
 	/**
@@ -172,44 +212,153 @@ class Model_Order extends \Orm\Model
 	}
 
 	/**
-	 * 统计某时间实际收入金额
-	 *
-	 * @param $begin 开始时间
-	 * @param $end	结束时间
+	 * 创建订单对象
+	 * @return static
 	 */
-	public static function get_fee($begin, $end){
-		$sql = <<<sql
-SELECT SUM(original_fee) AS fee FROM orders
- WHERE created_at BETWEEN {$begin} AND {$end}
- 	AND order_status IN('PAYMENT_SUCCESS', 'FINISH')
-sql;
-		$result = \DB::query($sql)->execute()->as_array();
-		return current($result)['fee'];
+	public static function get_order(){
+		$data = \Input::post();
+
+		if( ! static::valid_data()){
+			return false;
+		}
+
+
+		$order = \Model_Order::forge($data);
+		$order->order_no = static::get_order_on();
+		return $order;
 	}
 
 	/**
-	 * 分组统计某时段实际收入金额
+	 * 验证订单数据是否合法
 	 *
-	 * @param $begin 开始时间
-	 * @param $end	结束时间
+	 * @return bool
 	 */
-	public static function get_fee_group($begin, $end){
-		$beginAt = date('Y-m-d H:i:s', $begin);
-		$endAt = date('Y-m-d H:i:s', $end);
-		$sql = <<<sql
-SELECT o.from_id, s.name, 
-	'{$beginAt} - {$endAt}' AS `span`,
-	SUM(total_fee) AS total_fee, 
-	SUM(original_fee) AS original_fee, 
-	SUM(preferential_fee) AS preferential_fee
- FROM orders AS o 
- 	LEFT JOIN sellers AS s ON o.from_id = s.id
- WHERE o.created_at BETWEEN {$begin} AND {$end}
- 	AND order_status IN('PAYMENT_SUCCESS', 'FINISH')
- GROUP BY from_id
-sql;
+	public static function valid_data(){
+		$data = \Input::post();
 
-		$result = \DB::query($sql)->execute()->as_array();
-		return $result;
+		//验证数据合法性
+		$fields = ['money', 'order_type', 'order_status'];
+		$flag = true;
+		foreach($fields as $field){
+			if( ! isset($data[$field]) || ! $data[$field]){
+				$flag = false;
+				break;
+			}
+		}
+
+		return $flag;
+	}
+
+	/**
+	 * 生成订单号
+	 *
+	 * @return string
+	 */
+	public static function get_order_on(){
+		$seller = \Session::get('seller', false);
+		$wechat = \Session::get('wechat', false);
+		$wxaccount = \Session::get('WXAccount', false);
+		$user = \Auth::check() ? \Auth::get_user() : false;
+
+		$seller = $seller ? $seller->id : 0;
+		$user_id = $user ? $user->id : 0;
+		$wechat_id = $wechat ? $wechat->id : 0;
+		$account_id = $wxaccount ? $wxaccount->id : 0;
+		$date = date('YmdHis');
+		return "{$date}{$user_id}{$wechat_id}{$seller}{$account_id}";
+	}
+
+	/**
+	 * 发货操作
+	 * @param int $id 订单ID
+	 */
+	public static function delivery($id = 0){
+
+		$msg = false;
+		$order = \Model_Order::find($id);
+		if(! $order){
+			$msg = ['status' => 'err', 'msg' => '未找到订单,发货失败', 'title' => '错误'];
+		}else if(in_array($order->order_status, ['NONE', 'WAIT_PAYMENT'])){
+			$msg = ['status' => 'err', 'msg' => '订单未付款,发货失败', 'title' => '错误'];
+		}else if($order->order_status != 'PAYMENT_SUCCESS'){
+			$msg = ['status' => 'err', 'msg' => '订单状态异常,发货失败', 'title' => '错误'];
+		}
+
+		if($msg){
+			\Session::set_flash('msg', $msg);
+			return false;
+		}
+
+		//微信发货
+		$account = \Session::get('WXAccount', false);
+		if( ! $account){
+			$account = \Model_WXAccount::find(1);
+		}
+
+		if($account->temp_token_valid < time()){
+			$result = \handler\mp\Tool::generate_token($account->app_id, $account->app_secret);
+			$account->temp_token = $result['token'];
+			$account->temp_token_valid = $result['valid'];
+			$account->save();
+		}
+
+		$delivery_count = 0;
+		foreach($order->details as $detail){
+			$sn = \Model_GoodsAccount::query()
+				->where(['goods_id' => $detail->goods_id, 'status' => 'NONE'])
+				->get_one();
+			if(! $sn){
+				$delivery_count ++;
+				continue;
+			}
+
+			if($order->buyer_openid) {
+
+				$remark = "订单号：{$order->order_no}\n用户名：{$sn->account}\n密码：{$sn->password}";
+				$data = \handler\mp\TemplateMsg::get_buy_goods_success($detail->goods->name, $remark);
+				$params = \handler\mp\TemplateMsg::get_base_params($order->buyer_openid, "ARlIzufqpUc8tvCTAVswkny-_AYwYatkxiw42MOa_uA", "http://mall.doujao.com", $data);
+				$flag = \handler\mp\TemplateMsg::send_msg($account->temp_token, $params);
+				if ($flag) {
+					$sn->status = 'USED';
+					$sn->order_id = $order->id;
+					$sn->save();
+				}
+
+				$detail->is_delivery = 1;
+				$detail->save();
+			}
+		}
+
+		if($delivery_count > 0){
+			\Session::set_flash('msg', ['status' => 'err', 'msg' => "{$delivery_count}件商品发货失败.原因:库存不足!请联系客服.", 'title' => '错误']);
+			return false;
+		}
+
+		$order->order_status = 'FINISH';
+		$order->save();
+		return true;
+	}
+
+	/**
+	 * 判断是否存在未付款订单
+	 *
+	 * @param $buyer_id		购买人ID
+	 * @param $order_type	订单类型
+	 * @return mixed
+	 */
+	public static function exists($buyer_id, $order_type = false){
+
+		$where = ['buyer_id' => $buyer_id];
+
+		if($order_type){
+			$where['order_type'] = $order_type;
+		}
+
+		$result = \Model_Order::query()
+			->where($where)
+			->where('order_status', 'IN', ['NONE', 'WAIT_PAYMENT'])
+			->count();
+
+		return $result > 0;
 	}
 }

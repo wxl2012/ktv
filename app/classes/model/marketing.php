@@ -40,6 +40,15 @@ class Model_Marketing extends \Orm\Model
         ),
     );
 
+    protected static $_has_one = array(
+        'luck' => array(
+            'model_to' => 'Model_MarketingLuckOne',
+            'key_from' => 'id',
+            'key_to'   => 'marketing_id',
+            'cascade_save' => true,
+        ),
+    );
+
     /**
      * @var array	belongs_to relationships
      */
@@ -74,13 +83,7 @@ class Model_Marketing extends \Orm\Model
             'key_from' => 'id',
             'key_to'   => 'marketing_id',
             'cascade_save' => true,
-        ),
-        'luck' => array(
-            'model_to' => 'Model_MarketingLuckOne',
-            'key_from' => 'id',
-            'key_to'   => 'marketing_id',
-            'cascade_save' => true,
-        ),
+        )
     );
 
     /**
@@ -108,4 +111,11 @@ class Model_Marketing extends \Orm\Model
             'key_to'   => 'marketing_id'
         )
     );
+
+    public static $_maps = [
+        'status' => [
+            'NORMAL' => '正常',
+            'END' => '结束'
+        ]
+    ];
 }

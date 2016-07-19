@@ -50,7 +50,7 @@ class Model_MarketingLuckOne extends \Orm\Model
 
     protected static $_belongs_to = [
         'goods' => [
-            'model_to' => 'Model_Goods',
+            'model_to' => 'Model_Room',
             'key_from' => 'goods_id',
             'key_to'   => 'id'
         ],

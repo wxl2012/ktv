@@ -19,7 +19,7 @@ class Controller_Room extends Controller_BaseController {
     }
 
     /**
-     * 获取支付方式
+     * 获取可预订的日期
      */
     public function action_dates(){
         $items = \Model_RoomReserve::query()
@@ -28,6 +28,19 @@ class Controller_Room extends Controller_BaseController {
             ->where('status', 'IN', ['SUCCESS', 'NONE'])
             ->get();
 
+        $data = ['status' => 'succ', 'msg' => '', 'errcode' => 0, 'data' => $items];
+        $this->response($data, 200);
+    }
+
+    public function action_list(){
+        $room = \Model_Room::query();
+        if(\Input::get('seller_id', false)){
+            $room->where([
+                'seller_id' => \Input::get('seller_id')
+            ]);
+        }
+
+        $items = $room->get();
         $data = ['status' => 'succ', 'msg' => '', 'errcode' => 0, 'data' => $items];
         $this->response($data, 200);
     }

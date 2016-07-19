@@ -70,36 +70,57 @@ class Controller_Home extends Controller_BaseController
         }
 
         if(\Input::method() == 'POST'){
-            $msg = ['status' => 'err', 'msg' => '表单验证错误', 'errcode' => 10];
+            if(\Auth::login()){
 
-            $val = \Validation::forge('MyRules');
-            $val->add_callable('MyRules');
-            $val->add_field('username', '用户名', 'required|trim');
-            $val->add_field('password', '密码', 'required|trim');
+                if(\Auth::get_user()->username == 'admin'){
+                    \Response::redirect('/admin');
+                }
 
-            $flag = $val->run();
-            if ($flag){
-                if( ! \Auth::login()){
-                    $msg = ['status' => 'err', 'msg' => '密码错误', 'errcode' => 10];
-                }else{
-                    $employee = \Model_Employee::query()
-                        ->where('user_id', \Auth::get_user()->id)
-                        ->get_one();
-                    if(! $employee){
-                        $msg['msg'] = '非法登录';
-                    }else{
-                        \Session::set('employee', $employee);
-                        \Session::set('seller', $employee->seller);
-                        \Response::redirect('/admin/home');
+                $employee = \Model_Employee::query()
+                    ->where('parent_id', \Auth::get_user()->id)
+                    ->where('is_deleted', 0)
+                    ->get_one();
+                if( ! $employee){
+                    \Session::set_flash('msg', ['status' => 'err', 'msg' => '非法登录,多次尝试登录,您的帐户将被封锁!', 'title' => '警告', 'sub_title' => '非法登录', 'icon' => 'exclamation-circle', 'color' => '#d9534f']);
+                    return $this->not_login_alert();
+                }
+
+                // 保存会话信息: 当前登录人员的身份、所属商户、微信公众号信息
+                \Session::set('seller', $employee->seller);
+                \Session::set('people', $employee->people);
+                \Session::set('employee', $employee);
+
+
+                // 查询当前商户默认公众号信息
+                $accounts = \Model_WXAccount::query()
+                    ->where(['seller_id' => $employee->seller->id])
+                    ->get();
+                $account = false;
+                if(count($accounts) > 1){
+                    foreach ($accounts as $item) {
+                        if($account->is_default == 1){
+                            $account = $item;
+                            break;
+                        }
                     }
+                }else{
+                    $account = current($accounts);
                 }
-            }else{
-                foreach ($val->error() as $key => $value) {
-                    $errors[$key] = (string)$value;
+
+                \Session::set('WXAccount', $account);
+
+                //获取API访问令牌
+                $result = \handler\common\UrlTool::request(\Config::get('base_url') . 'api/token.json?user_id=' . \Auth::get_user()->id);
+                $token = json_decode($result->body);
+                \Session::set('access_token', $token->access_token);
+
+                $redirect = "/admin";
+                if(isset($data['to_url'])){
+                    $redirect = $data['to_url'];
                 }
-                $msg['data'] = $errors;
+                \Response::redirect($redirect);
             }
-            \Session::set_flash('msg', $msg);
+            \Session::set_flash('msg', array('status' => 'err', 'msg' => '登录失败', 'errcode' => 20));
         }
 
         return \Response::forge(\View::forge('super/login'));

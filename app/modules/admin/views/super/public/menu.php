@@ -135,18 +135,7 @@ $seller = \Session::get('seller', false);
                 <span class="menu-item">Calendar</span>
             </a>
         </li>
-        <li class="dropdown hide">
-            <a class="sa-side-page" href="">
-                <span class="menu-item">Pages</span>
-            </a>
-            <ul class="list-unstyled menu-item">
-                <li><a href="list-view.html">List View</a></li>
-                <li><a href="profile-page.html">Profile Page</a></li>
-                <li><a href="messages.html">Messages</a></li>
-                <li><a href="login.html">Login</a></li>
-                <li><a href="404.html">404 Error</a></li>
-            </ul>
-        </li>
+
         <?php if(\Auth::check() && \Auth::get_user()->group_id == 6){ ?>
             <li class="dropdown">
                 <a href="javascript:;">
@@ -184,6 +173,16 @@ $seller = \Session::get('seller', false);
                 </ul>
             </li>
         <?php } else { ?>
+            <li class="dropdown">
+                <a href="">
+                    <span class="icon" style="font-size: 2em;"></span>
+                    <span class="menu-item">营销活动</span>
+                </a>
+                <ul class="list-unstyled menu-item">
+                    <li><a href="/admin/marketing/luck/save">发布一元购活动</a></li>
+                    <li><a href="/admin/marketing/luck">一元购活动管理</a></li>
+                </ul>
+            </li>
             <li class="dropdown">
                 <a href="">
                     <span class="icon" style="font-size: 2em;"></span>

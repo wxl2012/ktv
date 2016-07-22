@@ -46,7 +46,7 @@
                 </div>
                 <div class="col-xs-9" style="padding-left: 5px;" data-endAt="${end}">
                     <p class="title">
-                        ${title}
+                        ${parent.title}
                     </p>
                     <!-- 进度条 -->
                     <div class="progress">

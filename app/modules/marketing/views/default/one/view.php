@@ -95,10 +95,10 @@
 </style>
 
 <div class="text-center" style="width: 100%; background-color: #fff; padding: 10px;">
-    <?php if(count($item->luck->goods->attachments) > 1){ ?>
+    <?php if(count($item->luck->goods->galleries) > 1){ ?>
         <div class="swiper-container">
             <div class="swiper-wrapper">
-                <?php foreach ($item->luck->goods->attachments as $key => $value) { ?>
+                <?php foreach ($item->luck->goods->galleries as $key => $value) { ?>
                     <div class="swiper-slide">
                         <img src="<?= $value->attachment->url; ?>" alt="" style="width:100%;"/>
                     </div>
@@ -107,8 +107,8 @@
             <!-- Add Pagination -->
             <div class="swiper-pagination"></div>
         </div>
-    <?php }else if(count($item->luck->goods->attachments) > 0){ ?>
-        <img src="<?= current($item->luck->goods->attachments)->attachment->url; ?>" alt="" style="width: 90%;"/>
+    <?php }else if(count($item->luck->goods->galleries) > 0){ ?>
+        <img src="<?= current($item->luck->goods->galleries)->attachment->url; ?>" alt="" style="width: 90%;"/>
     <?php }else{ ?>
         <img src="<?= $item->luck->goods->thumbnail; ?>" alt="" style="width: 100%;"/>
     <?php } ?>
